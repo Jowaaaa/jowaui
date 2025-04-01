@@ -13,7 +13,15 @@ const meta: Meta<typeof Button> = {
     shadow: {
       control: "select",
       options: ["large", "medium", "none"]
-    }
+    },
+    shadowColor: { control: "color" },
+    className: {
+      control: "text"
+    },
+    bgColor: {
+      control: "color"
+    },
+
   },
 };
 export default meta;
@@ -24,22 +32,10 @@ export const Primary: Story = {
   args: {
     variant: "primary",
     children: "Primary Button",
-    shadow: "large"
+    shadow: "large",
+    bgColor: "#101eda",
+    shadowColor: "rgba(0, 0, 0, 0.3)",
+    className: ""
   },
 };
 
-export const Outline: Story = {
-  args: {
-    variant: "outline",
-    children: "Outline Button",
-    shadow: "large"
-  },
-};
-
-export const Danger: Story = {
-    args: {
-      variant: "danger",
-      children: "Danger Button",
-      shadow: "large"
-    },
-  };

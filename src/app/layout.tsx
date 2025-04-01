@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
+import { Navbar } from "./components/navbar/navbar";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -28,6 +29,29 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <Navbar
+  bgColor="#680b0b"
+  className="rounded-lg"
+  links={[
+    {
+      href: '/',
+      name: 'Home'
+    },
+    {
+      href: '/about',
+      name: 'About'
+    },
+    {
+      href: '/contact',
+      name: 'Contact'
+    }
+  ]}
+  logoAlt=""
+  logoSrc="https://www.adaptivewfs.com/wp-content/uploads/2020/07/logo-placeholder-image.png"
+  shadow="large"
+  shadowColor="rgba(255, 255, 255, 0.2)"
+  title=""
+/>
         {children}
       </body>
     </html>

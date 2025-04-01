@@ -3,6 +3,11 @@ import "../src/app/globals.css"
 
 const preview: Preview = {
   parameters: {
+    nextjs: {
+      router: {
+        basePath: '/app/',
+      },
+    },
     controls: {
       matchers: {
        color: /(background|color)$/i,
