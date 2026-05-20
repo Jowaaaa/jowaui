@@ -1,0 +1,40 @@
+@layer jowa.components {
+  .jowa-textarea-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: var(--jowa-spacing-xs);
+    font-family: var(--jowa-font-family);
+  }
+
+  .jowa-textarea-label {
+    font-size: var(--jowa-font-size-sm);
+    font-weight: var(--jowa-font-weight-medium);
+    color: var(--jowa-color-neutral-text);
+  }
+
+  .jowa-textarea {
+    width: 100%;
+    min-height: 80px;
+    padding: 8px 12px;
+    font-family: var(--jowa-font-family);
+    font-size: var(--jowa-font-size-md);
+    color: var(--jowa-color-neutral-text);
+    background: var(--jowa-color-neutral-bg);
+    border: 1.5px solid var(--jowa-color-neutral-border);
+    border-radius: var(--jowa-radius-md);
+    outline: none;
+    line-height: var(--jowa-line-height);
+    transition:
+      border-color var(--jowa-duration-fast) var(--jowa-ease-smooth),
+      box-shadow var(--jowa-duration-fast) var(--jowa-ease-smooth);
+  }
+
+  .jowa-textarea:hover           { border-color: var(--jowa-neutral-400); }
+  .jowa-textarea:focus           { border-color: var(--jowa-color-primary); box-shadow: 0 0 0 3px oklch(from var(--jowa-color-primary) l c h / 15%); }
+  .jowa-textarea:disabled        { background: var(--jowa-color-surface); color: var(--jowa-color-muted); cursor: not-allowed; }
+  .jowa-textarea--error          { border-color: var(--jowa-color-danger); }
+  .jowa-textarea--error:focus    { border-color: var(--jowa-color-danger); box-shadow: 0 0 0 3px oklch(from var(--jowa-color-danger) l c h / 15%); }
+
+  .jowa-textarea-error { font-size: var(--jowa-font-size-xs); color: var(--jowa-color-danger); margin: 0; }
+  .jowa-textarea-hint  { font-size: var(--jowa-font-size-xs); color: var(--jowa-color-muted);  margin: 0; }
+}

@@ -3,6 +3,7 @@ import { defineConfig } from "tsup";
 export default defineConfig({
   entry: {
     index: "src/lib/index.ts",
+    styles: "src/lib/styles/tokens.css",
   },
   format: ["cjs", "esm"],
   dts: true,

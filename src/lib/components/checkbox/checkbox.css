@@ -1,0 +1,91 @@
+@layer jowa.components {
+  .jowa-checkbox-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    font-family: var(--jowa-font-family);
+  }
+
+  .jowa-checkbox-label {
+    display: inline-flex;
+    align-items: flex-start;
+    gap: var(--jowa-spacing-sm);
+    cursor: pointer;
+    font-size: var(--jowa-font-size-sm);
+    color: var(--jowa-color-neutral-text);
+    line-height: var(--jowa-line-height);
+  }
+
+  /* Hide native checkbox */
+  .jowa-checkbox {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+    pointer-events: none;
+  }
+
+  /* Custom box */
+  .jowa-checkbox-box {
+    flex-shrink: 0;
+    width: 16px;
+    height: 16px;
+    margin-top: 2px;
+    border: 1.5px solid var(--jowa-color-neutral-border);
+    border-radius: var(--jowa-radius-sm);
+    background: var(--jowa-color-neutral-bg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition:
+      border-color var(--jowa-duration-fast) var(--jowa-ease-smooth),
+      background var(--jowa-duration-fast) var(--jowa-ease-smooth),
+      box-shadow var(--jowa-duration-fast) var(--jowa-ease-smooth);
+  }
+
+  /* Checked state */
+  .jowa-checkbox:checked + .jowa-checkbox-box {
+    background: var(--jowa-color-primary);
+    border-color: var(--jowa-color-primary);
+  }
+  .jowa-checkbox:checked + .jowa-checkbox-box::after {
+    content: "";
+    display: block;
+    width: 9px;
+    height: 5px;
+    border-left: 2px solid #fff;
+    border-bottom: 2px solid #fff;
+    transform: rotate(-45deg) translateY(-1px);
+  }
+
+  /* Indeterminate */
+  .jowa-checkbox:indeterminate + .jowa-checkbox-box {
+    background: var(--jowa-color-primary);
+    border-color: var(--jowa-color-primary);
+  }
+  .jowa-checkbox:indeterminate + .jowa-checkbox-box::after {
+    content: "";
+    display: block;
+    width: 8px;
+    height: 2px;
+    background: #fff;
+    border-radius: 1px;
+  }
+
+  /* Focus */
+  .jowa-checkbox:focus-visible + .jowa-checkbox-box {
+    box-shadow: 0 0 0 3px oklch(from var(--jowa-color-primary) l c h / 20%);
+  }
+
+  /* Error */
+  .jowa-checkbox--error + .jowa-checkbox-box { border-color: var(--jowa-color-danger); }
+
+  /* Disabled */
+  .jowa-checkbox:disabled + .jowa-checkbox-box { opacity: 0.5; }
+  .jowa-checkbox:disabled ~ .jowa-checkbox-text { opacity: 0.5; }
+  .jowa-checkbox-label:has(.jowa-checkbox:disabled) { cursor: not-allowed; }
+
+  .jowa-checkbox-text  { flex: 1; }
+  .jowa-checkbox-error { font-size: var(--jowa-font-size-xs); color: var(--jowa-color-danger); margin: 0; }
+  .jowa-checkbox-hint  { font-size: var(--jowa-font-size-xs); color: var(--jowa-color-muted);  margin: 0; }
+}

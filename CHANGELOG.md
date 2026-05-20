@@ -11,6 +11,34 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [0.3.0] — 2026-05-20
+
+### Added
+
+- **14 new components:** Checkbox, Drawer, Popover, Radio, RadioGroup, Select, Skeleton, Switch, Table, Tabs, Textarea, Toast, and form-layout primitives
+  - `Select` — native select with custom chevron, sm/md/lg sizes, consistent focus ring
+  - `Checkbox` — custom styled checkbox with `indeterminate` support
+  - `Radio` + `RadioGroup` — compound component with context, fieldset/legend, full keyboard nav
+  - `Switch` — `role="switch"`, 3 sizes, spring thumb animation, left/right label
+  - `Textarea` — configurable `resize` prop, same focus ring as Input
+  - `Toast` + `useToast` hook — `ToastProvider` with `useReducer` queue, portal, `aria-live`, 6 positions, auto-dismiss
+  - `Skeleton` — shimmer animation, text/rect/circle variants, multi-line via `lines` prop
+  - `Drawer` — 4 sides, portal, Escape key, body scroll lock, directional spring animations
+  - `Popover` — 4 placements, outside-click + Escape dismiss, controlled/uncontrolled
+  - `Tabs` — line and pill variants, ARIA tablist/tabpanel, keyboard arrow navigation
+  - `Table` — generic `Table<T>`, client-side sorting, striped/hoverable/bordered/stickyHeader variants
+- **Interactive Theme Builder** Storybook story (`Theme/Theme Builder`)
+  - Live token editing via range sliders (colors, shape, spacing/density, motion, typography)
+  - Real-time preview canvas with representative components
+  - Copy CSS button exports `:root { ... }` overrides to clipboard
+  - Reset button restores computed defaults
+
+### Fixed
+
+- Theme Builder color sliders now update the preview in real-time by explicitly computing and setting derived oklch color tokens (`--jowa-color-primary`, `--jowa-color-danger`, etc.) directly on the preview element via `setProperty`
+
+---
+
 ## [0.2.0] — 2026-05-20
 
 ### Added

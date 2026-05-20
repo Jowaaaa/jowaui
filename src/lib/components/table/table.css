@@ -1,0 +1,81 @@
+@layer jowa.components {
+  .jowa-table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+    font-family: var(--jowa-font-family);
+    border-radius: var(--jowa-radius-lg);
+    border: 1px solid var(--jowa-color-neutral-border);
+  }
+
+  .jowa-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: var(--jowa-font-size-sm);
+    color: var(--jowa-color-neutral-text);
+  }
+
+  .jowa-table thead {
+    background: var(--jowa-color-surface);
+  }
+
+  .jowa-table th {
+    padding: var(--jowa-spacing-sm) var(--jowa-spacing-lg);
+    font-weight: var(--jowa-font-weight-semibold);
+    font-size: var(--jowa-font-size-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--jowa-color-muted);
+    text-align: left;
+    border-bottom: 1px solid var(--jowa-color-neutral-border);
+    white-space: nowrap;
+  }
+
+  .jowa-table th.jowa-table__th--sortable {
+    cursor: pointer;
+    user-select: none;
+    transition: color var(--jowa-duration-fast) var(--jowa-ease-smooth);
+  }
+  .jowa-table th.jowa-table__th--sortable:hover { color: var(--jowa-color-neutral-text); }
+
+  .jowa-table__th-inner {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .jowa-table__sort-icon         { opacity: 0.4; font-size: 0.75rem; }
+  .jowa-table__sort-icon--active { opacity: 1; color: var(--jowa-color-primary); }
+
+  .jowa-table td {
+    padding: var(--jowa-spacing-sm) var(--jowa-spacing-lg);
+    border-bottom: 1px solid var(--jowa-color-neutral-border);
+    vertical-align: middle;
+    line-height: var(--jowa-line-height);
+  }
+
+  .jowa-table tbody tr:last-child td { border-bottom: none; }
+
+  /* Variants */
+  .jowa-table--striped tbody tr:nth-child(even) { background: var(--jowa-color-surface); }
+  .jowa-table--hoverable tbody tr {
+    transition: background var(--jowa-duration-fast) var(--jowa-ease-smooth);
+  }
+  .jowa-table--hoverable tbody tr:hover { background: var(--jowa-color-neutral-hover); }
+  .jowa-table--bordered td,
+  .jowa-table--bordered th { border: 1px solid var(--jowa-color-neutral-border); }
+
+  /* Sticky header */
+  .jowa-table--sticky thead th {
+    position: sticky;
+    top: 0;
+    background: var(--jowa-color-surface);
+    z-index: 1;
+  }
+
+  .jowa-table__empty {
+    text-align: center;
+    padding: var(--jowa-spacing-2xl);
+    color: var(--jowa-color-muted);
+    font-style: italic;
+  }
+}
