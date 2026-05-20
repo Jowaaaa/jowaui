@@ -1,0 +1,82 @@
+/* jowaui design tokens — import once in your app: import "jowaui/styles" */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+:root {
+  --jowa-font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  /* Colors */
+  --jowa-color-primary: #2563eb;
+  --jowa-color-primary-hover: #1d4ed8;
+  --jowa-color-danger: #dc2626;
+  --jowa-color-danger-hover: #b91c1c;
+  --jowa-color-neutral-bg: #ffffff;
+  --jowa-color-neutral-border: #d1d5db;
+  --jowa-color-neutral-text: #374151;
+  --jowa-color-neutral-hover: #f3f4f6;
+
+  /* Shadows */
+  --jowa-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --jowa-shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --jowa-shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+
+  /* Spacing */
+  --jowa-spacing-xs: 4px;
+  --jowa-spacing-sm: 8px;
+  --jowa-spacing-md: 12px;
+  --jowa-spacing-lg: 16px;
+  --jowa-spacing-xl: 24px;
+  --jowa-spacing-2xl: 32px;
+
+  /* Radius */
+  --jowa-radius-sm: 4px;
+  --jowa-radius-md: 6px;
+  --jowa-radius-lg: 8px;
+  --jowa-radius-xl: 12px;
+  --jowa-radius-full: 9999px;
+
+  /* Colors — extended */
+  --jowa-color-success: #16a34a;
+  --jowa-color-success-bg: #dcfce7;
+  --jowa-color-warning: #ca8a04;
+  --jowa-color-warning-bg: #fef9c3;
+  --jowa-color-info: #0284c7;
+  --jowa-color-info-bg: #e0f2fe;
+  --jowa-color-danger-bg: #fee2e2;
+  --jowa-color-primary-bg: #eff6ff;
+  --jowa-color-muted: #6b7280;
+  --jowa-color-surface: #f9fafb;
+
+  /* Typography */
+  --jowa-font-size-xs: 0.75rem;
+  --jowa-font-size-sm: 0.875rem;
+  --jowa-font-size-md: 1rem;
+  --jowa-font-size-lg: 1.125rem;
+  --jowa-font-weight-normal: 400;
+  --jowa-font-weight-medium: 500;
+  --jowa-font-weight-semibold: 600;
+  --jowa-font-weight-bold: 700;
+  --jowa-line-height: 1.5;
+
+  /* Transitions */
+  --jowa-transition: 150ms ease;
+
+  /* Overlay */
+  --jowa-overlay-bg: rgba(0, 0, 0, 0.5);
+
+  /* Navbar */
+  --jowa-navbar-bg: var(--jowa-color-primary);
+  --jowa-navbar-text: #ffffff;
+  --jowa-navbar-height: 56px;
+}
+
+/* Apply font globally when jowaui/styles is imported */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+body, .jowa-root {
+  font-family: var(--jowa-font-family);
+  font-size: var(--jowa-font-size-md);
+  color: var(--jowa-color-neutral-text);
+  line-height: var(--jowa-line-height);
+}

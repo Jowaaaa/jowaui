@@ -1,0 +1,72 @@
+.jowa-alert {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--jowa-spacing-sm);
+  padding: var(--jowa-spacing-md) var(--jowa-spacing-lg);
+  border-radius: var(--jowa-radius-lg);
+  border: 1px solid transparent;
+  font-family: var(--jowa-font-family);
+  font-size: var(--jowa-font-size-sm);
+  line-height: var(--jowa-line-height);
+}
+
+.jowa-alert--info {
+  background: var(--jowa-color-info-bg);
+  color: var(--jowa-color-info);
+  border-color: #bae6fd;
+}
+
+.jowa-alert--success {
+  background: var(--jowa-color-success-bg);
+  color: var(--jowa-color-success);
+  border-color: #bbf7d0;
+}
+
+.jowa-alert--warning {
+  background: var(--jowa-color-warning-bg);
+  color: var(--jowa-color-warning);
+  border-color: #fde68a;
+}
+
+.jowa-alert--danger {
+  background: var(--jowa-color-danger-bg);
+  color: var(--jowa-color-danger);
+  border-color: #fecaca;
+}
+
+.jowa-alert__icon {
+  flex-shrink: 0;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.jowa-alert__content {
+  flex: 1;
+}
+
+.jowa-alert__title {
+  margin: 0 0 2px;
+  font-weight: var(--jowa-font-weight-semibold);
+}
+
+.jowa-alert__body {
+  margin: 0;
+  opacity: 0.9;
+}
+
+.jowa-alert__close {
+  flex-shrink: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0 2px;
+  color: inherit;
+  opacity: 0.6;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  transition: opacity var(--jowa-transition);
+}
+
+.jowa-alert__close:hover {
+  opacity: 1;
+}
