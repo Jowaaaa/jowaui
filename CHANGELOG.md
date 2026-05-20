@@ -9,6 +9,12 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+## [0.3.1] — 2026-05-20
+
+### Added
+
+- **Introduction page** creates some extra information on the introduction page of storybook
+
 ---
 
 ## [0.3.0] — 2026-05-20

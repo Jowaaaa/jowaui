@@ -1,0 +1,400 @@
+import React from "react";
+import type { Meta, StoryObj } from "@storybook/react";
+
+/* ── Data ─────────────────────────────────────────────────────────────────── */
+
+const COMPONENTS = [
+  { name: "Alert",        category: "Feedback",   description: "Dismissible status messages — info/success/warning/danger" },
+  { name: "Avatar",       category: "Display",    description: "User avatar with image fallback and initials" },
+  { name: "Badge",        category: "Display",    description: "Inline status labels" },
+  { name: "Breadcrumbs",  category: "Navigation", description: "Hierarchical path navigator" },
+  { name: "Button",       category: "Form",       description: "Primary/outline/ghost/danger, sm/md/lg" },
+  { name: "Card",         category: "Layout",     description: "Surface container with header/footer slots" },
+  { name: "Carousel",     category: "Display",    description: "Touch-friendly image/content slider" },
+  { name: "Chart",        category: "Data",       description: "SVG bar and line charts, no dependencies" },
+  { name: "Checkbox",     category: "Form",       description: "Styled checkbox with indeterminate state" },
+  { name: "Divider",      category: "Layout",     description: "Horizontal or vertical separator" },
+  { name: "Drawer",       category: "Overlay",    description: "Side panel — left/right/top/bottom" },
+  { name: "Dropdown",     category: "Navigation", description: "Trigger + floating menu" },
+  { name: "Footer",       category: "Layout",     description: "Page footer with columns and bottom bar" },
+  { name: "Gauge",        category: "Data",       description: "270° arc meter with variant colors" },
+  { name: "Hero",         category: "Layout",     description: "Full-width page hero with CTA slots" },
+  { name: "Input",        category: "Form",       description: "Text input with label, helper text, error state" },
+  { name: "Modal",        category: "Overlay",    description: "Accessible dialog with portal and focus trap" },
+  { name: "Navbar",       category: "Navigation", description: "Responsive top navigation bar" },
+  { name: "Pagination",   category: "Navigation", description: "Page navigator with ellipsis" },
+  { name: "Popover",      category: "Overlay",    description: "4-placement floating content panel" },
+  { name: "Progress",     category: "Feedback",   description: "Linear progress bar" },
+  { name: "Radio",        category: "Form",       description: "Accessible radio group with keyboard nav" },
+  { name: "Select",       category: "Form",       description: "Styled native select" },
+  { name: "Sidebar",      category: "Navigation", description: "Collapsible side navigation" },
+  { name: "Skeleton",     category: "Feedback",   description: "Shimmer loading placeholder" },
+  { name: "Sparkline",    category: "Data",       description: "Inline SVG trend line" },
+  { name: "Spinner",      category: "Feedback",   description: "Loading indicator" },
+  { name: "StatCard",     category: "Data",       description: "Dashboard metric card with trend and chart slot" },
+  { name: "Switch",       category: "Form",       description: "Toggle switch with spring animation" },
+  { name: "Table",        category: "Data",       description: "Generic sortable data table" },
+  { name: "Tabs",         category: "Navigation", description: "Line and pill tab variants" },
+  { name: "Tag",          category: "Display",    description: "Removable label/chip" },
+  { name: "Textarea",     category: "Form",       description: "Multi-line text input" },
+  { name: "Toast",        category: "Feedback",   description: "Toast notification queue with 6 positions" },
+  { name: "Tooltip",      category: "Overlay",    description: "Hover tooltip — 4 placements" },
+];
+
+const CATEGORY_COLORS: Record<string, string> = {
+  Feedback:   "oklch(52% 0.22 262)",
+  Display:    "oklch(52% 0.18 155)",
+  Navigation: "oklch(55% 0.20 300)",
+  Form:       "oklch(55% 0.22 25)",
+  Layout:     "oklch(55% 0.18 75)",
+  Overlay:    "oklch(48% 0.20 230)",
+  Data:       "oklch(52% 0.20 195)",
+};
+
+const TOKEN_GROUPS = [
+  {
+    label: "Color",
+    tokens: ["--jowa-color-primary", "--jowa-color-danger", "--jowa-color-success", "--jowa-color-warning", "--jowa-color-surface", "--jowa-color-muted"],
+  },
+  {
+    label: "Radius",
+    tokens: ["--jowa-radius-sm", "--jowa-radius-md", "--jowa-radius-lg", "--jowa-radius-xl", "--jowa-radius-full"],
+  },
+  {
+    label: "Duration",
+    tokens: ["--jowa-duration-instant (100ms)", "--jowa-duration-fast (150ms)", "--jowa-duration-normal (250ms)", "--jowa-duration-slow (400ms)"],
+  },
+  {
+    label: "Easing",
+    tokens: ["--jowa-ease-smooth", "--jowa-ease-spring", "--jowa-ease-bounce", "--jowa-ease-in", "--jowa-ease-out"],
+  },
+  {
+    label: "Density",
+    tokens: ["--jowa-density  (-2 compact · 0 default · 2 comfortable)"],
+  },
+  {
+    label: "Typography",
+    tokens: ["--jowa-font-family", "--jowa-font-size-sm", "--jowa-font-size-md", "--jowa-font-size-lg", "--jowa-font-size-xl"],
+  },
+];
+
+/* ── Helpers ──────────────────────────────────────────────────────────────── */
+
+const s: Record<string, React.CSSProperties> = {
+  page: {
+    maxWidth: 900,
+    margin: "0 auto",
+    padding: "2.5rem 1.5rem 5rem",
+    fontFamily: "var(--jowa-font-family, Inter, sans-serif)",
+    color: "var(--jowa-color-neutral-text, #111)",
+    lineHeight: 1.7,
+  },
+  hero: {
+    marginBottom: "3rem",
+  },
+  h1: {
+    fontSize: "clamp(2rem, 5vw, 3rem)",
+    fontWeight: 800,
+    letterSpacing: "-0.03em",
+    margin: "0 0 0.5rem",
+    background: "linear-gradient(135deg, oklch(52% 0.22 262), oklch(60% 0.28 300))",
+    WebkitBackgroundClip: "text",
+    WebkitTextFillColor: "transparent",
+    backgroundClip: "text",
+  },
+  tagline: {
+    fontSize: "1.125rem",
+    color: "var(--jowa-color-muted, #6b7280)",
+    margin: "0 0 1.5rem",
+    maxWidth: 560,
+  },
+  pillRow: {
+    display: "flex",
+    flexWrap: "wrap" as const,
+    gap: "0.5rem",
+    marginBottom: "2rem",
+  },
+  pill: {
+    display: "inline-flex",
+    alignItems: "center",
+    gap: "0.35rem",
+    padding: "0.3rem 0.75rem",
+    borderRadius: 999,
+    fontSize: "0.8125rem",
+    fontWeight: 600,
+    background: "var(--jowa-color-primary-bg, #eff6ff)",
+    color: "var(--jowa-color-primary, oklch(52% 0.22 262))",
+    border: "1px solid oklch(from var(--jowa-color-primary, oklch(52% 0.22 262)) l c h / 20%)",
+  },
+  hr: {
+    border: "none",
+    borderTop: "1px solid var(--jowa-color-neutral-border, #e5e7eb)",
+    margin: "2.5rem 0",
+  },
+  h2: {
+    fontSize: "1.25rem",
+    fontWeight: 700,
+    margin: "0 0 1rem",
+    paddingBottom: "0.4rem",
+    borderBottom: "2px solid var(--jowa-color-neutral-border, #e5e7eb)",
+  },
+  codeBlock: {
+    background: "var(--jowa-color-surface, #f8f9fa)",
+    border: "1px solid var(--jowa-color-neutral-border, #e5e7eb)",
+    borderRadius: 8,
+    padding: "1rem 1.25rem",
+    overflowX: "auto" as const,
+    fontSize: "0.875rem",
+    lineHeight: 1.6,
+    margin: "0 0 1.25rem",
+    fontFamily: "'Fira Code', 'Cascadia Code', monospace",
+    whiteSpace: "pre" as const,
+  },
+  inlineCode: {
+    fontFamily: "'Fira Code', 'Cascadia Code', monospace",
+    fontSize: "0.875em",
+    background: "var(--jowa-color-primary-bg, #eff6ff)",
+    color: "var(--jowa-color-primary, oklch(52% 0.22 262))",
+    padding: "1px 5px",
+    borderRadius: 4,
+  },
+  grid: {
+    display: "grid",
+    gridTemplateColumns: "repeat(auto-fill, minmax(260px, 1fr))",
+    gap: "0.75rem",
+    margin: "0 0 1.5rem",
+  },
+  componentCard: {
+    padding: "0.75rem 1rem",
+    borderRadius: 8,
+    border: "1px solid var(--jowa-color-neutral-border, #e5e7eb)",
+    background: "var(--jowa-color-surface, #f8f9fa)",
+  },
+  componentName: {
+    fontWeight: 700,
+    fontSize: "0.875rem",
+    marginBottom: 2,
+  },
+  componentDesc: {
+    fontSize: "0.8125rem",
+    color: "var(--jowa-color-muted, #6b7280)",
+    margin: 0,
+    lineHeight: 1.5,
+  },
+  categoryDot: {
+    display: "inline-block",
+    width: 8,
+    height: 8,
+    borderRadius: "50%",
+    marginRight: 6,
+    verticalAlign: "middle",
+    flexShrink: 0,
+  },
+  tokenGrid: {
+    display: "grid",
+    gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))",
+    gap: "1rem",
+    margin: "0 0 1.5rem",
+  },
+  tokenGroup: {
+    padding: "0.875rem 1rem",
+    borderRadius: 8,
+    border: "1px solid var(--jowa-color-neutral-border, #e5e7eb)",
+    background: "var(--jowa-color-surface, #f8f9fa)",
+  },
+  tokenGroupLabel: {
+    fontWeight: 700,
+    fontSize: "0.8125rem",
+    textTransform: "uppercase" as const,
+    letterSpacing: "0.06em",
+    color: "var(--jowa-color-primary, oklch(52% 0.22 262))",
+    marginBottom: "0.5rem",
+  },
+  tokenItem: {
+    fontSize: "0.8125rem",
+    fontFamily: "'Fira Code', 'Cascadia Code', monospace",
+    color: "var(--jowa-color-neutral-text, #111)",
+    lineHeight: 1.8,
+  },
+  callout: {
+    borderLeft: "3px solid var(--jowa-color-primary, oklch(52% 0.22 262))",
+    margin: "0 0 1rem",
+    padding: "0.5rem 1rem",
+    background: "var(--jowa-color-primary-bg, #eff6ff)",
+    borderRadius: "0 6px 6px 0",
+    fontSize: "0.9rem",
+  },
+};
+
+/* ── Component ────────────────────────────────────────────────────────────── */
+
+const IntroductionPage: React.FC = () => {
+  const categories = [...new Set(COMPONENTS.map((c) => c.category))].sort();
+
+  return (
+    <div style={s.page}>
+      {/* Hero */}
+      <div style={s.hero}>
+        <h1 style={s.h1}>jowaui</h1>
+        <p style={s.tagline}>
+          A zero-dependency React component library built on CSS custom properties.
+          No Tailwind required. No ThemeProvider required. No framer-motion required.
+        </p>
+        <div style={s.pillRow}>
+          {["Zero dependencies", "CSS custom properties", "oklch colors", "Dark mode", "Reduced motion", "35 components"].map((t) => (
+            <span key={t} style={s.pill}>{t}</span>
+          ))}
+        </div>
+      </div>
+
+      <hr style={s.hr} />
+
+      {/* Install */}
+      <h2 style={s.h2}>Install</h2>
+      <pre style={s.codeBlock}>{`npm install jowaui`}</pre>
+
+      <h2 style={s.h2}>Usage</h2>
+      <pre style={s.codeBlock}>{`// 1. Import the token stylesheet once at your app root
+import "jowaui/styles";
+
+// 2. Use components anywhere
+import { Button, Modal, useToast } from "jowaui";
+
+export default function App() {
+  return <Button variant="primary">Hello</Button>;
+}`}</pre>
+
+      <hr style={s.hr} />
+
+      {/* Theming */}
+      <h2 style={s.h2}>Theming</h2>
+      <p style={{ margin: "0 0 0.75rem", color: "var(--jowa-color-muted, #6b7280)" }}>
+        Override any <code style={s.inlineCode}>--jowa-*</code> token on <code style={s.inlineCode}>:root</code> to restyle the entire library:
+      </p>
+      <pre style={s.codeBlock}>{`:root {
+  --jowa-blue-h: 145;       /* hue — try 145 green, 25 orange, 300 purple */
+  --jowa-blue-c: 0.18;      /* chroma (saturation) */
+  --jowa-blue-l: 48%;       /* lightness */
+
+  --jowa-radius-md: 12px;   /* rounder corners */
+  --jowa-duration-normal: 400ms; /* slower animations */
+  --jowa-density: 2;        /* comfortable spacing */
+}`}</pre>
+
+      <p style={{ margin: "0 0 0.75rem", color: "var(--jowa-color-muted, #6b7280)" }}>
+        Or scope a theme to a subtree — no <code style={s.inlineCode}>ThemeProvider</code> needed:
+      </p>
+      <pre style={s.codeBlock}>{`<div style={{ "--jowa-blue-h": "145", "--jowa-blue-l": "48%" }}>
+  {/* All jowaui components here use green as primary */}
+  <Button variant="primary">Green Button</Button>
+</div>`}</pre>
+
+      <div style={s.callout}>
+        <strong>Dark mode</strong> — tokens respond automatically to{" "}
+        <code style={s.inlineCode}>@media (prefers-color-scheme: dark)</code> and{" "}
+        <code style={s.inlineCode}>[data-theme="dark"]</code>. Toggle with the toolbar above.
+      </div>
+      <div style={{ ...s.callout, borderColor: "var(--jowa-color-success, oklch(52% 0.18 155))", background: "var(--jowa-color-success-bg, oklch(97% 0.04 155))" }}>
+        <strong>prefers-reduced-motion</strong> — all duration tokens are automatically set to{" "}
+        <code style={s.inlineCode}>0ms</code> when the user enables reduced motion. No extra code needed.
+      </div>
+
+      <hr style={s.hr} />
+
+      {/* Components */}
+      <h2 style={s.h2}>Components</h2>
+
+      {/* Legend */}
+      <div style={{ display: "flex", flexWrap: "wrap", gap: "0.75rem", marginBottom: "1.25rem" }}>
+        {categories.map((cat) => (
+          <span key={cat} style={{ display: "flex", alignItems: "center", fontSize: "0.8125rem", color: "var(--jowa-color-muted, #6b7280)" }}>
+            <span style={{ ...s.categoryDot, background: CATEGORY_COLORS[cat] ?? "#aaa" }} />
+            {cat}
+          </span>
+        ))}
+      </div>
+
+      <div style={s.grid}>
+        {COMPONENTS.map((c) => (
+          <div key={c.name} style={s.componentCard}>
+            <div style={{ ...s.componentName, display: "flex", alignItems: "center" }}>
+              <span style={{ ...s.categoryDot, background: CATEGORY_COLORS[c.category] ?? "#aaa" }} />
+              <code style={{ ...s.inlineCode, background: "none", padding: 0, color: "var(--jowa-color-neutral-text, #111)" }}>{c.name}</code>
+              <span style={{ marginLeft: "auto", fontSize: "0.7rem", fontWeight: 500, color: CATEGORY_COLORS[c.category] ?? "#aaa", fontFamily: "var(--jowa-font-family)" }}>{c.category}</span>
+            </div>
+            <p style={s.componentDesc}>{c.description}</p>
+          </div>
+        ))}
+      </div>
+
+      <hr style={s.hr} />
+
+      {/* Tokens */}
+      <h2 style={s.h2}>Design Tokens</h2>
+      <p style={{ margin: "0 0 1rem", color: "var(--jowa-color-muted, #6b7280)" }}>
+        All tokens live in the <code style={s.inlineCode}>--jowa-*</code> namespace across three tiers: primitives → semantic → component.
+      </p>
+      <div style={s.tokenGrid}>
+        {TOKEN_GROUPS.map((g) => (
+          <div key={g.label} style={s.tokenGroup}>
+            <div style={s.tokenGroupLabel}>{g.label}</div>
+            {g.tokens.map((t) => (
+              <div key={t} style={s.tokenItem}>{t}</div>
+            ))}
+          </div>
+        ))}
+      </div>
+
+      <hr style={s.hr} />
+
+      {/* CSS Layers */}
+      <h2 style={s.h2}>CSS Layers</h2>
+      <p style={{ margin: "0 0 0.75rem", color: "var(--jowa-color-muted, #6b7280)" }}>
+        All component styles are scoped to <code style={s.inlineCode}>@layer jowa.components</code>. Your own styles always win — no <code style={s.inlineCode}>!important</code> needed:
+      </p>
+      <pre style={s.codeBlock}>{`@layer jowa.tokens, jowa.base, jowa.components, jowa.utilities;
+
+/* This always overrides the library */
+.jowa-btn {
+  border-radius: 999px;
+}`}</pre>
+
+      <hr style={s.hr} />
+
+      {/* Scripts */}
+      <h2 style={s.h2}>Scripts</h2>
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 2fr", gap: "0.25rem 1.5rem", fontSize: "0.875rem" }}>
+        {[
+          ["npm run storybook",       "Start Storybook dev server on port 6006"],
+          ["npm run build",           "Build library to dist/ (CJS + ESM + .d.ts)"],
+          ["npm run build-storybook", "Build static Storybook site"],
+          ["npm run lint",            "TypeScript type check"],
+        ].map(([cmd, desc]) => (
+          <React.Fragment key={cmd}>
+            <code style={s.inlineCode}>{cmd}</code>
+            <span style={{ color: "var(--jowa-color-muted, #6b7280)", alignSelf: "center" }}>{desc}</span>
+          </React.Fragment>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+/* ── Story ────────────────────────────────────────────────────────────────── */
+
+const meta: Meta = {
+  title: "Introduction",
+  parameters: {
+    layout: "fullscreen",
+    docs: { disable: true },
+    controls: { disable: true },
+    actions: { disable: true },
+  },
+};
+export default meta;
+
+type Story = StoryObj;
+export const Docs: Story = {
+  name: "Introduction",
+  render: () => <IntroductionPage />,
+};
