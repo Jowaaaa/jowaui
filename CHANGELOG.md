@@ -9,6 +9,8 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+- **reflect token** reflect all tokens use in styles to be visible in Introduction as part of the documentation.
+
 ## [0.3.1] — 2026-05-20
 
 ### Added
