@@ -1,0 +1,18 @@
+/**
+ * Storybook preview globals
+ * Applied on top of tokens.css — makes the story canvas background and
+ * text colour track the active [data-theme] so dark/light mode is visible
+ * across the entire preview pane, not just inside individual components.
+ */
+
+/* The #storybook-root element is where withThemeByDataAttribute sets data-theme */
+#storybook-root {
+  min-height: 100vh;
+  padding: 2rem;
+  background: var(--jowa-color-neutral-bg);
+  color: var(--jowa-color-neutral-text);
+  font-family: var(--jowa-font-family);
+  transition:
+    background-color 200ms ease,
+    color 200ms ease;
+}

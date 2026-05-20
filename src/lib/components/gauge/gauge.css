@@ -1,0 +1,29 @@
+@layer jowa.components {
+  .jowa-gauge { display: inline-block; }
+
+  .jowa-gauge__track {
+    stroke: var(--jowa-color-neutral-border);
+  }
+
+  .jowa-gauge--primary .jowa-gauge__fill { stroke: var(--jowa-color-primary); }
+  .jowa-gauge--success .jowa-gauge__fill { stroke: var(--jowa-color-success); }
+  .jowa-gauge--warning .jowa-gauge__fill { stroke: var(--jowa-color-warning); }
+  .jowa-gauge--danger  .jowa-gauge__fill { stroke: var(--jowa-color-danger);  }
+
+  .jowa-gauge__value {
+    font-family: var(--jowa-font-family);
+    font-size: 1.125rem;
+    font-weight: var(--jowa-font-weight-bold);
+    fill: var(--jowa-color-neutral-text);
+  }
+
+  .jowa-gauge__label {
+    font-family: var(--jowa-font-family);
+    font-size: 0.6875rem;
+    fill: var(--jowa-color-muted);
+  }
+
+  .jowa-gauge__fill {
+    transition: stroke-dashoffset var(--jowa-duration-slow) var(--jowa-ease-smooth);
+  }
+}

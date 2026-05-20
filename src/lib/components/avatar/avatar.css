@@ -1,47 +1,23 @@
-.jowa-avatar {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  background: var(--jowa-color-primary-bg);
-  color: var(--jowa-color-primary);
-  font-family: var(--jowa-font-family);
-  font-weight: var(--jowa-font-weight-semibold);
-  overflow: hidden;
-  flex-shrink: 0;
-  user-select: none;
-}
+@layer jowa.components {
+  .jowa-avatar {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: var(--jowa-color-primary-bg);
+    color: var(--jowa-color-primary);
+    font-family: var(--jowa-font-family);
+    font-weight: var(--jowa-font-weight-semibold);
+    overflow: hidden;
+    flex-shrink: 0;
+    user-select: none;
+  }
 
-.jowa-avatar--sm {
-  width: 28px;
-  height: 28px;
-  font-size: 0.6875rem;
-}
+  .jowa-avatar--sm { width: 28px; height: 28px; font-size: 0.6875rem; }
+  .jowa-avatar--md { width: 36px; height: 36px; font-size: var(--jowa-font-size-sm); }
+  .jowa-avatar--lg { width: 48px; height: 48px; font-size: var(--jowa-font-size-md); }
+  .jowa-avatar--xl { width: 64px; height: 64px; font-size: var(--jowa-font-size-lg); }
 
-.jowa-avatar--md {
-  width: 36px;
-  height: 36px;
-  font-size: var(--jowa-font-size-sm);
-}
-
-.jowa-avatar--lg {
-  width: 48px;
-  height: 48px;
-  font-size: var(--jowa-font-size-md);
-}
-
-.jowa-avatar--xl {
-  width: 64px;
-  height: 64px;
-  font-size: var(--jowa-font-size-lg);
-}
-
-.jowa-avatar__img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.jowa-avatar__initials {
-  line-height: 1;
+  .jowa-avatar__img      { width: 100%; height: 100%; object-fit: cover; }
+  .jowa-avatar__initials { line-height: 1; }
 }

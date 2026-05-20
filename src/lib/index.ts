@@ -20,6 +20,9 @@ export { Sidebar } from "./components/sidebar/sidebar";
 export { Tag } from "./components/tag/tag";
 export { Progress } from "./components/progress/progress";
 export { Divider } from "./components/divider/divider";
+export { Sparkline } from "./components/sparkline/sparkline";
+export { Gauge } from "./components/gauge/gauge";
+export { StatCard } from "./components/statcard/statcard";
 
 // Types
 export type { ButtonProps, ButtonVariant, ButtonSize } from "./components/button/button";
@@ -43,3 +46,6 @@ export type { SidebarProps, SidebarItem, SidebarGroup } from "./components/sideb
 export type { TagProps, TagVariant } from "./components/tag/tag";
 export type { ProgressProps, ProgressVariant } from "./components/progress/progress";
 export type { DividerProps } from "./components/divider/divider";
+export type { SparklineProps } from "./components/sparkline/sparkline";
+export type { GaugeProps } from "./components/gauge/gauge";
+export type { StatCardProps } from "./components/statcard/statcard";
