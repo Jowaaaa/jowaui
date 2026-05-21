@@ -1,0 +1,96 @@
+@layer jowa.components {
+  .jowa-fileinput-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: var(--jowa-spacing-xs);
+    font-family: var(--jowa-font-family);
+  }
+
+  .jowa-fileinput-label {
+    font-size: var(--jowa-font-size-sm);
+    font-weight: var(--jowa-font-weight-medium);
+    color: var(--jowa-color-neutral-text);
+  }
+
+  .jowa-fileinput-trigger {
+    display: flex;
+    align-items: center;
+    gap: var(--jowa-spacing-sm);
+    border: 1.5px solid var(--jowa-color-neutral-border);
+    border-radius: var(--jowa-radius-md);
+    background: var(--jowa-color-neutral-bg);
+    overflow: hidden;
+    cursor: pointer;
+    transition:
+      border-color var(--jowa-duration-fast) var(--jowa-ease-smooth),
+      box-shadow var(--jowa-duration-fast) var(--jowa-ease-smooth);
+  }
+
+  .jowa-fileinput-trigger:hover {
+    border-color: var(--jowa-color-primary);
+  }
+
+  .jowa-fileinput-trigger:focus-visible {
+    outline: none;
+    border-color: var(--jowa-color-primary);
+    box-shadow: 0 0 0 3px oklch(from var(--jowa-color-primary) l c h / 15%);
+  }
+
+  .jowa-fileinput-trigger--error {
+    border-color: var(--jowa-color-danger);
+  }
+
+  .jowa-fileinput-trigger--error:focus-visible {
+    border-color: var(--jowa-color-danger);
+    box-shadow: 0 0 0 3px oklch(from var(--jowa-color-danger) l c h / 15%);
+  }
+
+  .jowa-fileinput-trigger--disabled {
+    background: var(--jowa-color-surface);
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+
+  .jowa-fileinput-trigger--disabled:hover {
+    border-color: var(--jowa-color-neutral-border);
+  }
+
+  .jowa-fileinput-btn {
+    flex-shrink: 0;
+    padding: 8px var(--jowa-spacing-md);
+    font-family: var(--jowa-font-family);
+    font-size: var(--jowa-font-size-sm);
+    font-weight: var(--jowa-font-weight-medium);
+    color: var(--jowa-color-primary);
+    background: var(--jowa-color-primary-bg);
+    border-right: 1.5px solid var(--jowa-color-neutral-border);
+    white-space: nowrap;
+    transition: background var(--jowa-duration-fast) var(--jowa-ease-smooth);
+  }
+
+  .jowa-fileinput-trigger:hover .jowa-fileinput-btn {
+    background: oklch(from var(--jowa-color-primary-bg) calc(l - 0.03) c h);
+  }
+
+  .jowa-fileinput-filename {
+    flex: 1;
+    padding: 8px var(--jowa-spacing-sm);
+    font-size: var(--jowa-font-size-sm);
+    color: var(--jowa-color-muted);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .jowa-fileinput-error {
+    font-size: var(--jowa-font-size-xs);
+    color: var(--jowa-color-danger);
+    margin: 0;
+  }
+
+  .jowa-fileinput-hint {
+    font-size: var(--jowa-font-size-xs);
+    color: var(--jowa-color-muted);
+    margin: 0;
+  }
+}

@@ -1,0 +1,115 @@
+name: Bug Report
+description: Report a bug in jowaui
+title: "[Bug] "
+labels: ["bug"]
+body:
+  - type: dropdown
+    id: component
+    attributes:
+      label: Component affected
+      description: Which component is affected?
+      options:
+        - Accordion
+        - Alert
+        - Avatar
+        - Badge
+        - Banner
+        - Breadcrumbs
+        - Button
+        - Card
+        - Carousel
+        - Chart
+        - Checkbox
+        - ColorPicker
+        - ContextMenu
+        - DatePicker
+        - Divider
+        - Drawer
+        - Dropdown
+        - FileInput
+        - Footer
+        - Gauge
+        - Hero
+        - Input
+        - Modal
+        - Navbar
+        - NumberInput
+        - Pagination
+        - Popover
+        - Progress
+        - Radio
+        - Select
+        - Sidebar
+        - Skeleton
+        - Sparkline
+        - Spinner
+        - StatCard
+        - Stepper
+        - Switch
+        - Table
+        - Tabs
+        - Tag
+        - Textarea
+        - Toast
+        - Tooltip
+        - Tree
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      description: Clear steps to reproduce the bug.
+      placeholder: |
+        1. Import `<Component>` from 'jowaui'
+        2. Render with props `...`
+        3. See error
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+      description: What did you expect to happen?
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior
+      description: What actually happened?
+    validations:
+      required: true
+
+  - type: input
+    id: version
+    attributes:
+      label: jowaui version
+      placeholder: e.g. 1.2.3
+    validations:
+      required: true
+
+  - type: dropdown
+    id: browser
+    attributes:
+      label: Browser
+      options:
+        - Chrome
+        - Firefox
+        - Safari
+        - Edge
+        - Other
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: repro-conditions
+    attributes:
+      label: Reproduction conditions
+      options:
+        - label: Reproduces in dark mode
+        - label: Reproduces with reduced motion (`prefers-reduced-motion`)

@@ -1,0 +1,58 @@
+@layer jowa.components {
+  .jowa-banner {
+    display: flex;
+    align-items: center;
+    gap: var(--jowa-spacing-sm);
+    padding: var(--jowa-spacing-sm) var(--jowa-spacing-lg);
+    font-family: var(--jowa-font-family);
+    font-size: var(--jowa-font-size-sm);
+    line-height: var(--jowa-line-height);
+    border-left: 4px solid transparent;
+    width: 100%;
+  }
+
+  .jowa-banner--info    { background: var(--jowa-color-info-bg);    color: var(--jowa-color-info);    border-left-color: var(--jowa-color-info); }
+  .jowa-banner--success { background: var(--jowa-color-success-bg); color: var(--jowa-color-success); border-left-color: var(--jowa-color-success); }
+  .jowa-banner--warning { background: var(--jowa-color-warning-bg); color: var(--jowa-color-warning); border-left-color: var(--jowa-color-warning); }
+  .jowa-banner--danger  { background: var(--jowa-color-danger-bg);  color: var(--jowa-color-danger);  border-left-color: var(--jowa-color-danger); }
+
+  .jowa-banner-icon {
+    flex-shrink: 0;
+    font-size: 1rem;
+    line-height: 1;
+  }
+
+  .jowa-banner-content {
+    flex: 1;
+    font-weight: var(--jowa-font-weight-medium);
+  }
+
+  .jowa-banner-action {
+    flex-shrink: 0;
+  }
+
+  .jowa-banner-dismiss {
+    flex-shrink: 0;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0 var(--jowa-spacing-xs);
+    color: inherit;
+    opacity: 0.6;
+    font-size: var(--jowa-font-size-sm);
+    line-height: 1;
+    min-width: 44px;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--jowa-radius-sm);
+    transition: opacity var(--jowa-duration-fast) var(--jowa-ease-smooth);
+  }
+
+  .jowa-banner-dismiss:hover { opacity: 1; }
+  .jowa-banner-dismiss:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 2px;
+  }
+}

@@ -1,0 +1,103 @@
+@layer jowa.components {
+  .jowa-tree {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    font-family: var(--jowa-font-family);
+    font-size: var(--jowa-font-size-sm);
+    color: var(--jowa-color-neutral-text);
+  }
+
+  .jowa-tree-node {
+    list-style: none;
+  }
+
+  .jowa-tree-row {
+    display: flex;
+    align-items: center;
+    gap: var(--jowa-spacing-xs);
+    padding-top: var(--jowa-spacing-xs);
+    padding-bottom: var(--jowa-spacing-xs);
+    padding-right: var(--jowa-spacing-sm);
+    border-radius: var(--jowa-radius-sm);
+    cursor: pointer;
+    user-select: none;
+    min-height: 32px;
+    transition: background var(--jowa-duration-fast) var(--jowa-ease-smooth);
+  }
+
+  .jowa-tree-row:hover {
+    background: var(--jowa-color-neutral-hover);
+  }
+
+  .jowa-tree-row:focus-visible {
+    outline: 2px solid var(--jowa-color-primary);
+    outline-offset: -2px;
+  }
+
+  .jowa-tree-node--selected > .jowa-tree-row {
+    background: var(--jowa-color-primary-bg);
+    color: var(--jowa-color-primary);
+    font-weight: var(--jowa-font-weight-medium);
+  }
+
+  .jowa-tree-node--disabled > .jowa-tree-row {
+    opacity: 0.4;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+
+  .jowa-tree-chevron {
+    flex-shrink: 0;
+    width: 1rem;
+    height: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.6rem;
+    color: var(--jowa-color-muted);
+    transition: transform var(--jowa-duration-fast) var(--jowa-ease-smooth);
+  }
+
+  .jowa-tree-chevron--expanded {
+    transform: rotate(90deg);
+  }
+
+  .jowa-tree-chevron--hidden {
+    visibility: hidden;
+  }
+
+  .jowa-tree-icon {
+    flex-shrink: 0;
+    width: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--jowa-color-muted);
+  }
+
+  .jowa-tree-label {
+    flex: 1;
+    line-height: var(--jowa-line-height);
+  }
+
+  /* CSS grid trick for smooth height animation */
+  .jowa-tree-children {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-rows: 0fr;
+    overflow: hidden;
+    transition: grid-template-rows var(--jowa-duration-normal) var(--jowa-ease-smooth);
+  }
+
+  .jowa-tree-children > * {
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  .jowa-tree-children--expanded {
+    grid-template-rows: 1fr;
+  }
+}

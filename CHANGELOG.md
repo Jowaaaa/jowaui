@@ -9,7 +9,21 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
-- **reflect token** reflect all tokens use in styles to be visible in Introduction as part of the documentation.
+---
+
+## [0.3.2]
+
+### Added
+
+- **9 new components:** Accordion, DatePicker, FileInput, NumberInput, ColorPicker, Stepper, Banner, ContextMenu, Tree
+
+### Changed
+
+- **Documentation refactor** — Introduction trimmed to overview; new dedicated pages: `Docs/Install` and `Docs/Customize` (includes live design token reference)
+- **Design tokens page** — all `--jowa-*` tokens reflected live with computed values; integrated into Customize page
+- **Storybook default** — opens on Introduction page on launch
+
+---
 
 ## [0.3.1] — 2026-05-20
 
