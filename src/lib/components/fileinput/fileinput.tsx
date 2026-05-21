@@ -1,5 +1,4 @@
 import React from "react";
-import "./fileinput.css";
 
 export interface FileInputProps {
   label?: string;

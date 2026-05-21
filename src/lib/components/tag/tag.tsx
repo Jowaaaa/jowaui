@@ -1,5 +1,4 @@
 import React from "react";
-import "./tag.css";
 
 export type TagVariant = "neutral" | "primary" | "success" | "warning" | "danger";
 

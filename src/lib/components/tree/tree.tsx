@@ -1,5 +1,4 @@
 import React, { useCallback, useState } from "react";
-import "./tree.css";
 
 export interface TreeNode {
   id: string;

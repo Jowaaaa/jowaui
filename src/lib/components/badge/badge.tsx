@@ -1,5 +1,4 @@
 import React from "react";
-import "./badge.css";
 
 export type BadgeVariant = "primary" | "success" | "warning" | "danger" | "neutral";
 

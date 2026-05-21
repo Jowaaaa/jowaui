@@ -1,5 +1,4 @@
 import React from "react";
-import "./datepicker.css";
 
 export interface DatePickerProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "type"> {
   label?: string;

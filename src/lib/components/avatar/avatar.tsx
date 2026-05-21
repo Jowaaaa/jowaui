@@ -1,5 +1,4 @@
 import React from "react";
-import "./avatar.css";
 
 export type AvatarSize = "sm" | "md" | "lg" | "xl";
 

@@ -1,5 +1,4 @@
 import React from "react";
-import "./sparkline.css";
 
 export interface SparklineProps {
   /** Data values to plot */

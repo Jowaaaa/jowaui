@@ -1,5 +1,4 @@
 import React from "react";
-import "./skeleton.css";
 
 export interface SkeletonProps {
   /** Shape variant */

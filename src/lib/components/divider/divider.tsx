@@ -1,5 +1,4 @@
 import React from "react";
-import "./divider.css";
 
 export interface DividerProps {
   label?: string;

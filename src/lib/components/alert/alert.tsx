@@ -1,5 +1,4 @@
 import React from "react";
-import "./alert.css";
 
 export type AlertVariant = "info" | "success" | "warning" | "danger";
 

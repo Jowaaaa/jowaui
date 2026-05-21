@@ -1,5 +1,4 @@
 import React from "react";
-import "./sidebar.css";
 
 export interface SidebarItem {
   label: string;

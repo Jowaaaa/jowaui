@@ -1,5 +1,4 @@
 import React, { useState, useRef, useEffect } from "react";
-import "./dropdown.css";
 
 export interface DropdownItem {
   label: string;

@@ -1,5 +1,4 @@
 import React from "react";
-import "./navbar.css";
 
 export interface NavbarLink {
   label: string;

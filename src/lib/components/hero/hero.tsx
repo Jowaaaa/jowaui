@@ -1,5 +1,4 @@
 import React from "react";
-import "./hero.css";
 
 export interface HeroProps {
   title: React.ReactNode;

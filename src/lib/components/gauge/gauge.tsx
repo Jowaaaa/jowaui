@@ -1,5 +1,4 @@
 import React from "react";
-import "./gauge.css";
 
 export interface GaugeProps {
   /** Value between 0 and max */

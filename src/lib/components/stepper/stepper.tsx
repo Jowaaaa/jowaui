@@ -1,5 +1,4 @@
 import React from "react";
-import "./stepper.css";
 
 export type StepStatus = "completed" | "active" | "pending" | "error";
 

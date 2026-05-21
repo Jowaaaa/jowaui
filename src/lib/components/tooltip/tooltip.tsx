@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import "./tooltip.css";
 
 export type TooltipPosition = "top" | "bottom" | "left" | "right";
 

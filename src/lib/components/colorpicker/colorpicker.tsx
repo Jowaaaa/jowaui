@@ -1,5 +1,4 @@
 import React from "react";
-import "./colorpicker.css";
 
 export interface ColorPickerProps {
   label?: string;

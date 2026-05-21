@@ -2,7 +2,6 @@ import React, {
   createContext, useContext, useCallback, useReducer, useEffect, useRef,
 } from "react";
 import { createPortal } from "react-dom";
-import "./toast.css";
 
 /* ── Types ───────────────────────────────────────────────────────────────── */
 export type ToastVariant = "info" | "success" | "warning" | "danger";

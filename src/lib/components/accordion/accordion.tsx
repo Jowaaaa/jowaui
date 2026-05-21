@@ -1,5 +1,4 @@
 import React from "react";
-import "./accordion.css";
 
 export interface AccordionItem {
   id: string;

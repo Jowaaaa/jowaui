@@ -1,5 +1,4 @@
 import React from "react";
-import "./numberinput.css";
 
 export interface NumberInputProps {
   label?: string;

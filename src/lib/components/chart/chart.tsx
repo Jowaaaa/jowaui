@@ -1,5 +1,4 @@
 import React, { useMemo } from "react";
-import "./chart.css";
 
 export interface ChartDataPoint {
   label: string;

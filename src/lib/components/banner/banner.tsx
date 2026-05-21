@@ -1,5 +1,4 @@
 import React from "react";
-import "./banner.css";
 
 export type BannerVariant = "info" | "success" | "warning" | "danger";
 

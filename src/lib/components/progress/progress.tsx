@@ -1,5 +1,4 @@
 import React from "react";
-import "./progress.css";
 
 export type ProgressVariant = "primary" | "success" | "warning" | "danger";
 
