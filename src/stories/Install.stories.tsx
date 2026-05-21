@@ -76,17 +76,6 @@ const InstallPage: React.FC = () => (
     <h1 style={s.h1}>Install</h1>
     <p style={s.subtitle}>Get jowaui into your project.</p>
 
-    <div
-      style={{
-        ...s.callout,
-        borderColor: 'var(--jowa-color-warning)',
-        background: 'var(--jowa-color-warning-bg)',
-      }}
-    >
-      <strong>NPM package currently not available.</strong> Development is still
-      underway — this page documents the intended install flow.
-    </div>
-
     <hr style={s.hr} />
 
     <h2 style={s.h2}>Install</h2>
@@ -96,12 +85,11 @@ const InstallPage: React.FC = () => (
 
     <h2 style={s.h2}>Usage</h2>
     <p style={s.p}>
-      Import the token stylesheet once at your app root, then use components
-      anywhere:
+      Import the stylesheet once at your app root, then use components anywhere:
     </p>
     <pre
       style={s.codeBlock}
-    >{`// 1. Import the token stylesheet once at your app root
+    >{`// 1. Import the stylesheet once at your app root
 import "@jowaaaa/jowaui/styles";
 
 // 2. Use components anywhere
@@ -110,6 +98,22 @@ import { Button, Modal, useToast } from "@jowaaaa/jowaui";
 export default function App() {
   return <Button variant="primary">Hello</Button>;
 }`}</pre>
+
+    <hr style={s.hr} />
+
+    <h2 style={s.h2}>Using with Tailwind</h2>
+    <p style={s.p}>
+      Import jowaui styles <strong>after</strong> Tailwind in your CSS file.
+      This ensures jowaui's component layer is declared after Tailwind's base
+      reset, so component styles are not overridden.
+    </p>
+    <pre style={s.codeBlock}>{`/* app.css */
+@import 'tailwindcss';
+@import '@jowaaaa/jowaui/styles';`}</pre>
+    <p style={s.p}>
+      Do not import the stylesheet from JS/TSX when using Tailwind — CSS import
+      order is what controls layer priority.
+    </p>
   </div>
 );
 
