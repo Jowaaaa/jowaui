@@ -1,5 +1,4 @@
 import React from "react";
-import "./card.css";
 
 export interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
   header?: React.ReactNode;

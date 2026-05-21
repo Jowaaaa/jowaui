@@ -1,5 +1,4 @@
 import React from "react";
-import "./statcard.css";
 
 export interface StatCardProps {
   /** Main metric label */

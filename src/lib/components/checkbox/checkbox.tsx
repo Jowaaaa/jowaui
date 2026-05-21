@@ -1,5 +1,4 @@
 import React, { useId } from "react";
-import "./checkbox.css";
 
 export interface CheckboxProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "type"> {
   label?: string;

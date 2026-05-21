@@ -1,5 +1,4 @@
 import React, { useId, createContext, useContext } from "react";
-import "./radio.css";
 
 /* ── Context for RadioGroup ────────────────────────────────────────────────── */
 interface RadioGroupCtx {

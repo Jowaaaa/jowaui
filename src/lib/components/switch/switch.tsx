@@ -1,5 +1,4 @@
 import React, { useId } from "react";
-import "./switch.css";
 
 export interface SwitchProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "type" | "size"> {
   label?: string;

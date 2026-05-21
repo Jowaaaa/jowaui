@@ -1,5 +1,4 @@
 import React from "react";
-import "./breadcrumbs.css";
 
 export interface BreadcrumbItem {
   label: string;

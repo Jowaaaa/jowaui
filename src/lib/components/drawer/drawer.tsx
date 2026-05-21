@@ -1,6 +1,5 @@
 import React, { useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
-import "./drawer.css";
 
 export type DrawerSide = "left" | "right" | "top" | "bottom";
 

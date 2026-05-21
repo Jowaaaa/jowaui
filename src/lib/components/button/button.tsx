@@ -1,5 +1,4 @@
 import React from "react";
-import "./button.css";
 
 export type ButtonVariant = "primary" | "outline" | "danger" | "ghost";
 export type ButtonSize = "sm" | "md" | "lg";

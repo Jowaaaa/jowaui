@@ -1,5 +1,4 @@
 import React, { useId } from "react";
-import "./select.css";
 
 export interface SelectOption {
   value: string;

@@ -1,5 +1,4 @@
 import React, { useRef, useEffect, useState, useId } from "react";
-import "./popover.css";
 
 export type PopoverPlacement = "top" | "bottom" | "left" | "right";
 

@@ -1,5 +1,4 @@
 import React, { useState, useMemo } from "react";
-import "./table.css";
 
 export type SortDirection = "asc" | "desc" | null;
 
