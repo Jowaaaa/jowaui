@@ -171,8 +171,8 @@ const PreviewCanvas: React.FC<{ vars: Record<string, string> }> = ({ vars }) => 
         <Badge variant="neutral">Neutral</Badge>
       </div>
 
-      <Alert variant="info" title="Info alert" message="This is how info alerts look." />
-      <Alert variant="success" title="Success!" message="Action completed successfully." />
+      <Alert variant="info" title="Info alert">This is how info alerts look.</Alert>
+      <Alert variant="success" title="Success!">Action completed successfully.</Alert>
 
       <Progress label="Upload progress" value={68} size="md" variant="primary" />
 
