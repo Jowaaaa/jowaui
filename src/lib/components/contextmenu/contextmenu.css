@@ -1,0 +1,87 @@
+@layer jowa.components {
+  .jowa-contextmenu {
+    position: fixed;
+    z-index: 9999;
+    min-width: 180px;
+    max-width: 280px;
+    background: var(--jowa-color-neutral-bg);
+    border: 1px solid var(--jowa-color-neutral-border);
+    border-radius: var(--jowa-radius-md);
+    box-shadow: var(--jowa-shadow-md);
+    padding: var(--jowa-spacing-xs) 0;
+    margin: 0;
+    list-style: none;
+    font-family: var(--jowa-font-family);
+    font-size: var(--jowa-font-size-sm);
+    color: var(--jowa-color-neutral-text);
+
+    @starting-style {
+      opacity: 0;
+      transform: scale(0.96) translateY(-4px);
+    }
+
+    opacity: 1;
+    transform: scale(1) translateY(0);
+    transition:
+      opacity var(--jowa-duration-fast) var(--jowa-ease-out),
+      transform var(--jowa-duration-fast) var(--jowa-ease-out);
+  }
+
+  .jowa-contextmenu-item {
+    display: flex;
+    align-items: center;
+    gap: var(--jowa-spacing-sm);
+    width: 100%;
+    padding: var(--jowa-spacing-sm) var(--jowa-spacing-md);
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: inherit;
+    font-family: inherit;
+    font-size: inherit;
+    text-align: left;
+    line-height: var(--jowa-line-height);
+    transition: background var(--jowa-duration-fast) var(--jowa-ease-smooth);
+    min-height: 36px;
+  }
+
+  .jowa-contextmenu-item:hover,
+  .jowa-contextmenu-item:focus-visible {
+    background: var(--jowa-color-neutral-hover);
+    outline: none;
+  }
+
+  .jowa-contextmenu-item--danger {
+    color: var(--jowa-color-danger);
+  }
+
+  .jowa-contextmenu-item--danger:hover,
+  .jowa-contextmenu-item--danger:focus-visible {
+    background: var(--jowa-color-danger-bg);
+  }
+
+  .jowa-contextmenu-item--disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+
+  .jowa-contextmenu-separator {
+    height: 1px;
+    background: var(--jowa-color-neutral-border);
+    margin: var(--jowa-spacing-xs) 0;
+  }
+
+  .jowa-contextmenu-icon {
+    flex-shrink: 0;
+    width: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--jowa-color-muted);
+  }
+
+  .jowa-contextmenu-item--danger .jowa-contextmenu-icon {
+    color: inherit;
+  }
+}

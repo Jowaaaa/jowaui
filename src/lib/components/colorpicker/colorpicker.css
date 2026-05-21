@@ -1,0 +1,105 @@
+@layer jowa.components {
+  .jowa-colorpicker-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: var(--jowa-spacing-xs);
+    font-family: var(--jowa-font-family);
+  }
+
+  .jowa-colorpicker-label {
+    font-size: var(--jowa-font-size-sm);
+    font-weight: var(--jowa-font-weight-medium);
+    color: var(--jowa-color-neutral-text);
+  }
+
+  .jowa-colorpicker-control {
+    display: flex;
+    align-items: stretch;
+    border: 1.5px solid var(--jowa-color-neutral-border);
+    border-radius: var(--jowa-radius-md);
+    overflow: hidden;
+    background: var(--jowa-color-neutral-bg);
+    transition:
+      border-color var(--jowa-duration-fast) var(--jowa-ease-smooth),
+      box-shadow var(--jowa-duration-fast) var(--jowa-ease-smooth);
+  }
+
+  .jowa-colorpicker-control:focus-within {
+    border-color: var(--jowa-color-primary);
+    box-shadow: 0 0 0 3px oklch(from var(--jowa-color-primary) l c h / 15%);
+  }
+
+  .jowa-colorpicker-control--error {
+    border-color: var(--jowa-color-danger);
+  }
+
+  .jowa-colorpicker-control--error:focus-within {
+    border-color: var(--jowa-color-danger);
+    box-shadow: 0 0 0 3px oklch(from var(--jowa-color-danger) l c h / 15%);
+  }
+
+  .jowa-colorpicker-control--disabled {
+    background: var(--jowa-color-surface);
+    cursor: not-allowed;
+  }
+
+  .jowa-colorpicker-swatch {
+    flex-shrink: 0;
+    width: 40px;
+    border: none;
+    border-right: 1.5px solid var(--jowa-color-neutral-border);
+    cursor: pointer;
+    transition: opacity var(--jowa-duration-fast) var(--jowa-ease-smooth);
+    padding: 0;
+  }
+
+  .jowa-colorpicker-swatch:hover:not(:disabled) {
+    opacity: 0.85;
+  }
+
+  .jowa-colorpicker-swatch--disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+
+  /* Hide native color input visually but keep it accessible for click */
+  .jowa-colorpicker-native {
+    position: absolute;
+    width: 0;
+    height: 0;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .jowa-colorpicker-input {
+    flex: 1;
+    min-width: 0;
+    padding: 8px var(--jowa-spacing-md);
+    font-family: var(--jowa-font-family);
+    font-size: var(--jowa-font-size-md);
+    color: var(--jowa-color-neutral-text);
+    background: transparent;
+    border: none;
+    outline: none;
+    line-height: var(--jowa-line-height);
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.02em;
+  }
+
+  .jowa-colorpicker-input:disabled {
+    color: var(--jowa-color-muted);
+    cursor: not-allowed;
+  }
+
+  .jowa-colorpicker-error {
+    font-size: var(--jowa-font-size-xs);
+    color: var(--jowa-color-danger);
+    margin: 0;
+  }
+
+  .jowa-colorpicker-hint {
+    font-size: var(--jowa-font-size-xs);
+    color: var(--jowa-color-muted);
+    margin: 0;
+  }
+}

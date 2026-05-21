@@ -1,10 +1,26 @@
-import type { Preview } from "@storybook/react";
-import { withThemeByDataAttribute } from "@storybook/addon-themes";
-import "../src/lib/styles/tokens.css";
-import "./preview.css";
+import type { Preview } from '@storybook/react';
+import { withThemeByDataAttribute } from '@storybook/addon-themes';
+import '../src/lib/styles/tokens.css';
+import './preview.css';
 
 const preview: Preview = {
   parameters: {
+    options: {
+      storySort: {
+        order: [
+          'Introduction',
+          'Docs',
+          ['Install', 'Customize'],
+          'Components',
+          'Forms',
+          'Navigation',
+          'Overlay',
+          'Feedback',
+          'Data',
+          'Theme',
+        ],
+      },
+    },
     controls: {
       matchers: {
         color: /(background|color)$/i,
@@ -16,11 +32,11 @@ const preview: Preview = {
   decorators: [
     withThemeByDataAttribute({
       themes: {
-        Light: "light",
-        Dark:  "dark",
+        Light: 'light',
+        Dark: 'dark',
       },
-      defaultTheme: "Light",
-      attributeName: "data-theme",
+      defaultTheme: 'Light',
+      attributeName: 'data-theme',
     }),
   ],
 };

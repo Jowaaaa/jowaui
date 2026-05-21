@@ -1,0 +1,94 @@
+@layer jowa.components {
+  .jowa-accordion {
+    display: flex;
+    flex-direction: column;
+    font-family: var(--jowa-font-family);
+    border: 1.5px solid var(--jowa-color-neutral-border);
+    border-radius: var(--jowa-radius-md);
+    overflow: hidden;
+  }
+
+  .jowa-accordion-item {
+    border-bottom: 1.5px solid var(--jowa-color-neutral-border);
+  }
+
+  .jowa-accordion-item:last-child {
+    border-bottom: none;
+  }
+
+  .jowa-accordion-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: var(--jowa-spacing-sm) var(--jowa-spacing-md);
+    font-family: var(--jowa-font-family);
+    font-size: var(--jowa-font-size-md);
+    font-weight: var(--jowa-font-weight-medium);
+    color: var(--jowa-color-neutral-text);
+    background: var(--jowa-color-neutral-bg);
+    border: none;
+    cursor: pointer;
+    text-align: left;
+    transition: background var(--jowa-duration-fast) var(--jowa-ease-smooth);
+  }
+
+  .jowa-accordion-header:hover {
+    background: var(--jowa-color-neutral-hover);
+  }
+
+  .jowa-accordion-header:focus-visible {
+    outline: none;
+    box-shadow: inset 0 0 0 2px var(--jowa-color-primary);
+  }
+
+  .jowa-accordion-item--disabled .jowa-accordion-header {
+    color: var(--jowa-color-muted);
+    cursor: not-allowed;
+  }
+
+  .jowa-accordion-item--disabled .jowa-accordion-header:hover {
+    background: var(--jowa-color-neutral-bg);
+  }
+
+  .jowa-accordion-chevron {
+    flex-shrink: 0;
+    color: var(--jowa-color-muted);
+    transition: transform var(--jowa-duration-fast) var(--jowa-ease-smooth);
+  }
+
+  .jowa-accordion-item--open .jowa-accordion-chevron {
+    transform: rotate(180deg);
+  }
+
+  /* grid-template-rows trick for smooth height animation */
+  .jowa-accordion-panel {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows var(--jowa-duration-normal) var(--jowa-ease-smooth);
+  }
+
+  .jowa-accordion-item--open .jowa-accordion-panel {
+    grid-template-rows: 1fr;
+  }
+
+  .jowa-accordion-content {
+    overflow: hidden;
+    font-size: var(--jowa-font-size-md);
+    color: var(--jowa-color-neutral-text);
+    padding: 0 var(--jowa-spacing-md);
+    transition: padding var(--jowa-duration-normal) var(--jowa-ease-smooth);
+  }
+
+  .jowa-accordion-item--open .jowa-accordion-content {
+    padding: var(--jowa-spacing-sm) var(--jowa-spacing-md) var(--jowa-spacing-md);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .jowa-accordion-panel,
+    .jowa-accordion-chevron,
+    .jowa-accordion-content {
+      transition: none;
+    }
+  }
+}

@@ -1,0 +1,170 @@
+@layer jowa.components {
+  /* ── Shared ─────────────────────────────────────────────────────────────── */
+  .jowa-stepper {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    font-family: var(--jowa-font-family);
+  }
+
+  /* ── Horizontal ─────────────────────────────────────────────────────────── */
+  .jowa-stepper--horizontal {
+    display: flex;
+    align-items: flex-start;
+  }
+
+  .jowa-stepper--horizontal .jowa-stepper-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+    position: relative;
+  }
+
+  .jowa-stepper--horizontal .jowa-stepper-step-inner {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    position: relative;
+  }
+
+  .jowa-stepper--horizontal .jowa-stepper-circle {
+    flex-shrink: 0;
+    position: relative;
+    z-index: 1;
+  }
+
+  .jowa-stepper--horizontal .jowa-stepper-connector {
+    flex: 1;
+    height: 2px;
+    background: var(--jowa-color-neutral-border);
+    margin: 0 var(--jowa-spacing-xs);
+    transition: background var(--jowa-duration-normal) var(--jowa-ease-smooth);
+  }
+
+  .jowa-stepper--horizontal .jowa-stepper-connector--filled {
+    background: var(--jowa-color-primary);
+  }
+
+  .jowa-stepper--horizontal .jowa-stepper-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: var(--jowa-spacing-sm);
+    text-align: center;
+    padding: 0 var(--jowa-spacing-xs);
+  }
+
+  /* ── Vertical ───────────────────────────────────────────────────────────── */
+  .jowa-stepper--vertical {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .jowa-stepper--vertical .jowa-stepper-step {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: var(--jowa-spacing-md);
+  }
+
+  .jowa-stepper--vertical .jowa-stepper-step-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-shrink: 0;
+  }
+
+  .jowa-stepper--vertical .jowa-stepper-connector {
+    width: 2px;
+    flex: 1;
+    min-height: 24px;
+    background: var(--jowa-color-neutral-border);
+    margin: var(--jowa-spacing-xs) 0;
+    transition: background var(--jowa-duration-normal) var(--jowa-ease-smooth);
+  }
+
+  .jowa-stepper--vertical .jowa-stepper-connector--filled {
+    background: var(--jowa-color-primary);
+  }
+
+  .jowa-stepper--vertical .jowa-stepper-content {
+    display: flex;
+    flex-direction: column;
+    padding-top: 6px;
+    padding-bottom: var(--jowa-spacing-lg);
+  }
+
+  /* ── Circle ─────────────────────────────────────────────────────────────── */
+  .jowa-stepper-circle {
+    width: 32px;
+    height: 32px;
+    border-radius: var(--jowa-radius-full);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: var(--jowa-font-size-sm);
+    font-weight: var(--jowa-font-weight-semibold);
+    border: 2px solid var(--jowa-color-neutral-border);
+    background: var(--jowa-color-neutral-bg);
+    color: var(--jowa-color-muted);
+    transition:
+      background var(--jowa-duration-normal) var(--jowa-ease-smooth),
+      border-color var(--jowa-duration-normal) var(--jowa-ease-smooth),
+      color var(--jowa-duration-normal) var(--jowa-ease-smooth);
+  }
+
+  /* ── Step status modifiers ──────────────────────────────────────────────── */
+  .jowa-stepper-step--completed .jowa-stepper-circle {
+    background: var(--jowa-color-primary);
+    border-color: var(--jowa-color-primary);
+    color: var(--jowa-color-neutral-bg);
+  }
+
+  .jowa-stepper-step--active .jowa-stepper-circle {
+    background: var(--jowa-color-primary-bg);
+    border-color: var(--jowa-color-primary);
+    color: var(--jowa-color-primary);
+    box-shadow: 0 0 0 3px oklch(from var(--jowa-color-primary) l c h / 15%);
+  }
+
+  .jowa-stepper-step--pending .jowa-stepper-circle {
+    background: var(--jowa-color-surface);
+    border-color: var(--jowa-color-neutral-border);
+    color: var(--jowa-color-muted);
+  }
+
+  .jowa-stepper-step--error .jowa-stepper-circle {
+    background: var(--jowa-color-danger-bg);
+    border-color: var(--jowa-color-danger);
+    color: var(--jowa-color-danger);
+  }
+
+  /* ── Labels ─────────────────────────────────────────────────────────────── */
+  .jowa-stepper-label {
+    font-size: var(--jowa-font-size-sm);
+    font-weight: var(--jowa-font-weight-medium);
+    color: var(--jowa-color-neutral-text);
+    line-height: 1.4;
+  }
+
+  .jowa-stepper-step--pending .jowa-stepper-label {
+    color: var(--jowa-color-muted);
+  }
+
+  .jowa-stepper-step--active .jowa-stepper-label {
+    color: var(--jowa-color-primary);
+    font-weight: var(--jowa-font-weight-semibold);
+  }
+
+  .jowa-stepper-step--error .jowa-stepper-label {
+    color: var(--jowa-color-danger);
+  }
+
+  .jowa-stepper-description {
+    font-size: var(--jowa-font-size-xs);
+    color: var(--jowa-color-muted);
+    margin-top: var(--jowa-spacing-xs);
+    line-height: 1.4;
+  }
+}

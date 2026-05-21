@@ -1,15 +1,28 @@
 {
   "name": "jowaui",
   "version": "0.1.0",
-  "description": "Framework-agnostic React UI component library with CSS custom properties",
+  "description": "Zero-dependency React UI component library built on CSS custom properties",
   "private": false,
   "license": "MIT",
+  "author": "Job van der Wal",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Jowaaaa/jowaui"
+  },
+  "homepage": "https://jowaui.jobvanderwal.dev/?path=/story/introduction--docs",
   "keywords": [
     "react",
     "ui",
     "components",
-    "css-custom-properties"
+    "css-custom-properties",
+    "design-system",
+    "zero-dependencies",
+    "oklch",
+    "dark-mode"
   ],
+  "publishConfig": {
+    "access": "public"
+  },
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",

@@ -1,0 +1,127 @@
+@layer jowa.components {
+  .jowa-numberinput-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: var(--jowa-spacing-xs);
+    font-family: var(--jowa-font-family);
+  }
+
+  .jowa-numberinput-label {
+    font-size: var(--jowa-font-size-sm);
+    font-weight: var(--jowa-font-weight-medium);
+    color: var(--jowa-color-neutral-text);
+  }
+
+  .jowa-numberinput-control {
+    display: flex;
+    align-items: stretch;
+    border: 1.5px solid var(--jowa-color-neutral-border);
+    border-radius: var(--jowa-radius-md);
+    overflow: hidden;
+    background: var(--jowa-color-neutral-bg);
+    transition:
+      border-color var(--jowa-duration-fast) var(--jowa-ease-smooth),
+      box-shadow var(--jowa-duration-fast) var(--jowa-ease-smooth);
+  }
+
+  .jowa-numberinput-control:focus-within {
+    border-color: var(--jowa-color-primary);
+    box-shadow: 0 0 0 3px oklch(from var(--jowa-color-primary) l c h / 15%);
+  }
+
+  .jowa-numberinput-control--error {
+    border-color: var(--jowa-color-danger);
+  }
+
+  .jowa-numberinput-control--error:focus-within {
+    border-color: var(--jowa-color-danger);
+    box-shadow: 0 0 0 3px oklch(from var(--jowa-color-danger) l c h / 15%);
+  }
+
+  .jowa-numberinput-control--disabled {
+    background: var(--jowa-color-surface);
+    cursor: not-allowed;
+  }
+
+  .jowa-numberinput-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 36px;
+    padding: 0 var(--jowa-spacing-sm);
+    background: var(--jowa-color-surface);
+    border: none;
+    color: var(--jowa-color-neutral-text);
+    font-size: var(--jowa-font-size-md);
+    font-family: var(--jowa-font-family);
+    cursor: pointer;
+    transition: background var(--jowa-duration-fast) var(--jowa-ease-smooth);
+    line-height: 1;
+    user-select: none;
+  }
+
+  .jowa-numberinput-btn:hover:not(:disabled) {
+    background: var(--jowa-color-neutral-hover);
+    color: var(--jowa-color-primary);
+  }
+
+  .jowa-numberinput-btn:active:not(:disabled) {
+    background: var(--jowa-color-primary-bg);
+  }
+
+  .jowa-numberinput-btn:disabled {
+    color: var(--jowa-color-muted);
+    cursor: not-allowed;
+  }
+
+  .jowa-numberinput-btn--dec {
+    border-right: 1.5px solid var(--jowa-color-neutral-border);
+  }
+
+  .jowa-numberinput-btn--inc {
+    border-left: 1.5px solid var(--jowa-color-neutral-border);
+  }
+
+  .jowa-numberinput-field {
+    flex: 1;
+    min-width: 0;
+    padding: 8px var(--jowa-spacing-sm);
+    font-family: var(--jowa-font-family);
+    font-size: var(--jowa-font-size-md);
+    color: var(--jowa-color-neutral-text);
+    background: transparent;
+    border: none;
+    outline: none;
+    text-align: center;
+    line-height: var(--jowa-line-height);
+  }
+
+  .jowa-numberinput-field:disabled {
+    color: var(--jowa-color-muted);
+    cursor: not-allowed;
+  }
+
+  /* Hide native number input spinners */
+  .jowa-numberinput-field::-webkit-inner-spin-button,
+  .jowa-numberinput-field::-webkit-outer-spin-button {
+    appearance: none;
+    margin: 0;
+  }
+
+  .jowa-numberinput-field[type="number"] {
+    -moz-appearance: textfield;
+    appearance: textfield;
+  }
+
+  .jowa-numberinput-error {
+    font-size: var(--jowa-font-size-xs);
+    color: var(--jowa-color-danger);
+    margin: 0;
+  }
+
+  .jowa-numberinput-hint {
+    font-size: var(--jowa-font-size-xs);
+    color: var(--jowa-color-muted);
+    margin: 0;
+  }
+}
