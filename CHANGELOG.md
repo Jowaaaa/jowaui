@@ -94,9 +94,9 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 
 - Initial release
 - **21 components:** Alert, Avatar, Badge, Breadcrumbs, Button, Card, Carousel, Chart, Divider, Dropdown, Footer, Hero, Input, Modal, Navbar, Pagination, Progress, Sidebar, Spinner, Tag, Tooltip
-- CSS custom properties design token system (`jowaui/styles`)
+- CSS custom properties design token system (`@jowaaaa/jowaui/styles`)
 - Inter font loaded via Google Fonts
 - Full TypeScript types for all components
 - Storybook 8 with autodocs and stories for every component
 - tsup build (CJS + ESM + `.d.ts`)
-- `"jowaui/styles"` export for global token import
+- `"@jowaaaa/jowaui/styles"` export for global token import
