@@ -19,7 +19,7 @@ A lightweight, zero-dependency React component library built with pure CSS custo
 ## Installation
 
 ```bash
-npm install jowaui
+npm install @jowaaaa/jowaui
 ```
 
 ## Usage
@@ -27,13 +27,13 @@ npm install jowaui
 Import the stylesheet once at your app root:
 
 ```tsx
-import "jowaui/styles";
+import "@jowaaaa/jowaui/styles";
 ```
 
 Then use components anywhere:
 
 ```tsx
-import { Button, Card, Alert, StatCard, Sparkline } from "jowaui";
+import { Button, Card, Alert, StatCard, Sparkline } from "@jowaaaa/jowaui";
 
 export default function App() {
   return (

@@ -90,7 +90,7 @@ const InstallPage: React.FC = () => (
     <hr style={s.hr} />
 
     <h2 style={s.h2}>Install</h2>
-    <pre style={s.codeBlock}>{`npm install jowaui`}</pre>
+    <pre style={s.codeBlock}>{`npm install @jowaaaa/jowaui`}</pre>
 
     <hr style={s.hr} />
 
@@ -102,10 +102,10 @@ const InstallPage: React.FC = () => (
     <pre
       style={s.codeBlock}
     >{`// 1. Import the token stylesheet once at your app root
-import "jowaui/styles";
+import "@jowaaaa/jowaui/styles";
 
 // 2. Use components anywhere
-import { Button, Modal, useToast } from "jowaui";
+import { Button, Modal, useToast } from "@jowaaaa/jowaui";
 
 export default function App() {
   return <Button variant="primary">Hello</Button>;
