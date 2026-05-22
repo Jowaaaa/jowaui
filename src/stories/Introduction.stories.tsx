@@ -1,63 +1,215 @@
 import React from 'react';
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 
 /* ── Data ─────────────────────────────────────────────────────────────────── */
 
 const COMPONENTS = [
-  { name: 'Accordion', category: 'Layout', description: 'Collapsible content panels with animated height' },
-  { name: 'Alert', category: 'Feedback', description: 'Dismissible status messages — info/success/warning/danger' },
-  { name: 'Avatar', category: 'Display', description: 'User avatar with image fallback and initials' },
+  {
+    name: 'Accordion',
+    category: 'Layout',
+    description: 'Collapsible content panels with animated height',
+  },
+  {
+    name: 'Alert',
+    category: 'Feedback',
+    description: 'Dismissible status messages — info/success/warning/danger',
+  },
+  {
+    name: 'Avatar',
+    category: 'Display',
+    description: 'User avatar with image fallback and initials',
+  },
   { name: 'Badge', category: 'Display', description: 'Inline status labels' },
-  { name: 'Banner', category: 'Feedback', description: 'Full-width site notification strip' },
-  { name: 'Breadcrumbs', category: 'Navigation', description: 'Hierarchical path navigator' },
-  { name: 'Button', category: 'Form', description: 'Primary/outline/ghost/danger, sm/md/lg' },
-  { name: 'Card', category: 'Layout', description: 'Surface container with header/footer slots' },
-  { name: 'Carousel', category: 'Display', description: 'Touch-friendly image/content slider' },
-  { name: 'Chart', category: 'Data', description: 'SVG bar and line charts, no dependencies' },
-  { name: 'Checkbox', category: 'Form', description: 'Styled checkbox with indeterminate state' },
-  { name: 'ColorPicker', category: 'Form', description: 'Swatch + hex input backed by native color picker' },
-  { name: 'ContextMenu', category: 'Overlay', description: 'Right-click triggered floating menu' },
-  { name: 'DatePicker', category: 'Form', description: 'Styled native date input' },
-  { name: 'Divider', category: 'Layout', description: 'Horizontal or vertical separator' },
-  { name: 'Drawer', category: 'Overlay', description: 'Side panel — left/right/top/bottom' },
-  { name: 'Dropdown', category: 'Navigation', description: 'Trigger + floating menu' },
-  { name: 'FileInput', category: 'Form', description: 'Styled file upload trigger with filename display' },
-  { name: 'Footer', category: 'Layout', description: 'Page footer with columns and bottom bar' },
-  { name: 'Gauge', category: 'Data', description: '270° arc meter with variant colors' },
-  { name: 'Hero', category: 'Layout', description: 'Full-width page hero with CTA slots' },
-  { name: 'Input', category: 'Form', description: 'Text input with label, helper text, error state' },
-  { name: 'Modal', category: 'Overlay', description: 'Accessible dialog with portal and focus trap' },
-  { name: 'Navbar', category: 'Navigation', description: 'Responsive top navigation bar' },
-  { name: 'NumberInput', category: 'Form', description: 'Numeric stepper with − and + buttons' },
-  { name: 'Pagination', category: 'Navigation', description: 'Page navigator with ellipsis' },
-  { name: 'Popover', category: 'Overlay', description: '4-placement floating content panel' },
-  { name: 'Progress', category: 'Feedback', description: 'Linear progress bar' },
-  { name: 'Radio', category: 'Form', description: 'Accessible radio group with keyboard nav' },
+  {
+    name: 'Banner',
+    category: 'Feedback',
+    description: 'Full-width site notification strip',
+  },
+  {
+    name: 'Breadcrumbs',
+    category: 'Navigation',
+    description: 'Hierarchical path navigator',
+  },
+  {
+    name: 'Button',
+    category: 'Form',
+    description: 'Primary/outline/ghost/danger, sm/md/lg',
+  },
+  {
+    name: 'Card',
+    category: 'Layout',
+    description: 'Surface container with header/footer slots',
+  },
+  {
+    name: 'Carousel',
+    category: 'Display',
+    description: 'Touch-friendly image/content slider',
+  },
+  {
+    name: 'Chart',
+    category: 'Data',
+    description: 'SVG bar and line charts, no dependencies',
+  },
+  {
+    name: 'Checkbox',
+    category: 'Form',
+    description: 'Styled checkbox with indeterminate state',
+  },
+  {
+    name: 'ColorPicker',
+    category: 'Form',
+    description: 'Swatch + hex input backed by native color picker',
+  },
+  {
+    name: 'ContextMenu',
+    category: 'Overlay',
+    description: 'Right-click triggered floating menu',
+  },
+  {
+    name: 'DatePicker',
+    category: 'Form',
+    description: 'Styled native date input',
+  },
+  {
+    name: 'Divider',
+    category: 'Layout',
+    description: 'Horizontal or vertical separator',
+  },
+  {
+    name: 'Drawer',
+    category: 'Overlay',
+    description: 'Side panel — left/right/top/bottom',
+  },
+  {
+    name: 'Dropdown',
+    category: 'Navigation',
+    description: 'Trigger + floating menu',
+  },
+  {
+    name: 'FileInput',
+    category: 'Form',
+    description: 'Styled file upload trigger with filename display',
+  },
+  {
+    name: 'Footer',
+    category: 'Layout',
+    description: 'Page footer with columns and bottom bar',
+  },
+  {
+    name: 'Gauge',
+    category: 'Data',
+    description: '270° arc meter with variant colors',
+  },
+  {
+    name: 'Hero',
+    category: 'Layout',
+    description: 'Full-width page hero with CTA slots',
+  },
+  {
+    name: 'Input',
+    category: 'Form',
+    description: 'Text input with label, helper text, error state',
+  },
+  {
+    name: 'Modal',
+    category: 'Overlay',
+    description: 'Accessible dialog with portal and focus trap',
+  },
+  {
+    name: 'Navbar',
+    category: 'Navigation',
+    description: 'Responsive top navigation bar',
+  },
+  {
+    name: 'NumberInput',
+    category: 'Form',
+    description: 'Numeric stepper with − and + buttons',
+  },
+  {
+    name: 'Pagination',
+    category: 'Navigation',
+    description: 'Page navigator with ellipsis',
+  },
+  {
+    name: 'Popover',
+    category: 'Overlay',
+    description: '4-placement floating content panel',
+  },
+  {
+    name: 'Progress',
+    category: 'Feedback',
+    description: 'Linear progress bar',
+  },
+  {
+    name: 'Radio',
+    category: 'Form',
+    description: 'Accessible radio group with keyboard nav',
+  },
   { name: 'Select', category: 'Form', description: 'Styled native select' },
-  { name: 'Sidebar', category: 'Navigation', description: 'Collapsible side navigation' },
-  { name: 'Skeleton', category: 'Feedback', description: 'Shimmer loading placeholder' },
+  {
+    name: 'Sidebar',
+    category: 'Navigation',
+    description: 'Collapsible side navigation',
+  },
+  {
+    name: 'Skeleton',
+    category: 'Feedback',
+    description: 'Shimmer loading placeholder',
+  },
   { name: 'Sparkline', category: 'Data', description: 'Inline SVG trend line' },
   { name: 'Spinner', category: 'Feedback', description: 'Loading indicator' },
-  { name: 'StatCard', category: 'Data', description: 'Dashboard metric card with trend and chart slot' },
-  { name: 'Stepper', category: 'Navigation', description: 'Horizontal/vertical step progress indicator' },
-  { name: 'Switch', category: 'Form', description: 'Toggle switch with spring animation' },
-  { name: 'Table', category: 'Data', description: 'Generic sortable data table' },
-  { name: 'Tabs', category: 'Navigation', description: 'Line and pill tab variants' },
+  {
+    name: 'StatCard',
+    category: 'Data',
+    description: 'Dashboard metric card with trend and chart slot',
+  },
+  {
+    name: 'Stepper',
+    category: 'Navigation',
+    description: 'Horizontal/vertical step progress indicator',
+  },
+  {
+    name: 'Switch',
+    category: 'Form',
+    description: 'Toggle switch with spring animation',
+  },
+  {
+    name: 'Table',
+    category: 'Data',
+    description: 'Generic sortable data table',
+  },
+  {
+    name: 'Tabs',
+    category: 'Navigation',
+    description: 'Line and pill tab variants',
+  },
   { name: 'Tag', category: 'Display', description: 'Removable label/chip' },
   { name: 'Textarea', category: 'Form', description: 'Multi-line text input' },
-  { name: 'Toast', category: 'Feedback', description: 'Toast notification queue with 6 positions' },
-  { name: 'Tooltip', category: 'Overlay', description: 'Hover tooltip — 4 placements' },
-  { name: 'Tree', category: 'Display', description: 'Collapsible hierarchical node tree' },
+  {
+    name: 'Toast',
+    category: 'Feedback',
+    description: 'Toast notification queue with 6 positions',
+  },
+  {
+    name: 'Tooltip',
+    category: 'Overlay',
+    description: 'Hover tooltip — 4 placements',
+  },
+  {
+    name: 'Tree',
+    category: 'Display',
+    description: 'Collapsible hierarchical node tree',
+  },
 ];
 
 const CATEGORY_COLORS: Record<string, string> = {
-  Feedback:   'oklch(52% 0.22 262)',
-  Display:    'oklch(52% 0.18 155)',
+  Feedback: 'oklch(52% 0.22 262)',
+  Display: 'oklch(52% 0.18 155)',
   Navigation: 'oklch(55% 0.20 300)',
-  Form:       'oklch(55% 0.22 25)',
-  Layout:     'oklch(55% 0.18 75)',
-  Overlay:    'oklch(48% 0.20 230)',
-  Data:       'oklch(52% 0.20 195)',
+  Form: 'oklch(55% 0.22 25)',
+  Layout: 'oklch(55% 0.18 75)',
+  Overlay: 'oklch(48% 0.20 230)',
+  Data: 'oklch(52% 0.20 195)',
 };
 
 const DOC_PAGES = [
@@ -70,7 +222,8 @@ const DOC_PAGES = [
   {
     title: 'Customize',
     story: 'Docs/Customize',
-    description: 'Override tokens, scope themes to a subtree, dark mode, reduced motion, and all available design tokens with live values.',
+    description:
+      'Override tokens, scope themes to a subtree, dark mode, reduced motion, and all available design tokens with live values.',
     icon: '🎨',
   },
 ];
@@ -94,7 +247,8 @@ const s: Record<string, React.CSSProperties> = {
     fontWeight: 800,
     letterSpacing: '-0.03em',
     margin: '0 0 0.5rem',
-    background: 'linear-gradient(135deg, oklch(52% 0.22 262), oklch(60% 0.28 300))',
+    background:
+      'linear-gradient(135deg, oklch(52% 0.22 262), oklch(60% 0.28 300))',
     WebkitBackgroundClip: 'text',
     WebkitTextFillColor: 'transparent',
     backgroundClip: 'text',
@@ -121,7 +275,8 @@ const s: Record<string, React.CSSProperties> = {
     fontWeight: 600,
     background: 'var(--jowa-color-primary-bg, #eff6ff)',
     color: 'var(--jowa-color-primary, oklch(52% 0.22 262))',
-    border: '1px solid oklch(from var(--jowa-color-primary, oklch(52% 0.22 262)) l c h / 20%)',
+    border:
+      '1px solid oklch(from var(--jowa-color-primary, oklch(52% 0.22 262)) l c h / 20%)',
   },
   hr: {
     border: 'none',
@@ -228,19 +383,6 @@ const IntroductionPage: React.FC = () => {
 
   return (
     <div style={s.page}>
-      {/* Warning */}
-      <div
-        style={{
-          ...s.callout,
-          borderColor: 'var(--jowa-color-warning)',
-          background: 'var(--jowa-color-warning-bg)',
-        }}
-      >
-        <strong>NPM package currently not available.</strong> While this
-        documentation page is already active it currently does not serve a
-        purpose, since development is still undergoing.
-      </div>
-
       {/* Hero */}
       <div style={s.hero}>
         <h1 style={s.h1}>jowaui</h1>
@@ -258,7 +400,9 @@ const IntroductionPage: React.FC = () => {
             'Reduced motion',
             '44 components',
           ].map((t) => (
-            <span key={t} style={s.pill}>{t}</span>
+            <span key={t} style={s.pill}>
+              {t}
+            </span>
           ))}
         </div>
       </div>

@@ -3,16 +3,28 @@
  * Applied on top of tokens.css — makes the story canvas background and
  * text colour track the active [data-theme] so dark/light mode is visible
  * across the entire preview pane, not just inside individual components.
+ *
+ * Note: withThemeByDataAttribute targets <html> (attributeTarget: 'html'),
+ * so token overrides cascade correctly from the root element.
  */
 
-/* The #storybook-root element is where withThemeByDataAttribute sets data-theme */
+/* Override Storybook's docs preview wrapper background to track theme */
+[data-theme="dark"] .sbdocs-preview {
+  background: var(--jowa-color-neutral-bg) !important;
+  border-color: oklch(32% 0.01 250 / 40%) !important;
+}
+
+/* html/body track the theme via token cascade from [data-theme] on <html> */
+html, body {
+  background: var(--jowa-color-neutral-bg);
+  color: var(--jowa-color-neutral-text);
+}
+
+/* Story canvas */
 #storybook-root {
   min-height: 100vh;
   padding: 2rem;
   background: var(--jowa-color-neutral-bg);
   color: var(--jowa-color-neutral-text);
   font-family: var(--jowa-font-family);
-  transition:
-    background-color 200ms ease,
-    color 200ms ease;
 }

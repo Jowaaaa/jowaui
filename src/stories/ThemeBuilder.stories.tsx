@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useRef, useEffect } from "react";
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 import { Button } from "../lib/components/button/button";
 import { Badge } from "../lib/components/badge/badge";
 import { Alert } from "../lib/components/alert/alert";

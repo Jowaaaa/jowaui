@@ -11,7 +11,23 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 
 ---
 
-## [0.3.2]
+## [0.1.2]
+
+### Changed
+
+- **Documentation updates** — NPM warning on `Introduction` deleted.
+- **Updated versioning** - Changed the changelog version to reflect the current NPM version.
+- **Navbar button fix** - dark mode styling of the outline and ghost button.
+- **Carousel Component** Fixed the Carousel arrow buttons not being visible in dark mode.
+- **Footer component** Fixed the Footer component only having dark mode.
+- **Sidebar component** Fixed the Sidebar component not having controls in storybook.
+- **Tooltip component** Fixed the Tooltip component span always starting in a corner before going to the correct position.
+- **Dark Mode** Fixed an issue where dark mode was not changing background color in storybook.
+- **Storybook update** - Updated storybook to version 10.4.0
+
+---
+
+## [0.1.1]
 
 ### Added
 
@@ -25,7 +41,7 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 
 ---
 
-## [0.3.1] — 2026-05-20
+## [0.1.1] — 2026-05-20
 
 ### Added
 
@@ -33,7 +49,7 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 
 ---
 
-## [0.3.0] — 2026-05-20
+## [0.1.1] — 2026-05-20
 
 ### Added
 
@@ -61,7 +77,7 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 
 ---
 
-## [0.2.0] — 2026-05-20
+## [0.1.1] — 2026-05-20
 
 ### Added
 

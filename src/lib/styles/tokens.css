@@ -1,7 +1,5 @@
 /* jowaui design tokens — import once in your app: import "jowaui/styles" */
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
-
 /* ─── Layer order ─────────────────────────────────────────────────────────── */
 @layer jowa.tokens, jowa.base, jowa.components, jowa.utilities;
 
@@ -141,7 +139,7 @@
       --jowa-amber-l: 82%;
 
       --jowa-color-neutral-bg:     var(--jowa-neutral-900);
-      --jowa-color-neutral-border: var(--jowa-neutral-700);
+      --jowa-color-neutral-border: var(--jowa-neutral-500);
       --jowa-color-neutral-text:   var(--jowa-neutral-100);
       --jowa-color-neutral-hover:  var(--jowa-neutral-800);
       --jowa-color-muted:          var(--jowa-neutral-400);
@@ -194,7 +192,7 @@
     --jowa-amber-l: 82%;
 
     --jowa-color-neutral-bg:     var(--jowa-neutral-900);
-    --jowa-color-neutral-border: var(--jowa-neutral-700);
+    --jowa-color-neutral-border: var(--jowa-neutral-500);
     --jowa-color-neutral-text:   var(--jowa-neutral-100);
     --jowa-color-neutral-hover:  var(--jowa-neutral-800);
     --jowa-color-muted:          var(--jowa-neutral-400);

@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 import { Navbar } from "../lib/components/navbar/navbar";
 import { Button } from "../lib/components/button/button";
 
@@ -37,7 +37,7 @@ export const WithActions: Story = {
       { label: "Home", href: "/" },
       { label: "Docs", href: "/docs" },
     ],
-    actions: <Button variant="outline" size="sm">Sign in</Button>,
+    actions: <Button variant="navbar" size="sm">Sign in</Button>,
   },
 };
 

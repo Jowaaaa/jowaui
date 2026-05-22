@@ -43,6 +43,13 @@
   .jowa-btn--ghost { background-color: transparent; color: var(--jowa-color-neutral-text); }
   .jowa-btn--ghost:hover:not(:disabled) { background-color: var(--jowa-color-neutral-hover); }
 
+  .jowa-btn--navbar {
+    background-color: transparent;
+    color: var(--jowa-navbar-text);
+    border: 1px solid var(--jowa-navbar-text);
+  }
+  .jowa-btn--navbar:hover:not(:disabled) { background-color: oklch(100% 0 0 / 15%); }
+
   .jowa-btn--sm { padding: var(--jowa-spacing-xs) var(--jowa-spacing-sm); font-size: var(--jowa-font-size-sm); }
   .jowa-btn--md { padding: var(--jowa-spacing-sm) var(--jowa-spacing-lg); }
   .jowa-btn--lg { padding: var(--jowa-spacing-md) var(--jowa-spacing-lg); font-size: var(--jowa-font-size-md); }
