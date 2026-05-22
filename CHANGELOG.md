@@ -15,6 +15,14 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 
 ### Changed
 
+- **Missing Exports** — Added 6 missing components from export.
+
+---
+
+## [0.1.2]
+
+### Changed
+
 - **Documentation updates** — NPM warning on `Introduction` deleted.
 - **Updated versioning** - Changed the changelog version to reflect the current NPM version.
 - **Navbar button fix** - dark mode styling of the outline and ghost button.
