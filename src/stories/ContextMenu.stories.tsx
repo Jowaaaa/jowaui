@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 import { ContextMenu } from "../lib/components/contextmenu/contextmenu";
 import type { ContextMenuEntry } from "../lib/components/contextmenu/contextmenu";
 

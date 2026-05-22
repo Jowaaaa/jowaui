@@ -1,5 +1,7 @@
 # jowaui
 
+> **This library is under active development.** Bugs and missing features are expected. If you run into anything, please [open an issue](https://github.com/jowaaaa/jowaui/issues) — contributions are welcome.
+
 A lightweight, zero-dependency React component library built with pure CSS custom properties. No Tailwind, no Radix, no framework lock-in — just React, TypeScript, and CSS.
 
 ## Features

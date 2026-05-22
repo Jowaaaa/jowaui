@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 import { Tree } from "../lib/components/tree/tree";
 import type { TreeNode } from "../lib/components/tree/tree";
 

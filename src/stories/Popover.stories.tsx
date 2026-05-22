@@ -1,5 +1,5 @@
 import React from "react";
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 import { Popover } from "../lib/components/popover/popover";
 import { Button } from "../lib/components/button/button";
 

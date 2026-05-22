@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 import { Sidebar } from "../lib/components/sidebar/sidebar";
 
 const meta: Meta<typeof Sidebar> = {
@@ -6,6 +6,18 @@ const meta: Meta<typeof Sidebar> = {
   component: Sidebar,
   tags: ["autodocs"],
   parameters: { layout: "fullscreen" },
+  decorators: [
+    (Story) => (
+      <div style={{ display: "flex", height: "400px" }}>
+        <Story />
+      </div>
+    ),
+  ],
+  argTypes: {
+    collapsed: { control: "boolean" },
+    header: { control: "text" },
+    footer: { control: "text" },
+  },
 };
 
 export default meta;
@@ -30,17 +42,18 @@ const groups = [
 ];
 
 export const Default: Story = {
-  render: () => (
-    <div style={{ display: "flex", height: "400px" }}>
-      <Sidebar groups={groups} header="jowaui" footer="v0.1.0" />
-    </div>
-  ),
+  args: {
+    groups,
+    header: "jowaui",
+    footer: "v0.1.1",
+    collapsed: false,
+  },
 };
 
 export const Collapsed: Story = {
-  render: () => (
-    <div style={{ display: "flex", height: "400px" }}>
-      <Sidebar groups={groups} collapsed />
-    </div>
-  ),
+  args: {
+    groups,
+    header: "jowaui",
+    collapsed: true,
+  },
 };

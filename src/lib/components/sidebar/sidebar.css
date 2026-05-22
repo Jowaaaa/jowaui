@@ -22,6 +22,7 @@
     color: var(--jowa-color-neutral-text);
     white-space: nowrap;
     overflow: hidden;
+    transition: opacity var(--jowa-duration-fast) var(--jowa-ease-smooth);
   }
 
   .jowa-sidebar__nav   { flex: 1; padding: var(--jowa-spacing-sm); overflow-y: auto; }
@@ -77,6 +78,9 @@
     border-top: 1px solid var(--jowa-color-neutral-border);
     font-size: var(--jowa-font-size-sm);
     color: var(--jowa-color-muted);
+    white-space: nowrap;
+    overflow: hidden;
+    transition: opacity var(--jowa-duration-fast) var(--jowa-ease-smooth);
   }
 
   /* Container query: icon-only when sidebar is very narrow */
@@ -84,5 +88,7 @@
     .jowa-sidebar__group-heading,
     .jowa-sidebar__label { display: none; }
     .jowa-sidebar__item  { justify-content: center; }
+    .jowa-sidebar__header,
+    .jowa-sidebar__footer { opacity: 0; }
   }
 }

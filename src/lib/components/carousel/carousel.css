@@ -19,7 +19,7 @@
     top: 50%;
     transform: translateY(-50%);
     z-index: 2;
-    background: oklch(100% 0 0 / 90%);
+    background: var(--jowa-color-neutral-bg);
     border: 1px solid var(--jowa-color-neutral-border);
     border-radius: 50%;
     width: 36px;
@@ -38,7 +38,7 @@
       transform var(--jowa-duration-instant) var(--jowa-ease-spring);
     padding: 0;
   }
-  .jowa-carousel__arrow:hover   { background: oklch(100% 0 0); box-shadow: var(--jowa-shadow-md); }
+  .jowa-carousel__arrow:hover   { background: var(--jowa-color-neutral-hover); box-shadow: var(--jowa-shadow-md); }
   .jowa-carousel__arrow:active  { transform: translateY(-50%) scale(0.93); }
   .jowa-carousel__arrow--prev   { left: 12px; }
   .jowa-carousel__arrow--next   { right: 12px; }

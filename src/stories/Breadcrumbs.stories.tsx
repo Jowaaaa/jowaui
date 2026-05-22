@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 import { Breadcrumbs } from "../lib/components/breadcrumbs/breadcrumbs";
 
 const meta: Meta<typeof Breadcrumbs> = {

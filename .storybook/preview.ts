@@ -1,9 +1,32 @@
-import type { Preview } from '@storybook/react';
-import { withThemeByDataAttribute } from '@storybook/addon-themes';
+import type { Preview, Decorator } from '@storybook/react-vite';
 import '../src/lib/styles/index.css';
 import './preview.css';
 
+const withTheme: Decorator = (Story, context) => {
+  const theme = context.globals?.theme ?? 'light';
+  document.documentElement.setAttribute('data-theme', theme);
+  return Story();
+};
+
 const preview: Preview = {
+  globals: {
+    theme: 'light',
+  },
+  globalTypes: {
+    theme: {
+      name: 'Theme',
+      description: 'Global theme for components',
+      toolbar: {
+        icon: 'circlehollow',
+        items: [
+          { value: 'light', icon: 'sun', title: 'Light' },
+          { value: 'dark', icon: 'moon', title: 'Dark' },
+        ],
+        showName: true,
+        dynamicTitle: true,
+      },
+    },
+  },
   parameters: {
     options: {
       storySort: {
@@ -27,18 +50,9 @@ const preview: Preview = {
         date: /Date$/i,
       },
     },
-    backgrounds: { disable: true }, // we handle background via theme tokens
+    backgrounds: { disabled: true },
   },
-  decorators: [
-    withThemeByDataAttribute({
-      themes: {
-        Light: 'light',
-        Dark: 'dark',
-      },
-      defaultTheme: 'Light',
-      attributeName: 'data-theme',
-    }),
-  ],
+  decorators: [withTheme],
 };
 
 export default preview;
