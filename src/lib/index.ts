@@ -37,6 +37,12 @@ export { Table } from "./components/table/table";
 export { Banner } from "./components/banner/banner";
 export { ContextMenu } from "./components/contextmenu/contextmenu";
 export { Tree } from "./components/tree/tree";
+export { NumberInput } from "./components/numberinput/numberinput";
+export { ColorPicker } from "./components/colorpicker/colorpicker";
+export { Stepper } from "./components/stepper/stepper";
+export { Accordion } from "./components/accordion/accordion";
+export { DatePicker } from "./components/datepicker/datepicker";
+export { FileInput } from "./components/fileinput/fileinput";
 
 // Types
 export type { ButtonProps, ButtonVariant, ButtonSize } from "./components/button/button";
