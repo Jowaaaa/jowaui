@@ -7,7 +7,7 @@
   "author": "Job van der Wal",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Jowaaaa/jowaui"
+    "url": "git+https://github.com/Jowaaaa/jowaui.git"
   },
   "homepage": "https://jowaui.jobvanderwal.dev/?path=/story/introduction--docs",
   "keywords": [
