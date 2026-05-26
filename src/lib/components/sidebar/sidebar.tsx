@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 export interface SidebarItem {
   label: string;
@@ -18,6 +18,8 @@ export interface SidebarProps {
   header?: React.ReactNode;
   footer?: React.ReactNode;
   collapsed?: boolean;
+  defaultCollapsed?: boolean;
+  onCollapsedChange?: (collapsed: boolean) => void;
   className?: string;
 }
 
@@ -25,9 +27,22 @@ export const Sidebar: React.FC<SidebarProps> = ({
   groups,
   header,
   footer,
-  collapsed = false,
+  collapsed: collapsedProp,
+  defaultCollapsed = false,
+  onCollapsedChange,
   className = "",
 }) => {
+  const [internalCollapsed, setInternalCollapsed] = useState(defaultCollapsed);
+
+  const isControlled = collapsedProp !== undefined;
+  const collapsed = isControlled ? collapsedProp : internalCollapsed;
+
+  const toggle = () => {
+    const next = !collapsed;
+    if (!isControlled) setInternalCollapsed(next);
+    onCollapsedChange?.(next);
+  };
+
   const classes = [
     "jowa-sidebar",
     collapsed ? "jowa-sidebar--collapsed" : "",
@@ -38,6 +53,30 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
   return (
     <aside className={classes} aria-label="Sidebar navigation">
+      <div className="jowa-sidebar__toggle-bar">
+        <button
+          className="jowa-sidebar__toggle"
+          onClick={toggle}
+          aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"}
+          title={collapsed ? "Expand sidebar" : "Collapse sidebar"}
+        >
+          <svg
+            className="jowa-sidebar__toggle-icon"
+            width="16"
+            height="16"
+            viewBox="0 0 16 16"
+            fill="none"
+            aria-hidden="true"
+          >
+            {collapsed ? (
+              <path d="M6 3l5 5-5 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+            ) : (
+              <path d="M10 3L5 8l5 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+            )}
+          </svg>
+        </button>
+      </div>
+
       {header && <div className="jowa-sidebar__header">{header}</div>}
 
       <nav className="jowa-sidebar__nav">

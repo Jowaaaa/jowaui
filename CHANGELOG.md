@@ -11,6 +11,25 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [0.2.0]
+
+### Added
+
+- **11 new components:** Combobox, MultiSelect, OtpInput, RangeSlider, ConfirmDialog, Timeline, KanbanBoard, DataGrid, WizardStepper, MarkdownRenderer, RichTextEditor
+  - `Combobox` — searchable dropdown with keyboard navigation, ARIA combobox/listbox roles
+  - `MultiSelect` — multi-value select with removable chip tags and checkbox options
+  - `OtpInput` — N-box one-time password / PIN input; auto-advance, paste support, SMS autofill (`autoComplete="one-time-code"`)
+  - `RangeSlider` — single or dual-handle slider; pointer capture drag, tooltip, `Shift+Arrow` coarse step
+  - `ConfirmDialog` — portal modal for destructive confirmations; focus trap, 3 variants (default / warning / danger)
+  - `Timeline` — vertical activity feed with variant-colored dots, icon slot, and semantic `<time>` element
+  - `KanbanBoard` — drag-and-drop board using HTML5 DnD API; controlled/uncontrolled, drop zone highlight
+  - `DataGrid` — generic `DataGrid<T>` with column sorting, column resize, and row selection (header select-all + indeterminate)
+  - `WizardStepper` — multi-step wizard with async step validation, completed/error indicator states
+  - `MarkdownRenderer` — zero-dependency markdown parser (headings, bold/italic/code, lists, blockquotes, fenced code, links); XSS-safe href sanitization
+  - `RichTextEditor` — contentEditable WYSIWYG with toolbar (bold, italic, underline, strikethrough, H1/H2, lists, link, undo/redo); active format detection
+
+---
+
 ## [0.1.4]
 
 ### Changed

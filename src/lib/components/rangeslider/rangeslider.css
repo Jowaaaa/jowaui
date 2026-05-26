@@ -1,0 +1,103 @@
+@layer jowa.components {
+  .jowa-rangeslider {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding-block: var(--jowa-spacing-lg);
+    font-family: var(--jowa-font-family);
+  }
+
+  .jowa-rangeslider__track {
+    position: relative;
+    width: 100%;
+    height: 6px;
+    background-color: var(--jowa-color-neutral-bg);
+    border-radius: var(--jowa-radius-full);
+    cursor: pointer;
+  }
+
+  .jowa-rangeslider--disabled .jowa-rangeslider__track {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+
+  .jowa-rangeslider__fill {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    background-color: var(--jowa-color-primary);
+    border-radius: var(--jowa-radius-full);
+    pointer-events: none;
+    transition:
+      left var(--jowa-duration-fast) var(--jowa-ease-smooth),
+      right var(--jowa-duration-fast) var(--jowa-ease-smooth);
+  }
+
+  .jowa-rangeslider__thumb {
+    position: absolute;
+    top: 50%;
+    width: 20px;
+    height: 20px;
+    transform: translate(-50%, -50%);
+    background-color: var(--jowa-color-surface);
+    border: 2px solid var(--jowa-color-primary);
+    border-radius: var(--jowa-radius-full);
+    cursor: grab;
+    box-shadow: var(--jowa-shadow-sm);
+    transition:
+      box-shadow var(--jowa-duration-fast) var(--jowa-ease-smooth),
+      border-color var(--jowa-duration-fast) var(--jowa-ease-smooth),
+      transform var(--jowa-duration-fast) var(--jowa-ease-smooth);
+    outline: none;
+    z-index: 1;
+  }
+
+  .jowa-rangeslider__thumb:hover:not(.jowa-rangeslider--disabled .jowa-rangeslider__thumb) {
+    box-shadow: 0 0 0 6px var(--jowa-color-primary-bg);
+  }
+
+  .jowa-rangeslider__thumb:focus-visible {
+    box-shadow: 0 0 0 4px var(--jowa-color-primary-bg);
+    border-color: var(--jowa-color-primary-hover);
+  }
+
+  .jowa-rangeslider__thumb--active {
+    cursor: grabbing;
+    transform: translate(-50%, -50%) scale(1.15);
+    box-shadow: 0 0 0 8px var(--jowa-color-primary-bg);
+    z-index: 2;
+  }
+
+  .jowa-rangeslider__tooltip {
+    position: absolute;
+    bottom: calc(100% + 10px);
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: var(--jowa-color-neutral-text);
+    color: var(--jowa-color-surface);
+    font-size: var(--jowa-font-size-xs);
+    font-weight: var(--jowa-font-weight-medium);
+    padding: 2px var(--jowa-spacing-xs);
+    border-radius: var(--jowa-radius-sm);
+    white-space: nowrap;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity var(--jowa-duration-fast) var(--jowa-ease-smooth);
+  }
+
+  .jowa-rangeslider__tooltip::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 4px solid transparent;
+    border-top-color: var(--jowa-color-neutral-text);
+  }
+
+  .jowa-rangeslider__thumb:hover .jowa-rangeslider__tooltip,
+  .jowa-rangeslider__thumb--active .jowa-rangeslider__tooltip,
+  .jowa-rangeslider__thumb:focus-visible .jowa-rangeslider__tooltip {
+    opacity: 1;
+  }
+}

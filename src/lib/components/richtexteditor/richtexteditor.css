@@ -1,0 +1,158 @@
+@layer jowa.components {
+  .jowa-rte {
+    display: flex;
+    flex-direction: column;
+    font-family: var(--jowa-font-family);
+    border: 1px solid var(--jowa-color-neutral-border);
+    border-radius: var(--jowa-radius-lg);
+    background: var(--jowa-color-neutral-bg);
+    overflow: hidden;
+    transition:
+      border-color var(--jowa-duration-fast) var(--jowa-ease-smooth),
+      box-shadow var(--jowa-duration-fast) var(--jowa-ease-smooth);
+  }
+
+  .jowa-rte--focused {
+    border-color: var(--jowa-color-primary);
+    box-shadow: 0 0 0 3px oklch(from var(--jowa-color-primary) l c h / 15%);
+  }
+
+  .jowa-rte--disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    background: var(--jowa-color-surface);
+  }
+
+  /* ── Toolbar ────────────────────────────────────────────────────────────── */
+  .jowa-rte__toolbar {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 2px;
+    padding: var(--jowa-spacing-xs) var(--jowa-spacing-sm);
+    background: var(--jowa-color-surface);
+    border-bottom: 1px solid var(--jowa-color-neutral-border);
+  }
+
+  .jowa-rte__toolbar-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border: 1px solid transparent;
+    border-radius: var(--jowa-radius-sm);
+    background: transparent;
+    color: var(--jowa-color-muted);
+    cursor: pointer;
+    font-family: var(--jowa-font-family);
+    font-size: var(--jowa-font-size-sm);
+    transition:
+      background var(--jowa-duration-fast) var(--jowa-ease-smooth),
+      color var(--jowa-duration-fast) var(--jowa-ease-smooth),
+      border-color var(--jowa-duration-fast) var(--jowa-ease-smooth);
+  }
+
+  .jowa-rte__toolbar-btn:hover:not(:disabled) {
+    background: var(--jowa-color-neutral-hover);
+    color: var(--jowa-color-neutral-text);
+    border-color: var(--jowa-color-neutral-border);
+  }
+
+  .jowa-rte__toolbar-btn--active {
+    background: var(--jowa-color-primary-bg);
+    color: var(--jowa-color-primary);
+    border-color: var(--jowa-color-primary);
+  }
+
+  .jowa-rte__toolbar-btn--active:hover:not(:disabled) {
+    background: var(--jowa-color-primary-bg);
+    color: var(--jowa-color-primary-hover);
+  }
+
+  .jowa-rte__toolbar-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+
+  .jowa-rte__toolbar-divider {
+    display: inline-block;
+    width: 1px;
+    height: 20px;
+    background: var(--jowa-color-neutral-border);
+    margin: 0 var(--jowa-spacing-xs);
+    flex-shrink: 0;
+  }
+
+  /* ── Editor area ────────────────────────────────────────────────────────── */
+  .jowa-rte__editor {
+    flex: 1;
+    min-height: 160px;
+    padding: var(--jowa-spacing-lg);
+    font-family: var(--jowa-font-family);
+    font-size: var(--jowa-font-size-md);
+    color: var(--jowa-color-neutral-text);
+    line-height: var(--jowa-line-height);
+    outline: none;
+    overflow-y: auto;
+    word-break: break-word;
+  }
+
+  /* Placeholder */
+  .jowa-rte__editor:empty::before {
+    content: attr(data-placeholder);
+    color: var(--jowa-color-muted);
+    pointer-events: none;
+  }
+
+  /* Content styles inside editor */
+  .jowa-rte__editor h1 {
+    font-size: var(--jowa-font-size-lg);
+    font-weight: var(--jowa-font-weight-bold);
+    margin: 0.5em 0;
+  }
+
+  .jowa-rte__editor h2 {
+    font-size: calc(var(--jowa-font-size-md) * 1.15);
+    font-weight: var(--jowa-font-weight-semibold);
+    margin: 0.5em 0;
+  }
+
+  .jowa-rte__editor p {
+    margin: 0 0 0.5em 0;
+  }
+
+  .jowa-rte__editor ul,
+  .jowa-rte__editor ol {
+    padding-left: 1.5em;
+    margin: 0.25em 0;
+  }
+
+  .jowa-rte__editor li {
+    margin-bottom: 0.2em;
+  }
+
+  .jowa-rte__editor a {
+    color: var(--jowa-color-primary);
+    text-decoration: underline;
+  }
+
+  .jowa-rte__editor strong,
+  .jowa-rte__editor b {
+    font-weight: var(--jowa-font-weight-semibold);
+  }
+
+  .jowa-rte__editor em,
+  .jowa-rte__editor i {
+    font-style: italic;
+  }
+
+  .jowa-rte__editor u {
+    text-decoration: underline;
+  }
+
+  .jowa-rte__editor s,
+  .jowa-rte__editor strike {
+    text-decoration: line-through;
+  }
+}

@@ -1,0 +1,53 @@
+@layer jowa.components {
+  .jowa-otpinput {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--jowa-spacing-sm);
+    font-family: var(--jowa-font-family);
+  }
+
+  .jowa-otpinput__box {
+    width: 2.75rem;
+    height: 3rem;
+    text-align: center;
+    font-size: var(--jowa-font-size-lg);
+    font-weight: var(--jowa-font-weight-semibold);
+    font-family: var(--jowa-font-family);
+    color: var(--jowa-color-neutral-text);
+    background-color: var(--jowa-color-surface);
+    border: 2px solid var(--jowa-color-neutral-border);
+    border-radius: var(--jowa-radius-md);
+    outline: none;
+    caret-color: var(--jowa-color-primary);
+    transition:
+      border-color var(--jowa-duration-fast) var(--jowa-ease-smooth),
+      box-shadow var(--jowa-duration-fast) var(--jowa-ease-smooth),
+      background-color var(--jowa-duration-fast) var(--jowa-ease-smooth);
+  }
+
+  .jowa-otpinput__box:hover:not(:disabled) {
+    border-color: var(--jowa-color-neutral-text);
+  }
+
+  .jowa-otpinput__box:focus,
+  .jowa-otpinput__box--focused {
+    border-color: var(--jowa-color-primary);
+    box-shadow: 0 0 0 3px var(--jowa-color-primary-bg);
+  }
+
+  .jowa-otpinput__box--filled {
+    background-color: var(--jowa-color-primary-bg);
+    border-color: var(--jowa-color-primary);
+  }
+
+  .jowa-otpinput__box--filled:focus,
+  .jowa-otpinput__box--filled.jowa-otpinput__box--focused {
+    box-shadow: 0 0 0 3px var(--jowa-color-primary-bg);
+  }
+
+  .jowa-otpinput--disabled .jowa-otpinput__box {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background-color: var(--jowa-color-neutral-bg);
+  }
+}

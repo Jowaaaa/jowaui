@@ -31,7 +31,15 @@ const meta: Meta = { title: "Data/Table", tags: ["autodocs"] };
 export default meta;
 type Story = StoryObj;
 
-export const Default: Story  = { render: () => <Table columns={COLUMNS} data={DATA} rowKey="id" /> };
-export const Striped: Story  = { render: () => <Table columns={COLUMNS} data={DATA} rowKey="id" striped /> };
-export const Bordered: Story = { render: () => <Table columns={COLUMNS} data={DATA} rowKey="id" bordered /> };
-export const Empty: Story    = { render: () => <Table columns={COLUMNS} data={[]} rowKey="id" emptyMessage="No users found." /> };
+export const Default: Story = {
+  render: () => <Table columns={COLUMNS} data={DATA} rowKey="id" />,
+};
+export const Striped: Story = {
+  render: () => <Table columns={COLUMNS} data={DATA} rowKey="id" striped />,
+};
+export const Bordered: Story = {
+  render: () => <Table columns={COLUMNS} data={DATA} rowKey="id" bordered />,
+};
+export const Empty: Story = {
+  render: () => <Table columns={COLUMNS} data={[]} rowKey="id" emptyMessage="No users found." />,
+};

@@ -1,0 +1,106 @@
+@layer jowa.components {
+  .jowa-timeline {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .jowa-timeline__item {
+    display: flex;
+    gap: var(--jowa-spacing-md);
+    min-height: 3rem;
+  }
+
+  .jowa-timeline__track {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-shrink: 0;
+    width: 1.5rem;
+  }
+
+  .jowa-timeline__dot {
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: var(--jowa-radius-full);
+    background-color: var(--jowa-color-neutral-border);
+    border: 2px solid var(--jowa-color-surface);
+    box-shadow: 0 0 0 2px var(--jowa-color-neutral-border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: background-color var(--jowa-duration-fast) var(--jowa-ease-smooth);
+  }
+
+  .jowa-timeline__dot--success {
+    background-color: var(--jowa-color-success);
+    box-shadow: 0 0 0 2px var(--jowa-color-success);
+  }
+
+  .jowa-timeline__dot--danger {
+    background-color: var(--jowa-color-danger);
+    box-shadow: 0 0 0 2px var(--jowa-color-danger);
+  }
+
+  .jowa-timeline__dot--warning {
+    background-color: var(--jowa-color-warning);
+    box-shadow: 0 0 0 2px var(--jowa-color-warning);
+  }
+
+  .jowa-timeline__dot--info {
+    background-color: var(--jowa-color-primary);
+    box-shadow: 0 0 0 2px var(--jowa-color-primary);
+  }
+
+  .jowa-timeline__dot-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 0.625rem;
+    line-height: 1;
+  }
+
+  .jowa-timeline__connector {
+    flex: 1;
+    width: 2px;
+    background-color: var(--jowa-color-neutral-border);
+    margin-block: var(--jowa-spacing-xs);
+    min-height: var(--jowa-spacing-md);
+  }
+
+  .jowa-timeline__content {
+    padding-bottom: var(--jowa-spacing-lg);
+    padding-top: 0.125rem;
+    display: flex;
+    flex-direction: column;
+    gap: var(--jowa-spacing-xs);
+    min-width: 0;
+  }
+
+  .jowa-timeline__title {
+    margin: 0;
+    font-family: var(--jowa-font-family);
+    font-size: var(--jowa-font-size-sm);
+    font-weight: var(--jowa-font-weight-semibold);
+    color: var(--jowa-color-neutral-text);
+    line-height: 1.4;
+  }
+
+  .jowa-timeline__description {
+    margin: 0;
+    font-family: var(--jowa-font-family);
+    font-size: var(--jowa-font-size-sm);
+    color: var(--jowa-color-muted);
+    line-height: 1.5;
+  }
+
+  .jowa-timeline__timestamp {
+    font-family: var(--jowa-font-family);
+    font-size: var(--jowa-font-size-xs);
+    color: var(--jowa-color-muted);
+  }
+}

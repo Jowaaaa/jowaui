@@ -1,0 +1,178 @@
+@layer jowa.components {
+  .jowa-wizard {
+    display: flex;
+    flex-direction: column;
+    gap: var(--jowa-spacing-xl);
+    font-family: var(--jowa-font-family);
+    background: var(--jowa-color-neutral-bg);
+    border: 1px solid var(--jowa-color-neutral-border);
+    border-radius: var(--jowa-radius-xl);
+    padding: var(--jowa-spacing-xl);
+    box-shadow: var(--jowa-shadow-sm);
+  }
+
+  /* ── Step indicators ────────────────────────────────────────────────────── */
+  .jowa-wizard__steps {
+    display: flex;
+    align-items: center;
+    gap: 0;
+  }
+
+  .jowa-wizard__step-indicator {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--jowa-spacing-xs);
+    flex-shrink: 0;
+  }
+
+  .jowa-wizard__step-number {
+    width: 32px;
+    height: 32px;
+    border-radius: var(--jowa-radius-full);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: var(--jowa-font-size-sm);
+    font-weight: var(--jowa-font-weight-semibold);
+    border: 2px solid var(--jowa-color-neutral-border);
+    background: var(--jowa-color-neutral-bg);
+    color: var(--jowa-color-muted);
+    transition:
+      background var(--jowa-duration-normal) var(--jowa-ease-smooth),
+      border-color var(--jowa-duration-normal) var(--jowa-ease-smooth),
+      color var(--jowa-duration-normal) var(--jowa-ease-smooth);
+  }
+
+  .jowa-wizard__step-title {
+    font-size: var(--jowa-font-size-xs);
+    font-weight: var(--jowa-font-weight-medium);
+    color: var(--jowa-color-muted);
+    text-align: center;
+    white-space: nowrap;
+    transition: color var(--jowa-duration-normal) var(--jowa-ease-smooth);
+  }
+
+  /* Active */
+  .jowa-wizard__step-indicator--active .jowa-wizard__step-number {
+    background: var(--jowa-color-primary-bg);
+    border-color: var(--jowa-color-primary);
+    color: var(--jowa-color-primary);
+    box-shadow: 0 0 0 3px oklch(from var(--jowa-color-primary) l c h / 15%);
+  }
+
+  .jowa-wizard__step-indicator--active .jowa-wizard__step-title {
+    color: var(--jowa-color-primary);
+    font-weight: var(--jowa-font-weight-semibold);
+  }
+
+  /* Completed */
+  .jowa-wizard__step-indicator--completed .jowa-wizard__step-number {
+    background: var(--jowa-color-primary);
+    border-color: var(--jowa-color-primary);
+    color: var(--jowa-color-neutral-bg);
+  }
+
+  .jowa-wizard__step-indicator--completed .jowa-wizard__step-title {
+    color: var(--jowa-color-neutral-text);
+  }
+
+  /* Error */
+  .jowa-wizard__step-indicator--error .jowa-wizard__step-number {
+    background: var(--jowa-color-danger-bg);
+    border-color: var(--jowa-color-danger);
+    color: var(--jowa-color-danger);
+  }
+
+  .jowa-wizard__step-indicator--error .jowa-wizard__step-title {
+    color: var(--jowa-color-danger);
+  }
+
+  /* ── Connector ──────────────────────────────────────────────────────────── */
+  .jowa-wizard__step-connector {
+    flex: 1;
+    height: 2px;
+    background: var(--jowa-color-neutral-border);
+    margin: 0 var(--jowa-spacing-xs);
+    margin-bottom: calc(var(--jowa-font-size-xs) * 1.4 + var(--jowa-spacing-xs));
+    transition: background var(--jowa-duration-normal) var(--jowa-ease-smooth);
+  }
+
+  .jowa-wizard__step-connector--filled {
+    background: var(--jowa-color-primary);
+  }
+
+  /* ── Content ────────────────────────────────────────────────────────────── */
+  .jowa-wizard__content {
+    flex: 1;
+    min-height: 120px;
+    padding: var(--jowa-spacing-lg);
+    background: var(--jowa-color-surface);
+    border: 1px solid var(--jowa-color-neutral-border);
+    border-radius: var(--jowa-radius-lg);
+    color: var(--jowa-color-neutral-text);
+    font-size: var(--jowa-font-size-md);
+    line-height: var(--jowa-line-height);
+  }
+
+  .jowa-wizard__step-description {
+    font-size: var(--jowa-font-size-sm);
+    color: var(--jowa-color-muted);
+    margin-bottom: var(--jowa-spacing-md);
+  }
+
+  /* ── Actions ────────────────────────────────────────────────────────────── */
+  .jowa-wizard__actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--jowa-spacing-md);
+  }
+
+  .jowa-wizard__btn-prev,
+  .jowa-wizard__btn-next {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--jowa-spacing-xs);
+    padding: var(--jowa-spacing-sm) var(--jowa-spacing-lg);
+    font-family: var(--jowa-font-family);
+    font-size: var(--jowa-font-size-sm);
+    font-weight: var(--jowa-font-weight-medium);
+    border-radius: var(--jowa-radius-md);
+    border: 1px solid transparent;
+    cursor: pointer;
+    min-height: 36px;
+    transition:
+      background var(--jowa-duration-fast) var(--jowa-ease-smooth),
+      border-color var(--jowa-duration-fast) var(--jowa-ease-smooth),
+      color var(--jowa-duration-fast) var(--jowa-ease-smooth),
+      opacity var(--jowa-duration-fast) var(--jowa-ease-smooth);
+  }
+
+  .jowa-wizard__btn-prev {
+    background: var(--jowa-color-neutral-bg);
+    border-color: var(--jowa-color-neutral-border);
+    color: var(--jowa-color-neutral-text);
+  }
+
+  .jowa-wizard__btn-prev:hover:not(:disabled) {
+    background: var(--jowa-color-neutral-hover);
+    border-color: var(--jowa-color-muted);
+  }
+
+  .jowa-wizard__btn-next {
+    background: var(--jowa-color-primary);
+    color: var(--jowa-color-neutral-bg);
+    margin-left: auto;
+  }
+
+  .jowa-wizard__btn-next:hover:not(:disabled) {
+    background: var(--jowa-color-primary-hover);
+  }
+
+  .jowa-wizard__btn-prev:disabled,
+  .jowa-wizard__btn-next:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}

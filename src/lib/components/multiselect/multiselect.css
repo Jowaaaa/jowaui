@@ -1,0 +1,154 @@
+@layer jowa.components {
+  .jowa-multiselect {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    font-family: var(--jowa-font-family);
+    font-size: var(--jowa-font-size-sm);
+  }
+
+  .jowa-multiselect__input-area {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--jowa-spacing-xs);
+    min-height: 2.5rem;
+    padding: var(--jowa-spacing-xs) var(--jowa-spacing-xl) var(--jowa-spacing-xs) var(--jowa-spacing-sm);
+    background-color: var(--jowa-color-surface);
+    border: 1px solid var(--jowa-color-neutral-border);
+    border-radius: var(--jowa-radius-md);
+    cursor: pointer;
+    position: relative;
+    transition:
+      border-color var(--jowa-duration-fast) var(--jowa-ease-smooth),
+      box-shadow var(--jowa-duration-fast) var(--jowa-ease-smooth);
+  }
+
+  .jowa-multiselect__input-area:hover:not(.jowa-multiselect--disabled .jowa-multiselect__input-area) {
+    border-color: var(--jowa-color-neutral-text);
+  }
+
+  .jowa-multiselect__input-area:focus {
+    outline: none;
+    border-color: var(--jowa-color-primary);
+    box-shadow: 0 0 0 3px var(--jowa-color-primary-bg);
+  }
+
+  .jowa-multiselect--open .jowa-multiselect__input-area {
+    border-color: var(--jowa-color-primary);
+    box-shadow: 0 0 0 3px var(--jowa-color-primary-bg);
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+
+  .jowa-multiselect--disabled .jowa-multiselect__input-area {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background-color: var(--jowa-color-neutral-bg);
+  }
+
+  .jowa-multiselect__placeholder {
+    color: var(--jowa-color-muted);
+    flex: 1;
+  }
+
+  .jowa-multiselect__chevron {
+    position: absolute;
+    right: var(--jowa-spacing-sm);
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    color: var(--jowa-color-muted);
+    pointer-events: none;
+    transition: transform var(--jowa-duration-fast) var(--jowa-ease-smooth);
+  }
+
+  .jowa-multiselect--open .jowa-multiselect__chevron {
+    transform: translateY(-50%) rotate(180deg);
+  }
+
+  .jowa-multiselect__tag {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--jowa-spacing-xs);
+    padding: 2px var(--jowa-spacing-xs);
+    background-color: var(--jowa-color-primary-bg);
+    color: var(--jowa-color-primary);
+    border-radius: var(--jowa-radius-sm);
+    font-size: var(--jowa-font-size-xs);
+    font-weight: var(--jowa-font-weight-medium);
+    max-width: 180px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .jowa-multiselect__tag-remove {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    color: inherit;
+    opacity: 0.7;
+    border-radius: var(--jowa-radius-sm);
+    flex-shrink: 0;
+    transition: opacity var(--jowa-duration-fast) var(--jowa-ease-smooth);
+  }
+
+  .jowa-multiselect__tag-remove:hover {
+    opacity: 1;
+  }
+
+  .jowa-multiselect__dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    list-style: none;
+    margin: 0;
+    padding: var(--jowa-spacing-xs) 0;
+    background-color: var(--jowa-color-surface);
+    border: 1px solid var(--jowa-color-primary);
+    border-top: none;
+    border-bottom-left-radius: var(--jowa-radius-md);
+    border-bottom-right-radius: var(--jowa-radius-md);
+    box-shadow: var(--jowa-shadow-md);
+    max-height: 240px;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+
+  .jowa-multiselect__option {
+    display: flex;
+    align-items: center;
+    gap: var(--jowa-spacing-sm);
+    padding: var(--jowa-spacing-sm) var(--jowa-spacing-md);
+    cursor: pointer;
+    color: var(--jowa-color-neutral-text);
+    transition: background-color var(--jowa-duration-fast) var(--jowa-ease-smooth);
+  }
+
+  .jowa-multiselect__option:hover {
+    background-color: var(--jowa-color-neutral-hover);
+  }
+
+  .jowa-multiselect__option--selected {
+    color: var(--jowa-color-primary);
+    font-weight: var(--jowa-font-weight-medium);
+  }
+
+  .jowa-multiselect__option-check {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+    color: var(--jowa-color-primary);
+  }
+}
