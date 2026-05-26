@@ -11,7 +11,16 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 
 ---
 
-## [0.1.2]
+## [0.1.4]
+
+### Changed
+
+- **Theme** — Changed default storybook theme.
+- **import warning** - This should fix import order warning.
+
+---
+
+## [0.1.3]
 
 ### Changed
 
