@@ -40,6 +40,8 @@ jobs:
   publish:
     runs-on: ubuntu-latest
     needs: deploy
+    permissions:
+      id-token: write
 
     steps:
       - name: Checkout repository
@@ -60,15 +62,11 @@ jobs:
         run: |
           LOCAL=$(node -p "require('./package.json').version")
           REMOTE=$(npm view $(node -p "require('./package.json').name") version 2>/dev/null || echo "none")
-          echo "local=$LOCAL" >> $GITHUB_OUTPUT
-          echo "remote=$REMOTE" >> $GITHUB_OUTPUT
           if [ "$LOCAL" = "$REMOTE" ]; then
             echo "skip=true" >> $GITHUB_OUTPUT
           else
             echo "skip=false" >> $GITHUB_OUTPUT
           fi
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Build library
         if: steps.version_check.outputs.skip == 'false'
@@ -76,6 +74,4 @@ jobs:
 
       - name: Publish to npm
         if: steps.version_check.outputs.skip == 'false'
-        run: npm publish
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: npm publish --provenance
