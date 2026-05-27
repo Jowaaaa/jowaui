@@ -6,6 +6,12 @@ const meta: Meta<typeof Pagination> = {
   title: "Components/Pagination",
   component: Pagination,
   tags: ["autodocs"],
+  argTypes: {
+    page: { control: 'number' },
+    total: { control: 'number' },
+    pageSize: { control: 'number' },
+    siblingCount: { control: 'number' },
+  },
 };
 
 export default meta;
@@ -24,7 +30,11 @@ const Controlled = ({ total }: { total: number }) => {
 };
 
 export const Default: Story = {
-  render: () => <Controlled total={100} />,
+  args: { total: 100, pageSize: 10, siblingCount: 1 },
+  render: (args) => {
+    const [page, setPage] = useState(args.page ?? 1);
+    return <Pagination {...args} page={page} onChange={setPage} />;
+  },
 };
 
 export const FewPages: Story = {

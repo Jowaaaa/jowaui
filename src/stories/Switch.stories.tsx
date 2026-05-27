@@ -6,6 +6,13 @@ const meta: Meta<typeof Switch> = {
   component: Switch,
   tags: ["autodocs"],
   args: { label: "Enable notifications" },
+  argTypes: {
+    label: { control: 'text' },
+    hint: { control: 'text' },
+    labelPosition: { control: 'select', options: ['left', 'right'] },
+    size: { control: 'select', options: ['sm', 'md', 'lg'] },
+    disabled: { control: 'boolean' },
+  },
 };
 export default meta;
 type Story = StoryObj<typeof Switch>;

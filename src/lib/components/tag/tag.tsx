@@ -3,7 +3,9 @@ import React from "react";
 export type TagVariant = "neutral" | "primary" | "success" | "warning" | "danger";
 
 export interface TagProps extends React.HTMLAttributes<HTMLSpanElement> {
+  /** Color variant applied to the tag (default: "neutral") */
   variant?: TagVariant;
+  /** Callback fired when the remove button is clicked; renders the button when provided */
   onRemove?: () => void;
 }
 

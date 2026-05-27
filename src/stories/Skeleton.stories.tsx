@@ -6,6 +6,12 @@ const meta: Meta<typeof Skeleton> = {
   title: "Feedback/Skeleton",
   component: Skeleton,
   tags: ["autodocs"],
+  argTypes: {
+    variant: { control: 'select', options: ['text', 'rect', 'circle'] },
+    lines: { control: 'number' },
+    width: { control: 'text' },
+    height: { control: 'text' },
+  },
 };
 export default meta;
 type Story = StoryObj<typeof Skeleton>;

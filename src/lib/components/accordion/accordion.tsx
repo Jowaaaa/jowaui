@@ -1,16 +1,24 @@
 import React from "react";
 
 export interface AccordionItem {
+  /** Unique identifier for the accordion item */
   id: string;
+  /** Heading text displayed in the toggle button */
   title: string;
+  /** Content rendered inside the collapsible panel */
   content: React.ReactNode;
+  /** When true, the item cannot be expanded or collapsed */
   disabled?: boolean;
 }
 
 export interface AccordionProps {
+  /** List of accordion items to render */
   items: AccordionItem[];
+  /** Allow multiple panels to be open simultaneously (default: false) */
   multiple?: boolean;
+  /** IDs of items that are open on initial render (default: []) */
   defaultOpen?: string[];
+  /** Additional CSS class applied to the accordion wrapper */
   className?: string;
 }
 

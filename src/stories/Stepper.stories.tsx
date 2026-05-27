@@ -18,6 +18,10 @@ const meta: Meta<typeof Stepper> = {
     activeStep: 1,
     orientation: "horizontal",
   },
+  argTypes: {
+    activeStep: { control: 'number' },
+    orientation: { control: 'select', options: ['horizontal', 'vertical'] },
+  },
 };
 
 export default meta;

@@ -1,23 +1,39 @@
-import React from "react";
+import React, { useState } from "react";
 
 export interface SidebarItem {
+  /** Display text for the navigation item */
   label: string;
+  /** Navigation URL; renders an anchor when provided, otherwise a button */
   href?: string;
+  /** Icon element rendered before the label */
   icon?: React.ReactNode;
+  /** Highlights the item as the current page when true */
   active?: boolean;
+  /** Click handler for button-style items */
   onClick?: () => void;
 }
 
 export interface SidebarGroup {
+  /** Optional section heading shown above the items (hidden when collapsed) */
   heading?: string;
+  /** Navigation items in this group */
   items: SidebarItem[];
 }
 
 export interface SidebarProps {
+  /** Navigation groups to render */
   groups: SidebarGroup[];
+  /** Content rendered at the top of the sidebar (e.g. logo) */
   header?: React.ReactNode;
+  /** Content rendered at the bottom of the sidebar */
   footer?: React.ReactNode;
+  /** Controlled collapsed state */
   collapsed?: boolean;
+  /** Initial collapsed state for uncontrolled usage (default: false) */
+  defaultCollapsed?: boolean;
+  /** Callback fired when the collapse toggle is clicked */
+  onCollapsedChange?: (collapsed: boolean) => void;
+  /** Additional CSS class applied to the aside element */
   className?: string;
 }
 
@@ -25,9 +41,22 @@ export const Sidebar: React.FC<SidebarProps> = ({
   groups,
   header,
   footer,
-  collapsed = false,
+  collapsed: collapsedProp,
+  defaultCollapsed = false,
+  onCollapsedChange,
   className = "",
 }) => {
+  const [internalCollapsed, setInternalCollapsed] = useState(defaultCollapsed);
+
+  const isControlled = collapsedProp !== undefined;
+  const collapsed = isControlled ? collapsedProp : internalCollapsed;
+
+  const toggle = () => {
+    const next = !collapsed;
+    if (!isControlled) setInternalCollapsed(next);
+    onCollapsedChange?.(next);
+  };
+
   const classes = [
     "jowa-sidebar",
     collapsed ? "jowa-sidebar--collapsed" : "",
@@ -38,6 +67,30 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
   return (
     <aside className={classes} aria-label="Sidebar navigation">
+      <div className="jowa-sidebar__toggle-bar">
+        <button
+          className="jowa-sidebar__toggle"
+          onClick={toggle}
+          aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"}
+          title={collapsed ? "Expand sidebar" : "Collapse sidebar"}
+        >
+          <svg
+            className="jowa-sidebar__toggle-icon"
+            width="16"
+            height="16"
+            viewBox="0 0 16 16"
+            fill="none"
+            aria-hidden="true"
+          >
+            {collapsed ? (
+              <path d="M6 3l5 5-5 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+            ) : (
+              <path d="M10 3L5 8l5 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+            )}
+          </svg>
+        </button>
+      </div>
+
       {header && <div className="jowa-sidebar__header">{header}</div>}
 
       <nav className="jowa-sidebar__nav">

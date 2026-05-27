@@ -35,7 +35,7 @@ import "@jowaaaa/jowaui/styles";
 Then use components anywhere:
 
 ```tsx
-import { Button, Card, Alert, StatCard, Sparkline } from "@jowaaaa/jowaui";
+import { Button, Card, Alert, StatCard, Sparkline, Combobox, RangeSlider } from "@jowaaaa/jowaui";
 
 export default function App() {
   return (
@@ -137,6 +137,37 @@ All animation durations are CSS variables. To disable all motion globally:
 | `StatCard` | Dashboard metric card with value, trend badge, icon, and chart slot |
 | `Tag` | Removable chips, 5 variants |
 | `Tooltip` | Hover hint — top / bottom / left / right |
+| `Accordion` | Collapsible content sections |
+| `Banner` | Full-width dismissable notification bar |
+| `Checkbox` | Custom styled checkbox with `indeterminate` support |
+| `ColorPicker` | Hue/saturation/lightness color picker |
+| `ContextMenu` | Right-click triggered menu |
+| `DatePicker` | Calendar date picker |
+| `Drawer` | 4-side slide-in panel with overlay |
+| `FileInput` | Styled file upload input |
+| `NumberInput` | Numeric input with increment/decrement |
+| `Popover` | 4-placement floating content panel |
+| `Radio` / `RadioGroup` | Compound radio group with keyboard nav |
+| `Select` | Native select with custom chevron, 3 sizes |
+| `Skeleton` | Shimmer loading placeholder — text / rect / circle |
+| `Stepper` | Step indicator with status states |
+| `Switch` | Toggle switch with spring animation |
+| `Table` | Generic `Table<T>` with client-side sort and variants |
+| `Tabs` | Line and pill tab variants with ARIA |
+| `Textarea` | Multi-line text input |
+| `Toast` / `useToast` | Toast queue with `ToastProvider`, 6 positions, auto-dismiss |
+| `Tree` | Collapsible tree view |
+| `Combobox` | Searchable dropdown with keyboard navigation |
+| `MultiSelect` | Multi-value select with removable chip tags |
+| `OtpInput` | N-box OTP / PIN input with paste and SMS autofill |
+| `RangeSlider` | Single or dual-handle slider with tooltip |
+| `ConfirmDialog` | Portal modal for destructive confirmations, 3 variants |
+| `Timeline` | Vertical activity feed with variant dots and icon slot |
+| `KanbanBoard` | Drag-and-drop board (HTML5 DnD), controlled/uncontrolled |
+| `DataGrid` | Generic table with sorting, column resize, row selection |
+| `WizardStepper` | Multi-step wizard with async validation |
+| `MarkdownRenderer` | Zero-dep markdown renderer with XSS-safe links |
+| `RichTextEditor` | contentEditable WYSIWYG with formatting toolbar |
 
 ## Scripts
 

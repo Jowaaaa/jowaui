@@ -12,6 +12,15 @@ const meta: Meta<typeof NumberInput> = {
     max: 20,
     step: 1,
   },
+  argTypes: {
+    label: { control: 'text' },
+    error: { control: 'text' },
+    hint: { control: 'text' },
+    min: { control: 'number' },
+    max: { control: 'number' },
+    step: { control: 'number' },
+    disabled: { control: 'boolean' },
+  },
 };
 
 export default meta;

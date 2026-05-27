@@ -1,24 +1,48 @@
 import React, { useState, useCallback, useEffect, useRef } from "react";
 
+export interface CarouselImage {
+  /** URL of the slide image */
+  src: string;
+  /** Alt text for the image (default: "Slide N") */
+  alt?: string;
+}
+
 export interface CarouselProps {
-  children: React.ReactNode[];
+  /** Arbitrary React nodes used as slides when no images are provided */
+  children?: React.ReactNode[];
+  /** Image sources; takes precedence over children when provided */
+  images?: (CarouselImage | string)[];
+  /** Automatically advance slides on an interval (default: false) */
   autoPlay?: boolean;
+  /** Milliseconds between auto-advance steps (default: 4000) */
   interval?: number;
+  /** Show dot navigation indicators (default: true) */
   showDots?: boolean;
+  /** Show previous/next arrow buttons (default: true) */
   showArrows?: boolean;
+  /** Additional CSS class applied to the carousel root */
   className?: string;
 }
 
 export const Carousel: React.FC<CarouselProps> = ({
   children,
+  images,
   autoPlay = false,
   interval = 4000,
   showDots = true,
   showArrows = true,
   className = "",
 }) => {
+  const imageSlides: React.ReactNode[] = (images ?? []).map((img, i) => {
+    const src = typeof img === "string" ? img : img.src;
+    const alt = typeof img === "string" ? `Slide ${i + 1}` : (img.alt ?? `Slide ${i + 1}`);
+    return <img key={i} src={src} alt={alt} className="jowa-carousel__image" />;
+  });
+
+  const slides: React.ReactNode[] = imageSlides.length > 0 ? imageSlides : (children ?? []);
+
   const [current, setCurrent] = useState(0);
-  const total = children.length;
+  const total = slides.length;
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const next = useCallback(() => setCurrent((c) => (c + 1) % total), [total]);
@@ -35,7 +59,7 @@ export const Carousel: React.FC<CarouselProps> = ({
   return (
     <div className={classes} aria-roledescription="carousel">
       <div className="jowa-carousel__track" style={{ transform: `translateX(-${current * 100}%)` }}>
-        {children.map((child, i) => (
+        {slides.map((child, i) => (
           <div
             key={i}
             className="jowa-carousel__slide"
@@ -70,7 +94,7 @@ export const Carousel: React.FC<CarouselProps> = ({
 
       {showDots && total > 1 && (
         <div className="jowa-carousel__dots" role="tablist" aria-label="Slides">
-          {children.map((_, i) => (
+          {slides.map((_, i) => (
             <button
               key={i}
               role="tab"

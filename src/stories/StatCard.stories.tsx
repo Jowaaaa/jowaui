@@ -12,6 +12,13 @@ const meta: Meta<typeof StatCard> = {
     change: "+12.4%",
     trend: "up",
   },
+  argTypes: {
+    label: { control: 'text' },
+    value: { control: 'text' },
+    unit: { control: 'text' },
+    change: { control: 'text' },
+    trend: { control: 'select', options: ['up', 'down', 'neutral'] },
+  },
 };
 export default meta;
 type Story = StoryObj<typeof StatCard>;

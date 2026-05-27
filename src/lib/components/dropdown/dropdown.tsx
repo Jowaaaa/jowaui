@@ -1,17 +1,26 @@
 import React, { useState, useRef, useEffect } from "react";
 
 export interface DropdownItem {
+  /** Display text for the menu item */
   label: string;
+  /** When provided, renders the item as an anchor tag */
   href?: string;
+  /** Callback fired when the item is clicked */
   onClick?: () => void;
+  /** Prevents interaction and applies disabled styling when true */
   disabled?: boolean;
+  /** Renders a horizontal rule separator instead of a menu item when true */
   divider?: boolean;
 }
 
 export interface DropdownProps {
+  /** Element that toggles the dropdown on click */
   trigger: React.ReactElement;
+  /** List of menu items */
   items: DropdownItem[];
+  /** Horizontal alignment of the dropdown menu relative to the trigger (default: "left") */
   align?: "left" | "right";
+  /** Additional CSS class applied to the dropdown wrapper */
   className?: string;
 }
 

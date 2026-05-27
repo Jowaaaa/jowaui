@@ -3,11 +3,17 @@ import React from "react";
 export type BannerVariant = "info" | "success" | "warning" | "danger";
 
 export interface BannerProps {
+  /** Visual style and icon variant (default: "info") */
   variant?: BannerVariant;
+  /** Main banner message content */
   children: React.ReactNode;
+  /** Optional action element (e.g. a button) rendered to the right of the content */
   action?: React.ReactNode;
+  /** When true, renders a dismiss button (default: false) */
   dismissible?: boolean;
+  /** Callback fired when the dismiss button is clicked */
   onDismiss?: () => void;
+  /** Additional CSS class applied to the banner root */
   className?: string;
 }
 

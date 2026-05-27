@@ -1,17 +1,25 @@
 export interface FooterLink {
+  /** Display text for the link */
   label: string;
+  /** Navigation URL */
   href: string;
 }
 
 export interface FooterLinkGroup {
+  /** Section heading rendered above the links */
   heading: string;
+  /** Links belonging to this group */
   links: FooterLink[];
 }
 
 export interface FooterProps {
+  /** Brand logo or name rendered in the top-left area */
   brand?: React.ReactNode;
+  /** Grouped navigation link sections (default: []) */
   groups?: FooterLinkGroup[];
+  /** Content rendered in the bottom bar (e.g. copyright text) */
   bottom?: React.ReactNode;
+  /** Additional CSS class applied to the footer element */
   className?: string;
 }
 

@@ -13,6 +13,14 @@ const meta: Meta<typeof Gauge> = {
     variant: "primary",
     label: "CPU",
   },
+  argTypes: {
+    value: { control: 'number' },
+    max: { control: 'number' },
+    size: { control: 'number' },
+    strokeWidth: { control: 'number' },
+    label: { control: 'text' },
+    variant: { control: 'select', options: ['primary', 'success', 'warning', 'danger'] },
+  },
 };
 export default meta;
 type Story = StoryObj<typeof Gauge>;

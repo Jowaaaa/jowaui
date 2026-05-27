@@ -1,17 +1,26 @@
 import React, { useId } from "react";
 
 export interface SelectOption {
+  /** Value submitted on selection */
   value: string;
+  /** Human-readable label shown in the dropdown */
   label: string;
+  /** Prevents the option from being selected when true */
   disabled?: boolean;
 }
 
 export interface SelectProps extends Omit<React.SelectHTMLAttributes<HTMLSelectElement>, "size"> {
+  /** Visible label rendered above the select */
   label?: string;
+  /** Helper text shown below the select when there is no error */
   hint?: string;
+  /** Validation error message; applies error styling */
   error?: string;
+  /** List of options to render */
   options: SelectOption[];
+  /** Disabled placeholder option shown when no value is selected */
   placeholder?: string;
+  /** Size variant controlling padding and font size (default: "md") */
   size?: "sm" | "md" | "lg";
 }
 

@@ -1,9 +1,13 @@
 import React, { useId } from "react";
 
 export interface CheckboxProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "type"> {
+  /** Visible label text rendered next to the checkbox */
   label?: string;
+  /** Helper text shown below the checkbox when there is no error */
   hint?: string;
+  /** Validation error message; replaces hint and applies error styling */
   error?: string;
+  /** Puts the checkbox into an indeterminate visual state */
   indeterminate?: boolean;
 }
 

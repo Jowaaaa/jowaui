@@ -1,8 +1,11 @@
 import React from "react";
 
 export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
+  /** Visible label rendered above the input */
   label?: string;
+  /** Validation error message; applies error styling */
   error?: string;
+  /** Helper text shown below the input when there is no error */
   hint?: string;
 }
 

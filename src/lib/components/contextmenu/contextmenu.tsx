@@ -2,12 +2,35 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 import ReactDOM from "react-dom";
 
 export interface ContextMenuItem {
+  /** Unique identifier passed to onSelect */
   id: string;
+  /** Display text for the menu item */
   label: string;
+  /** Optional icon rendered before the label */
   icon?: React.ReactNode;
+  /** Prevents selection and applies disabled styling when true */
   disabled?: boolean;
+  /** Applies danger/destructive styling when true */
   danger?: boolean;
   separator?: never;
+}
+
+export interface ContextMenuSeparator {
+  /** Marks this entry as a visual separator line */
+  separator: true;
+  /** Unique key for React reconciliation */
+  id: string;
+}
+
+export interface ContextMenuProps {
+  /** Menu entries — mix of items and separators */
+  items: ContextMenuEntry[];
+  /** Callback fired with the selected item's id */
+  onSelect?: (id: string) => void;
+  /** Element that triggers the context menu on right-click */
+  children: React.ReactNode;
+  /** Additional CSS class applied to the wrapper element */
+  className?: string;
 }
 
 export interface ContextMenuSeparator {

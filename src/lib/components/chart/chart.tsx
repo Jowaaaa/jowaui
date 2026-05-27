@@ -1,17 +1,26 @@
 import React, { useMemo } from "react";
 
 export interface ChartDataPoint {
+  /** X-axis label for this data point */
   label: string;
+  /** Numeric value plotted on the Y-axis */
   value: number;
 }
 
 export interface ChartProps {
+  /** Array of data points to render */
   data: ChartDataPoint[];
+  /** Chart type — bar or line (default: "bar") */
   type?: "bar" | "line";
+  /** SVG height in pixels (default: 220) */
   height?: number;
+  /** Fill/stroke color for bars or the line (default: primary token) */
   color?: string;
+  /** Render horizontal grid lines and Y-axis labels (default: true) */
   showGrid?: boolean;
+  /** Render X-axis labels below each data point (default: true) */
   showLabels?: boolean;
+  /** Additional CSS class applied to the chart wrapper */
   className?: string;
 }
 

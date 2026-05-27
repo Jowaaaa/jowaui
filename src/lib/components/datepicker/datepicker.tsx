@@ -1,8 +1,11 @@
 import React from "react";
 
 export interface DatePickerProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "type"> {
+  /** Visible label rendered above the input */
   label?: string;
+  /** Validation error message; applies error styling */
   error?: string;
+  /** Helper text shown below the input when there is no error */
   hint?: string;
 }
 

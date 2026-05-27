@@ -5,9 +5,29 @@ import { RadioGroup, Radio } from "../lib/components/radio/radio";
 const meta: Meta = {
   title: "Forms/Radio",
   tags: ["autodocs"],
+  argTypes: {
+    label: { control: 'text' },
+    hint: { control: 'text' },
+    error: { control: 'text' },
+    orientation: { control: 'select', options: ['vertical', 'horizontal'] },
+  },
 };
 export default meta;
 type Story = StoryObj;
+
+export const Default: Story = {
+  args: { label: "Choose an option", orientation: "vertical" },
+  render: (args) => {
+    const [val, setVal] = useState("");
+    return (
+      <RadioGroup name="demo" {...args} value={val} onChange={setVal}>
+        <Radio value="option1" label="Option 1" />
+        <Radio value="option2" label="Option 2" />
+        <Radio value="option3" label="Option 3" />
+      </RadioGroup>
+    );
+  },
+};
 
 export const Vertical: Story = {
   render: () => {

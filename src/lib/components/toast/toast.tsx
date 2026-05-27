@@ -8,10 +8,15 @@ export type ToastVariant = "info" | "success" | "warning" | "danger";
 export type ToastPosition = "top-right" | "top-left" | "top-center" | "bottom-right" | "bottom-left" | "bottom-center";
 
 export interface ToastItem {
+  /** Unique identifier used to dismiss a specific toast */
   id: string;
+  /** Optional bold title rendered above the message */
   title?: string;
+  /** Main notification text */
   message: string;
+  /** Visual style and icon variant (default: "info") */
   variant?: ToastVariant;
+  /** Auto-dismiss delay in milliseconds; 0 keeps the toast persistent (default: provider defaultDuration) */
   duration?: number; // ms — 0 = persistent
 }
 
@@ -40,8 +45,11 @@ function reducer(state: ToastState, action: ToastAction): ToastState {
 
 /* ── Provider ────────────────────────────────────────────────────────────── */
 export interface ToastProviderProps {
+  /** Application content that can call useToast() */
   children: React.ReactNode;
+  /** Screen position where toasts are stacked (default: "top-right") */
   position?: ToastPosition;
+  /** Default auto-dismiss duration in milliseconds (default: 4000) */
   defaultDuration?: number;
 }
 

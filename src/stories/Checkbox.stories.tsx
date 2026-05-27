@@ -6,6 +6,13 @@ const meta: Meta<typeof Checkbox> = {
   component: Checkbox,
   tags: ["autodocs"],
   args: { label: "I agree to the terms" },
+  argTypes: {
+    label: { control: 'text' },
+    hint: { control: 'text' },
+    error: { control: 'text' },
+    indeterminate: { control: 'boolean' },
+    disabled: { control: 'boolean' },
+  },
 };
 export default meta;
 type Story = StoryObj<typeof Checkbox>;

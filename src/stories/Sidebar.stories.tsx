@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { Sidebar } from "../lib/components/sidebar/sidebar";
 
@@ -42,6 +43,17 @@ const groups = [
 ];
 
 export const Default: Story = {
+  render: (args) => {
+    const [collapsed, setCollapsed] = useState(args.collapsed ?? false);
+    return (
+      <Sidebar
+        {...args}
+        collapsed={collapsed}
+        onCollapsedChange={setCollapsed}
+        key={args.collapsed ? "collapsed" : "expanded"}
+      />
+    );
+  },
   args: {
     groups,
     header: "jowaui",

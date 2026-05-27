@@ -51,6 +51,12 @@ const preview: Preview = {
       },
     },
     backgrounds: { disabled: true },
+    docs: {
+      source: {
+        type: 'dynamic',
+        excludeDecorators: true,
+      },
+    },
   },
   decorators: [withTheme],
 };

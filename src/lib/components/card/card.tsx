@@ -1,7 +1,9 @@
 import React from "react";
 
 export interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
+  /** Content rendered in the card header section */
   header?: React.ReactNode;
+  /** Content rendered in the card footer section */
   footer?: React.ReactNode;
 }
 

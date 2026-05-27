@@ -1,7 +1,9 @@
 import React from "react";
 
 export interface NavbarLink {
+  /** Display text for the navigation link */
   label: string;
+  /** Navigation URL */
   href: string;
 }
 
@@ -10,12 +12,15 @@ export interface NavbarProps {
   title?: string;
   /** URL of the logo image */
   logoSrc?: string;
+  /** Alt text for the logo image (default: "Logo") */
   logoAlt?: string;
   /** Navigation links */
   links?: NavbarLink[];
   /** Slot for extra content on the right (e.g. buttons, avatar) */
   actions?: React.ReactNode;
+  /** Additional CSS class applied to the nav element */
   className?: string;
+  /** Inline styles applied to the nav element */
   style?: React.CSSProperties;
 }
 

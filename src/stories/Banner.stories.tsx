@@ -7,6 +7,7 @@ const meta: Meta<typeof Banner> = {
   tags: ["autodocs"],
   argTypes: {
     variant: { control: "select", options: ["info", "success", "warning", "danger"] },
+    dismissible: { control: 'boolean' },
   },
 };
 

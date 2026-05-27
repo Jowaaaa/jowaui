@@ -1,0 +1,144 @@
+@layer jowa.components {
+  .jowa-datagrid {
+    width: 100%;
+    overflow-x: auto;
+    font-family: var(--jowa-font-family);
+    border: 1px solid var(--jowa-color-neutral-border);
+    border-radius: var(--jowa-radius-lg);
+    background: var(--jowa-color-neutral-bg);
+    box-shadow: var(--jowa-shadow-sm);
+  }
+
+  .jowa-datagrid__table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: var(--jowa-font-size-sm);
+    color: var(--jowa-color-neutral-text);
+    table-layout: fixed;
+  }
+
+  /* ── Header ─────────────────────────────────────────────────────────────── */
+  .jowa-datagrid__thead {
+    background: var(--jowa-color-surface);
+  }
+
+  .jowa-datagrid__th {
+    padding: var(--jowa-spacing-sm) var(--jowa-spacing-lg);
+    font-weight: var(--jowa-font-weight-semibold);
+    font-size: var(--jowa-font-size-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--jowa-color-muted);
+    text-align: left;
+    border-bottom: 1px solid var(--jowa-color-neutral-border);
+    white-space: nowrap;
+    position: relative;
+    overflow: hidden;
+    user-select: none;
+  }
+
+  .jowa-datagrid__th--sortable {
+    cursor: pointer;
+    transition: color var(--jowa-duration-fast) var(--jowa-ease-smooth);
+  }
+
+  .jowa-datagrid__th--sortable:hover {
+    color: var(--jowa-color-neutral-text);
+    background: var(--jowa-color-neutral-hover);
+  }
+
+  .jowa-datagrid__th--asc .jowa-datagrid__sort-icon,
+  .jowa-datagrid__th--desc .jowa-datagrid__sort-icon {
+    color: var(--jowa-color-primary);
+    opacity: 1;
+  }
+
+  .jowa-datagrid__th-inner {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--jowa-spacing-xs);
+  }
+
+  .jowa-datagrid__sort-icon {
+    opacity: 0.4;
+    font-size: 0.7rem;
+    transition: opacity var(--jowa-duration-fast) var(--jowa-ease-smooth);
+  }
+
+  /* ── Resize handle ──────────────────────────────────────────────────────── */
+  .jowa-datagrid__resize-handle {
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 5px;
+    cursor: col-resize;
+    background: transparent;
+    transition: background var(--jowa-duration-fast) var(--jowa-ease-smooth);
+    z-index: 1;
+  }
+
+  .jowa-datagrid__resize-handle:hover,
+  .jowa-datagrid__resize-handle:active {
+    background: var(--jowa-color-primary);
+    opacity: 0.5;
+  }
+
+  /* ── Checkbox cell ──────────────────────────────────────────────────────── */
+  .jowa-datagrid__checkbox-cell {
+    width: 44px;
+    min-width: 44px;
+    text-align: center;
+    padding: var(--jowa-spacing-sm);
+  }
+
+  .jowa-datagrid__checkbox-cell input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+    accent-color: var(--jowa-color-primary);
+  }
+
+  /* ── Body ───────────────────────────────────────────────────────────────── */
+  .jowa-datagrid__tr {
+    transition: background var(--jowa-duration-fast) var(--jowa-ease-smooth);
+  }
+
+  .jowa-datagrid__tr:hover {
+    background: var(--jowa-color-neutral-hover);
+  }
+
+  .jowa-datagrid__tr--striped {
+    background: var(--jowa-color-surface);
+  }
+
+  .jowa-datagrid__tr--striped:hover {
+    background: var(--jowa-color-neutral-hover);
+  }
+
+  .jowa-datagrid__tr--selected {
+    background: var(--jowa-color-primary-bg) !important;
+  }
+
+  .jowa-datagrid__td {
+    padding: var(--jowa-spacing-sm) var(--jowa-spacing-lg);
+    border-bottom: 1px solid var(--jowa-color-neutral-border);
+    vertical-align: middle;
+    line-height: var(--jowa-line-height);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .jowa-datagrid__tbody .jowa-datagrid__tr:last-child .jowa-datagrid__td {
+    border-bottom: none;
+  }
+
+  /* ── Empty state ────────────────────────────────────────────────────────── */
+  .jowa-datagrid__empty {
+    text-align: center;
+    padding: var(--jowa-spacing-2xl);
+    color: var(--jowa-color-muted);
+    font-style: italic;
+  }
+}

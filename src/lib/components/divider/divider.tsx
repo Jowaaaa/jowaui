@@ -1,8 +1,11 @@
 import React from "react";
 
 export interface DividerProps {
+  /** Optional text label centered on a horizontal divider */
   label?: string;
+  /** Layout direction of the divider (default: "horizontal") */
   orientation?: "horizontal" | "vertical";
+  /** Additional CSS class applied to the divider element */
   className?: string;
 }
 

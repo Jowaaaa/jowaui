@@ -1,18 +1,28 @@
 import React, { useCallback, useState } from "react";
 
 export interface TreeNode {
+  /** Unique identifier for the node */
   id: string;
+  /** Display text for the node */
   label: string;
+  /** Icon rendered before the label */
   icon?: React.ReactNode;
+  /** Child nodes; presence enables expand/collapse behavior */
   children?: TreeNode[];
+  /** Prevents selection and interaction when true */
   disabled?: boolean;
 }
 
 export interface TreeProps {
+  /** Root-level tree nodes */
   nodes: TreeNode[];
+  /** ID of the currently selected node */
   selected?: string;
+  /** Callback fired with the node ID when a leaf node is clicked */
   onSelect?: (id: string) => void;
+  /** IDs of nodes that are expanded on initial render (default: []) */
   defaultExpanded?: string[];
+  /** Additional CSS class applied to the root ul element */
   className?: string;
 }
 

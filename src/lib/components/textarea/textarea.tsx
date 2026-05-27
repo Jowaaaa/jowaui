@@ -1,9 +1,13 @@
 import React, { useId } from "react";
 
 export interface TextareaProps extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
+  /** Visible label rendered above the textarea */
   label?: string;
+  /** Helper text shown below the textarea when there is no error */
   hint?: string;
+  /** Validation error message; applies error styling */
   error?: string;
+  /** CSS resize behavior of the textarea (default: "vertical") */
   resize?: "none" | "vertical" | "horizontal" | "both";
 }
 

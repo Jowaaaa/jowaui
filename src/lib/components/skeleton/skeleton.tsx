@@ -3,10 +3,13 @@ import React from "react";
 export interface SkeletonProps {
   /** Shape variant */
   variant?: "text" | "rect" | "circle";
+  /** CSS width of the skeleton (number treated as px) */
   width?: string | number;
+  /** CSS height of the skeleton (number treated as px) */
   height?: string | number;
   /** Number of text lines to render */
   lines?: number;
+  /** Additional CSS class applied to the skeleton element */
   className?: string;
 }
 

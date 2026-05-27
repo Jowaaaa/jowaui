@@ -22,7 +22,8 @@ const slides = [
 ];
 
 export const Default: Story = {
-  render: () => <Carousel>{slides}</Carousel>,
+  args: { showDots: true, showArrows: true, autoPlay: false },
+  render: (args) => <Carousel {...args}>{slides}</Carousel>,
 };
 
 export const AutoPlay: Story = {

@@ -6,6 +6,14 @@ const meta: Meta<typeof FileInput> = {
   component: FileInput,
   tags: ["autodocs"],
   args: { label: "Upload file" },
+  argTypes: {
+    label: { control: 'text' },
+    error: { control: 'text' },
+    hint: { control: 'text' },
+    accept: { control: 'text' },
+    multiple: { control: 'boolean' },
+    disabled: { control: 'boolean' },
+  },
 };
 
 export default meta;

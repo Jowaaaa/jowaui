@@ -1,14 +1,23 @@
 import React from "react";
 
 export interface FileInputProps {
+  /** Visible label rendered above the file trigger */
   label?: string;
+  /** Validation error message; applies error styling */
   error?: string;
+  /** Helper text shown below the control when there is no error */
   hint?: string;
+  /** Accepted file types passed to the native input (e.g. "image/*,.pdf") */
   accept?: string;
+  /** Allows selecting multiple files when true (default: false) */
   multiple?: boolean;
+  /** Disables the control when true (default: false) */
   disabled?: boolean;
+  /** Callback fired with the selected FileList (or null) on change */
   onChange?: (files: FileList | null) => void;
+  /** Additional CSS class applied to the trigger element */
   className?: string;
+  /** HTML id for the hidden file input; auto-derived from label when omitted */
   id?: string;
 }
 

@@ -1,0 +1,100 @@
+@layer jowa.components {
+  .jowa-confirmdialog {
+    position: fixed;
+    inset: 0;
+    background-color: var(--jowa-overlay-bg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1100;
+    padding: var(--jowa-spacing-md);
+    animation: jowa-confirmdialog-backdrop-in var(--jowa-duration-fast) var(--jowa-ease-smooth);
+  }
+
+  .jowa-confirmdialog__panel {
+    background-color: var(--jowa-color-surface);
+    border-radius: var(--jowa-radius-xl);
+    box-shadow: var(--jowa-shadow-lg);
+    padding: var(--jowa-spacing-xl);
+    width: 100%;
+    max-width: 26rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: var(--jowa-spacing-sm);
+    animation: jowa-confirmdialog-panel-in var(--jowa-duration-normal) var(--jowa-ease-smooth);
+  }
+
+  .jowa-confirmdialog__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 3rem;
+    height: 3rem;
+    border-radius: var(--jowa-radius-full);
+    margin-bottom: var(--jowa-spacing-xs);
+  }
+
+  .jowa-confirmdialog--danger .jowa-confirmdialog__icon {
+    color: var(--jowa-color-danger);
+    background-color: var(--jowa-color-danger-bg);
+  }
+
+  .jowa-confirmdialog--warning .jowa-confirmdialog__icon {
+    color: var(--jowa-color-warning);
+    background-color: var(--jowa-color-warning-bg);
+  }
+
+  .jowa-confirmdialog--default .jowa-confirmdialog__icon {
+    color: var(--jowa-color-primary);
+    background-color: var(--jowa-color-primary-bg);
+  }
+
+  .jowa-confirmdialog__title {
+    margin: 0;
+    font-family: var(--jowa-font-family);
+    font-size: var(--jowa-font-size-lg);
+    font-weight: var(--jowa-font-weight-semibold);
+    color: var(--jowa-color-neutral-text);
+    line-height: 1.3;
+  }
+
+  .jowa-confirmdialog__description {
+    margin: 0;
+    font-family: var(--jowa-font-family);
+    font-size: var(--jowa-font-size-sm);
+    color: var(--jowa-color-muted);
+    line-height: 1.5;
+  }
+
+  .jowa-confirmdialog__actions {
+    display: flex;
+    gap: var(--jowa-spacing-sm);
+    margin-top: var(--jowa-spacing-md);
+    width: 100%;
+    justify-content: center;
+  }
+
+  .jowa-confirmdialog__actions .jowa-btn {
+    flex: 1;
+    max-width: 10rem;
+  }
+
+  @keyframes jowa-confirmdialog-backdrop-in {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+
+  @keyframes jowa-confirmdialog-panel-in {
+    from { transform: translateY(-8px) scale(0.97); opacity: 0; }
+    to   { transform: translateY(0) scale(1); opacity: 1; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .jowa-confirmdialog,
+    .jowa-confirmdialog__panel {
+      animation: none;
+    }
+  }
+}

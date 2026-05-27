@@ -200,6 +200,61 @@ const COMPONENTS = [
     category: 'Display',
     description: 'Collapsible hierarchical node tree',
   },
+  {
+    name: 'Combobox',
+    category: 'Form',
+    description: 'Searchable dropdown with keyboard navigation and ARIA',
+  },
+  {
+    name: 'MultiSelect',
+    category: 'Form',
+    description: 'Multi-value select with removable chip tags',
+  },
+  {
+    name: 'OtpInput',
+    category: 'Form',
+    description: 'N-box OTP / PIN input with paste and SMS autofill',
+  },
+  {
+    name: 'RangeSlider',
+    category: 'Form',
+    description: 'Single or dual-handle slider with tooltip',
+  },
+  {
+    name: 'ConfirmDialog',
+    category: 'Overlay',
+    description: 'Portal modal for destructive confirmations — 3 variants',
+  },
+  {
+    name: 'Timeline',
+    category: 'Display',
+    description: 'Vertical activity feed with variant dots and icon slot',
+  },
+  {
+    name: 'KanbanBoard',
+    category: 'Data',
+    description: 'Drag-and-drop board using HTML5 DnD API',
+  },
+  {
+    name: 'DataGrid',
+    category: 'Data',
+    description: 'Generic table with sorting, column resize, row selection',
+  },
+  {
+    name: 'WizardStepper',
+    category: 'Navigation',
+    description: 'Multi-step wizard with async step validation',
+  },
+  {
+    name: 'MarkdownRenderer',
+    category: 'Display',
+    description: 'Zero-dep markdown renderer with XSS-safe links',
+  },
+  {
+    name: 'RichTextEditor',
+    category: 'Form',
+    description: 'contentEditable WYSIWYG with formatting toolbar',
+  },
 ];
 
 const CATEGORY_COLORS: Record<string, string> = {
@@ -398,7 +453,7 @@ const IntroductionPage: React.FC = () => {
             'oklch colors',
             'Dark mode',
             'Reduced motion',
-            '44 components',
+            '55 components',
           ].map((t) => (
             <span key={t} style={s.pill}>
               {t}

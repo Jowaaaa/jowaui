@@ -6,7 +6,24 @@ import { Button } from "../lib/components/button/button";
 const meta: Meta = {
   title: "Feedback/Toast",
   tags: ["autodocs"],
-  decorators: [(Story) => <ToastProvider><Story /></ToastProvider>],
+  decorators: [
+    (Story, { args }) => (
+      <ToastProvider
+        position={args["position"] as Parameters<typeof ToastProvider>[0]["position"]}
+        defaultDuration={args["defaultDuration"] as number | undefined}
+      >
+        <Story />
+      </ToastProvider>
+    ),
+  ],
+  argTypes: {
+    position: { control: 'select', options: ['top-right', 'top-left', 'top-center', 'bottom-right', 'bottom-left', 'bottom-center'] },
+    defaultDuration: { control: 'number' },
+  },
+  args: {
+    position: "top-right",
+    defaultDuration: 3000,
+  },
 };
 export default meta;
 type Story = StoryObj;
