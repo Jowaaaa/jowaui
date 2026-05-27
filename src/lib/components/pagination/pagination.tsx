@@ -1,11 +1,17 @@
 import React from "react";
 
 export interface PaginationProps {
+  /** Currently active page (1-based) */
   page: number;
+  /** Total number of items across all pages */
   total: number;
+  /** Number of items per page used to calculate total pages (default: 10) */
   pageSize?: number;
+  /** Number of page buttons shown on each side of the current page (default: 1) */
   siblingCount?: number;
+  /** Callback fired with the new page number when a button is clicked */
   onChange: (page: number) => void;
+  /** Additional CSS class applied to the nav element */
   className?: string;
 }
 

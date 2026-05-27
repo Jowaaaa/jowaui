@@ -7,12 +7,15 @@ export interface PopoverProps {
   trigger: React.ReactElement;
   /** Popover content */
   children: React.ReactNode;
+  /** Preferred placement of the popover relative to the trigger (default: "bottom") */
   placement?: PopoverPlacement;
   /** Open state (controlled) */
   open?: boolean;
   /** Default open state (uncontrolled) */
   defaultOpen?: boolean;
+  /** Callback fired when the open state changes */
   onOpenChange?: (open: boolean) => void;
+  /** Additional CSS class applied to the wrapper element */
   className?: string;
 }
 

@@ -4,13 +4,21 @@ import { createPortal } from "react-dom";
 export type DrawerSide = "left" | "right" | "top" | "bottom";
 
 export interface DrawerProps {
+  /** Controls drawer visibility */
   open: boolean;
+  /** Callback fired when the overlay or close button is clicked, or Escape is pressed */
   onClose: () => void;
+  /** Edge from which the drawer slides in (default: "right") */
   side?: DrawerSide;
+  /** Optional title rendered in the drawer header */
   title?: string;
+  /** CSS width value applied when side is "left" or "right" (e.g. "400px") */
   width?: string;
+  /** CSS height value applied when side is "top" or "bottom" (e.g. "50vh") */
   height?: string;
+  /** Drawer body content */
   children: React.ReactNode;
+  /** Additional CSS class applied to the drawer panel */
   className?: string;
 }
 

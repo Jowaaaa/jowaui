@@ -1,17 +1,29 @@
 import React from "react";
 
 export interface NumberInputProps {
+  /** Visible label rendered above the control */
   label?: string;
+  /** Validation error message; applies error styling */
   error?: string;
+  /** Helper text shown below the control when there is no error */
   hint?: string;
+  /** Controlled numeric value */
   value?: number;
+  /** Initial value for uncontrolled usage */
   defaultValue?: number;
+  /** Minimum allowed value; decrement button is disabled at this boundary */
   min?: number;
+  /** Maximum allowed value; increment button is disabled at this boundary */
   max?: number;
+  /** Amount added or subtracted per increment/decrement action (default: 1) */
   step?: number;
+  /** Disables all interaction when true (default: false) */
   disabled?: boolean;
+  /** Callback fired with the clamped numeric value on change */
   onChange?: (value: number) => void;
+  /** Additional CSS class applied to the wrapper */
   className?: string;
+  /** HTML id for the input; auto-derived from label when omitted */
   id?: string;
 }
 

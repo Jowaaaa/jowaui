@@ -3,8 +3,11 @@ import React from "react";
 export type AlertVariant = "info" | "success" | "warning" | "danger";
 
 export interface AlertProps extends React.HTMLAttributes<HTMLDivElement> {
+  /** Visual style and icon variant (default: "info") */
   variant?: AlertVariant;
+  /** Bold title text rendered above the body */
   title?: string;
+  /** Callback fired when the dismiss button is clicked; renders the button when provided */
   onClose?: () => void;
 }
 

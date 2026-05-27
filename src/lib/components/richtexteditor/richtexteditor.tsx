@@ -1,11 +1,17 @@
 import React, { useRef, useState, useEffect, useCallback } from "react";
 
 export interface RichTextEditorProps {
+  /** Controlled HTML string value */
   value?: string;
+  /** Initial HTML content for uncontrolled usage (default: "") */
   defaultValue?: string;
+  /** Callback fired with the editor's innerHTML on every change */
   onChange?: (html: string) => void;
+  /** Placeholder text shown when the editor is empty (default: "Start typing…") */
   placeholder?: string;
+  /** Disables editing and toolbar buttons when true (default: false) */
   disabled?: boolean;
+  /** Additional CSS class applied to the editor wrapper */
   className?: string;
 }
 

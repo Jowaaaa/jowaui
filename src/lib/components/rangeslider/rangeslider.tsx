@@ -5,14 +5,23 @@ type DualValue = [number, number];
 
 export interface RangeSliderProps
   extends Omit<React.HTMLAttributes<HTMLDivElement>, "onChange" | "defaultValue"> {
+  /** Minimum selectable value (default: 0) */
   min?: number;
+  /** Maximum selectable value (default: 100) */
   max?: number;
+  /** Snap increment for thumb movement (default: 1) */
   step?: number;
+  /** Controlled value — a single number or a [low, high] tuple for dual-thumb mode */
   value?: SingleValue | DualValue;
+  /** Initial value for uncontrolled usage */
   defaultValue?: SingleValue | DualValue;
+  /** Callback fired with the updated value on every change */
   onChange?: (value: SingleValue | DualValue) => void;
+  /** Disables all interaction when true (default: false) */
   disabled?: boolean;
+  /** Additional CSS class applied to the slider wrapper */
   className?: string;
+  /** Show a tooltip above the active thumb displaying its current value (default: true) */
   showTooltip?: boolean;
 }
 

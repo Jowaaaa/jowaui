@@ -1,9 +1,13 @@
 import React, { useId } from "react";
 
 export interface SwitchProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "type" | "size"> {
+  /** Visible label text rendered next to the toggle */
   label?: string;
+  /** Helper text shown below the switch */
   hint?: string;
+  /** Side on which the label is rendered relative to the toggle (default: "right") */
   labelPosition?: "left" | "right";
+  /** Size variant controlling the toggle dimensions (default: "md") */
   size?: "sm" | "md" | "lg";
 }
 

@@ -122,16 +122,18 @@ const VALIDATION_STEPS: WizardStep[] = [
 const meta: Meta = {
   title: "Navigation/WizardStepper",
   tags: ["autodocs"],
+  argTypes: {
+    currentStep: { control: 'number' },
+    defaultStep: { control: 'number' },
+  },
 };
 export default meta;
 type Story = StoryObj;
 
 export const Default: Story = {
-  render: () => (
-    <WizardStepper
-      steps={BASIC_STEPS}
-      onComplete={() => alert("Wizard complete!")}
-    />
+  args: { currentStep: 0 },
+  render: (args) => (
+    <WizardStepper {...args} steps={BASIC_STEPS} onComplete={() => {}} />
   ),
 };
 

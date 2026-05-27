@@ -1,3 +1,4 @@
+import React from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { Accordion } from "../lib/components/accordion/accordion";
 import type { AccordionItem } from "../lib/components/accordion/accordion";
@@ -31,12 +32,19 @@ const meta: Meta<typeof Accordion> = {
   component: Accordion,
   tags: ["autodocs"],
   args: { items: ITEMS },
+  argTypes: {
+    multiple: { control: 'boolean' },
+  },
 };
 
 export default meta;
 type Story = StoryObj<typeof Accordion>;
 
-export const Default: Story = {};
+export const Default: Story = {
+  render: (args) => (
+    <Accordion key={String(args.multiple) + String(args.defaultOpen)} {...args} />
+  ),
+};
 
 export const Multiple: Story = {
   args: { multiple: true, defaultOpen: ["item-1", "item-2"] },

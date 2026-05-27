@@ -1,11 +1,17 @@
 import React from "react";
 
 export interface HeroProps {
+  /** Primary heading content */
   title: React.ReactNode;
+  /** Secondary descriptive text rendered below the title */
   subtitle?: React.ReactNode;
+  /** Call-to-action buttons or links rendered below the subtitle */
   actions?: React.ReactNode;
+  /** Image or visual element displayed alongside the text in split layout */
   media?: React.ReactNode;
+  /** Text alignment and layout mode (default: "center"); "left" enables split layout when media is provided */
   align?: "left" | "center";
+  /** Additional CSS class applied to the section element */
   className?: string;
 }
 

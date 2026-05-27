@@ -1,3 +1,4 @@
+import React from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { Combobox } from "../lib/components/combobox/combobox";
 import "../lib/components/combobox/combobox.css";
@@ -26,7 +27,9 @@ const meta: Meta<typeof Combobox> = {
 export default meta;
 type Story = StoryObj<typeof Combobox>;
 
-export const Default: Story = {};
+export const Default: Story = {
+  render: (args) => <Combobox key={args.defaultValue} {...args} />,
+};
 
 export const WithDefaultValue: Story = {
   args: { defaultValue: "banana" },

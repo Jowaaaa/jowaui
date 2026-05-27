@@ -1,25 +1,39 @@
 import React, { useState } from "react";
 
 export interface SidebarItem {
+  /** Display text for the navigation item */
   label: string;
+  /** Navigation URL; renders an anchor when provided, otherwise a button */
   href?: string;
+  /** Icon element rendered before the label */
   icon?: React.ReactNode;
+  /** Highlights the item as the current page when true */
   active?: boolean;
+  /** Click handler for button-style items */
   onClick?: () => void;
 }
 
 export interface SidebarGroup {
+  /** Optional section heading shown above the items (hidden when collapsed) */
   heading?: string;
+  /** Navigation items in this group */
   items: SidebarItem[];
 }
 
 export interface SidebarProps {
+  /** Navigation groups to render */
   groups: SidebarGroup[];
+  /** Content rendered at the top of the sidebar (e.g. logo) */
   header?: React.ReactNode;
+  /** Content rendered at the bottom of the sidebar */
   footer?: React.ReactNode;
+  /** Controlled collapsed state */
   collapsed?: boolean;
+  /** Initial collapsed state for uncontrolled usage (default: false) */
   defaultCollapsed?: boolean;
+  /** Callback fired when the collapse toggle is clicked */
   onCollapsedChange?: (collapsed: boolean) => void;
+  /** Additional CSS class applied to the aside element */
   className?: string;
 }
 

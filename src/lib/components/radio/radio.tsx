@@ -10,14 +10,23 @@ const RadioGroupContext = createContext<RadioGroupCtx | null>(null);
 
 /* ── RadioGroup ─────────────────────────────────────────────────────────────── */
 export interface RadioGroupProps {
+  /** HTML name attribute shared by all child Radio inputs */
   name: string;
+  /** Controlled selected value */
   value?: string;
+  /** Callback fired with the value of the newly selected radio */
   onChange?: (value: string) => void;
+  /** Fieldset legend text */
   label?: string;
+  /** Helper text shown below the group when there is no error */
   hint?: string;
+  /** Validation error message; applies error styling */
   error?: string;
+  /** Layout direction of the radio options (default: "vertical") */
   orientation?: "vertical" | "horizontal";
+  /** Radio option elements */
   children: React.ReactNode;
+  /** Additional CSS class applied to the fieldset */
   className?: string;
 }
 
@@ -42,7 +51,9 @@ export const RadioGroup: React.FC<RadioGroupProps> = ({
 
 /* ── Radio ─────────────────────────────────────────────────────────────────── */
 export interface RadioProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "type" | "name"> {
+  /** Visible label text rendered next to the radio button */
   label?: string;
+  /** Value submitted when this radio is selected; also used by RadioGroup for controlled state */
   value: string;
 }
 

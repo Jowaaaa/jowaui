@@ -1,23 +1,35 @@
 import React, { useState, useRef, useCallback } from "react";
 
 export interface KanbanCard {
+  /** Unique identifier for the card */
   id: string;
+  /** Card heading text */
   title: string;
+  /** Optional body text shown below the title */
   description?: string;
+  /** List of tag labels rendered as chips on the card */
   tags?: string[];
+  /** Assignee name; first character is shown as an avatar */
   assignee?: string;
 }
 
 export interface KanbanColumn {
+  /** Unique identifier for the column */
   id: string;
+  /** Column heading text */
   title: string;
+  /** Accent color shown as a dot in the column header */
   color?: string;
+  /** Cards belonging to this column */
   cards: KanbanCard[];
 }
 
 export interface KanbanBoardProps {
+  /** Column definitions including their cards */
   columns: KanbanColumn[];
+  /** Callback fired with the updated columns array after a card is moved; makes the board controlled */
   onChange?: (columns: KanbanColumn[]) => void;
+  /** Additional CSS class applied to the board wrapper */
   className?: string;
 }
 

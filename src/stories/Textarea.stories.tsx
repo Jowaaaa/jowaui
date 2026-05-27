@@ -6,6 +6,13 @@ const meta: Meta<typeof Textarea> = {
   component: Textarea,
   tags: ["autodocs"],
   args: { label: "Message", placeholder: "Type your message…", rows: 4 },
+  argTypes: {
+    label: { control: 'text' },
+    hint: { control: 'text' },
+    error: { control: 'text' },
+    resize: { control: 'select', options: ['none', 'vertical', 'horizontal', 'both'] },
+    disabled: { control: 'boolean' },
+  },
 };
 export default meta;
 type Story = StoryObj<typeof Textarea>;

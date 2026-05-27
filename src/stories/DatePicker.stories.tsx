@@ -6,6 +6,12 @@ const meta: Meta<typeof DatePicker> = {
   component: DatePicker,
   tags: ["autodocs"],
   args: { label: "Date of birth" },
+  argTypes: {
+    label: { control: 'text' },
+    error: { control: 'text' },
+    hint: { control: 'text' },
+    disabled: { control: 'boolean' },
+  },
 };
 
 export default meta;

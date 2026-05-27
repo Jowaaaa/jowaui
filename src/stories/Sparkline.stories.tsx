@@ -12,6 +12,13 @@ const meta: Meta<typeof Sparkline> = {
     filled: true,
     showLastDot: true,
   },
+  argTypes: {
+    width: { control: 'number' },
+    height: { control: 'number' },
+    filled: { control: 'boolean' },
+    color: { control: 'text' },
+    showLastDot: { control: 'boolean' },
+  },
 };
 export default meta;
 type Story = StoryObj<typeof Sparkline>;

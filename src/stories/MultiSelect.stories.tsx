@@ -1,3 +1,4 @@
+import React from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { MultiSelect } from "../lib/components/multiselect/multiselect";
 import "../lib/components/multiselect/multiselect.css";
@@ -24,7 +25,9 @@ const meta: Meta<typeof MultiSelect> = {
 export default meta;
 type Story = StoryObj<typeof MultiSelect>;
 
-export const Default: Story = {};
+export const Default: Story = {
+  render: (args) => <MultiSelect key={JSON.stringify(args.defaultValue)} {...args} />,
+};
 
 export const WithDefaultValue: Story = {
   args: { defaultValue: ["react", "svelte"] },

@@ -1,18 +1,28 @@
 import React, { useId, useState } from "react";
 
 export interface TabItem {
+  /** Unique value identifying this tab */
   value: string;
+  /** Tab button label content */
   label: React.ReactNode;
+  /** Panel content rendered when this tab is active */
   content: React.ReactNode;
+  /** Prevents the tab from being selected when true */
   disabled?: boolean;
 }
 
 export interface TabsProps {
+  /** List of tab definitions */
   items: TabItem[];
+  /** Initial active tab value for uncontrolled usage */
   defaultValue?: string;
+  /** Controlled active tab value */
   value?: string;
+  /** Callback fired with the newly selected tab value */
   onChange?: (value: string) => void;
+  /** Visual style of the tab list (default: "line") */
   variant?: "line" | "pill";
+  /** Additional CSS class applied to the tabs root */
   className?: string;
 }
 

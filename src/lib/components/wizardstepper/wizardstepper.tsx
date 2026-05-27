@@ -1,19 +1,30 @@
 import React, { useState, useCallback } from "react";
 
 export interface WizardStep {
+  /** Unique identifier for the step */
   id: string;
+  /** Step title shown in the indicator nav */
   title: string;
+  /** Optional description rendered above the step content */
   description?: string;
+  /** Content rendered in the main content area when this step is active */
   content: React.ReactNode;
+  /** Optional async validation function; returning false (or throwing) blocks advancement */
   validate?: () => boolean | Promise<boolean>;
 }
 
 export interface WizardStepperProps {
+  /** Ordered list of wizard steps */
   steps: WizardStep[];
+  /** Controlled active step index (0-based) */
   currentStep?: number;
+  /** Initial active step index for uncontrolled usage (default: 0) */
   defaultStep?: number;
+  /** Callback fired with the new step index when navigation occurs */
   onStepChange?: (step: number) => void;
+  /** Callback fired when the last step is successfully completed */
   onComplete?: () => void;
+  /** Additional CSS class applied to the wizard wrapper */
   className?: string;
 }
 

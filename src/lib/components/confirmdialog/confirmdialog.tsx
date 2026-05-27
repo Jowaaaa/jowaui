@@ -4,14 +4,23 @@ import { createPortal } from "react-dom";
 export type ConfirmDialogVariant = "danger" | "warning" | "default";
 
 export interface ConfirmDialogProps {
+  /** Controls dialog visibility */
   open: boolean;
+  /** Callback fired when the confirm button is clicked */
   onConfirm: () => void;
+  /** Callback fired when the cancel button or backdrop is clicked */
   onCancel: () => void;
+  /** Dialog heading text */
   title: string;
+  /** Optional body text providing additional context */
   description?: string;
+  /** Label for the confirm button (default: "Confirm") */
   confirmLabel?: string;
+  /** Label for the cancel button (default: "Cancel") */
   cancelLabel?: string;
+  /** Visual variant affecting icon and confirm button color (default: "default") */
   variant?: ConfirmDialogVariant;
+  /** Additional CSS class applied to the dialog panel */
   className?: string;
 }
 

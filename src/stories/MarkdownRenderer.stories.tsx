@@ -43,6 +43,9 @@ const meta: Meta<typeof MarkdownRenderer> = {
   title: "Content/MarkdownRenderer",
   component: MarkdownRenderer,
   tags: ["autodocs"],
+  argTypes: {
+    content: { control: 'text' },
+  },
 };
 export default meta;
 type Story = StoryObj<typeof MarkdownRenderer>;

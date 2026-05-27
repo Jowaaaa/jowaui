@@ -1,7 +1,9 @@
 import React, { useMemo } from "react";
 
 export interface MarkdownRendererProps {
+  /** Markdown string to parse and render */
   content: string;
+  /** Additional CSS class applied to the wrapper div */
   className?: string;
 }
 

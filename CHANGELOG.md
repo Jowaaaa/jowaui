@@ -11,6 +11,19 @@ Versioning follows [Semantic Versioning](https://semver.org/).
 
 ---
 
+## [0.2.1]
+
+### Added
+
+- **JSDoc documentation** — all exported prop interfaces across all 55 components now have full JSDoc comments on every property; improves IntelliSense and hover docs in consumer projects
+
+### Changed
+
+- **Storybook `argTypes`** — added missing controls to 28 story files (Accordion, Banner, Checkbox, ColorPicker, DatePicker, Drawer, Dropdown, FileInput, Gauge, Input, MarkdownRenderer, NumberInput, Pagination, Popover, Radio, RichTextEditor, Select, Skeleton, Sparkline, StatCard, Stepper, Switch, Table, Tabs, Textarea, Toast, Tree, WizardStepper)
+- **Live controls** — fixed controls not reflecting changes in the Docs canvas for 17 stories
+
+---
+
 ## [0.2.0]
 
 ### Added

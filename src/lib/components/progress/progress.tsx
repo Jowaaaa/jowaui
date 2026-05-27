@@ -3,12 +3,19 @@ import React from "react";
 export type ProgressVariant = "primary" | "success" | "warning" | "danger";
 
 export interface ProgressProps {
+  /** Current progress value */
   value: number;
+  /** Maximum value used to calculate percentage (default: 100) */
   max?: number;
+  /** Color variant for the fill bar (default: "primary") */
   variant?: ProgressVariant;
+  /** Accessible label and optional visible text above the bar */
   label?: string;
+  /** Render the percentage value next to the label (default: false) */
   showValue?: boolean;
+  /** Height variant of the progress track (default: "md") */
   size?: "sm" | "md" | "lg";
+  /** Additional CSS class applied to the wrapper */
   className?: string;
 }
 

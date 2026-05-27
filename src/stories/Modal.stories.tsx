@@ -8,7 +8,7 @@ const meta: Meta<typeof Modal> = {
   component: Modal,
   tags: ["autodocs"],
   argTypes: {
-    open: { control: "boolean" },
+    // `open` is intentionally excluded — the demo wrapper owns open state via a trigger button
     title: { control: "text" },
     closeOnOverlayClick: { control: "boolean" },
     showCloseButton: { control: "boolean" },

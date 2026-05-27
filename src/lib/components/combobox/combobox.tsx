@@ -1,19 +1,29 @@
 import React from "react";
 
 export interface ComboboxOption {
+  /** Unique value submitted on selection */
   value: string;
+  /** Human-readable label shown in the list and input */
   label: string;
+  /** Prevents the option from being selected when true */
   disabled?: boolean;
 }
 
 export interface ComboboxProps
   extends Omit<React.HTMLAttributes<HTMLDivElement>, "onChange"> {
+  /** List of selectable options */
   options: ComboboxOption[];
+  /** Controlled selected value */
   value?: string;
+  /** Initial selected value for uncontrolled usage (default: "") */
   defaultValue?: string;
+  /** Callback fired with the selected option's value */
   onChange?: (value: string) => void;
+  /** Input placeholder text (default: "Search…") */
   placeholder?: string;
+  /** Disables the combobox when true (default: false) */
   disabled?: boolean;
+  /** Additional CSS class applied to the root element */
   className?: string;
 }
 

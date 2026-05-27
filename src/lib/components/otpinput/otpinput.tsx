@@ -2,12 +2,19 @@ import React from "react";
 
 export interface OtpInputProps
   extends Omit<React.HTMLAttributes<HTMLDivElement>, "onChange"> {
+  /** Number of individual digit boxes to render (default: 6) */
   length?: number;
+  /** Controlled OTP string value */
   value?: string;
+  /** Initial value for uncontrolled usage (default: "") */
   defaultValue?: string;
+  /** Callback fired with the full OTP string on every change */
   onChange?: (value: string) => void;
+  /** Disables all inputs when true (default: false) */
   disabled?: boolean;
+  /** Additional CSS class applied to the group wrapper */
   className?: string;
+  /** Input type — "number" restricts to digits, "password" masks input (default: "text") */
   type?: "text" | "number" | "password";
 }
 

@@ -1,20 +1,32 @@
 import React, { useState, useRef, useCallback } from "react";
 
 export interface DataGridColumn<T> {
+  /** Row property used to read the cell value */
   key: keyof T;
+  /** Column header label */
   header: string;
+  /** Fixed column width in pixels */
   width?: number;
+  /** Enables click-to-sort on this column when true */
   sortable?: boolean;
+  /** Custom cell renderer; receives the cell value and full row */
   render?: (value: T[keyof T], row: T) => React.ReactNode;
 }
 
 export interface DataGridProps<T extends object> {
+  /** Column definitions */
   columns: DataGridColumn<T>[];
+  /** Row data array */
   rows: T[];
+  /** Controlled set of selected row IDs */
   selectedRows?: Set<string | number>;
+  /** Callback fired when the selection changes */
   onSelectedRowsChange?: (selected: Set<string | number>) => void;
+  /** Returns a stable unique ID for a row; defaults to row.id or row.key */
   getRowId?: (row: T) => string | number;
+  /** Callback fired when a sortable column header is clicked */
   onSort?: (key: keyof T, direction: "asc" | "desc") => void;
+  /** Additional CSS class applied to the grid wrapper */
   className?: string;
 }
 

@@ -7,6 +7,9 @@ const meta: Meta<typeof Tree> = {
   title: "Components/Tree",
   component: Tree,
   tags: ["autodocs"],
+  argTypes: {
+    selected: { control: 'text' },
+  },
 };
 
 export default meta;
@@ -51,6 +54,7 @@ const fileTree: TreeNode[] = [
 ];
 
 export const Default: Story = {
+  render: (args) => <Tree key={JSON.stringify(args.defaultExpanded)} {...args} />,
   args: {
     nodes: fileTree,
     defaultExpanded: ["src"],

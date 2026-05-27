@@ -3,9 +3,13 @@ import React from "react";
 export type AvatarSize = "sm" | "md" | "lg" | "xl";
 
 export interface AvatarProps extends React.HTMLAttributes<HTMLSpanElement> {
+  /** URL of the avatar image; when provided, renders an <img> */
   src?: string;
+  /** Alt text for the image or accessible label for initials (default: "") */
   alt?: string;
+  /** Explicit initials to display when no src is given; falls back to first two chars of alt */
   initials?: string;
+  /** Size variant controlling width/height (default: "md") */
   size?: AvatarSize;
 }
 

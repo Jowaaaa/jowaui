@@ -3,22 +3,36 @@ import React, { useState, useMemo } from "react";
 export type SortDirection = "asc" | "desc" | null;
 
 export interface TableColumn<T> {
+  /** Row property key or arbitrary string used to identify the column */
   key: keyof T | string;
+  /** Column header content */
   header: React.ReactNode;
+  /** Custom cell renderer; receives the row and its index */
   render?: (row: T, index: number) => React.ReactNode;
+  /** Enables click-to-sort on this column when true */
   sortable?: boolean;
+  /** CSS width applied to the column (e.g. "120px" or "20%") */
   width?: string;
 }
 
 export interface TableProps<T extends object> {
+  /** Column definitions */
   columns: TableColumn<T>[];
+  /** Row data array */
   data: T[];
+  /** Key used to derive a stable React key for each row */
   rowKey: keyof T | ((row: T) => string);
+  /** Apply alternating row background colors (default: false) */
   striped?: boolean;
+  /** Apply hover highlight to rows (default: true) */
   hoverable?: boolean;
+  /** Render borders around cells (default: false) */
   bordered?: boolean;
+  /** Make the table header stick to the top on scroll (default: false) */
   stickyHeader?: boolean;
+  /** Content shown when data is empty (default: "No data") */
   emptyMessage?: React.ReactNode;
+  /** Additional CSS class applied to the table wrapper */
   className?: string;
 }
 

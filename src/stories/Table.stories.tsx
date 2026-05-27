@@ -27,12 +27,27 @@ const COLUMNS = [
   },
 ];
 
-const meta: Meta = { title: "Data/Table", tags: ["autodocs"] };
+const meta: Meta = {
+  title: "Data/Table",
+  tags: ["autodocs"],
+  argTypes: {
+    striped: { control: 'boolean' },
+    hoverable: { control: 'boolean' },
+    bordered: { control: 'boolean' },
+    stickyHeader: { control: 'boolean' },
+  },
+};
 export default meta;
 type Story = StoryObj;
 
 export const Default: Story = {
-  render: () => <Table columns={COLUMNS} data={DATA} rowKey="id" />,
+  args: {
+    striped: false,
+    bordered: false,
+    hoverable: false,
+    stickyHeader: false,
+  },
+  render: (args) => <Table columns={COLUMNS} data={DATA} rowKey="id" {...args} />,
 };
 export const Striped: Story = {
   render: () => <Table columns={COLUMNS} data={DATA} rowKey="id" striped />,

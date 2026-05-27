@@ -3,8 +3,11 @@ import React, { useState } from "react";
 export type TooltipPosition = "top" | "bottom" | "left" | "right";
 
 export interface TooltipProps {
+  /** Content rendered inside the tooltip bubble */
   content: React.ReactNode;
+  /** Preferred position of the tooltip relative to the trigger (default: "top") */
   position?: TooltipPosition;
+  /** Element that triggers the tooltip on hover/focus */
   children: React.ReactElement;
 }
 

@@ -4,7 +4,9 @@ export type ButtonVariant = "primary" | "outline" | "danger" | "ghost" | "navbar
 export type ButtonSize = "sm" | "md" | "lg";
 
 export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  /** Visual style variant (default: "primary") */
   variant?: ButtonVariant;
+  /** Size variant controlling padding and font size (default: "md") */
   size?: ButtonSize;
 }
 

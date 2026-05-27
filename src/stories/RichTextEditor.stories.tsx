@@ -6,6 +6,10 @@ const meta: Meta<typeof RichTextEditor> = {
   title: "Forms/RichTextEditor",
   component: RichTextEditor,
   tags: ["autodocs"],
+  argTypes: {
+    placeholder: { control: 'text' },
+    disabled: { control: 'boolean' },
+  },
 };
 export default meta;
 type Story = StoryObj<typeof RichTextEditor>;

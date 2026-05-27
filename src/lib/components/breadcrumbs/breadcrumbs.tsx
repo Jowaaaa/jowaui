@@ -1,13 +1,18 @@
 import React from "react";
 
 export interface BreadcrumbItem {
+  /** Display text for the breadcrumb link */
   label: string;
+  /** Navigation URL; omit for the current (last) item */
   href?: string;
 }
 
 export interface BreadcrumbsProps {
+  /** Ordered list of breadcrumb items from root to current page */
   items: BreadcrumbItem[];
+  /** Element rendered between items (default: "/") */
   separator?: React.ReactNode;
+  /** Additional CSS class applied to the nav element */
   className?: string;
 }
 

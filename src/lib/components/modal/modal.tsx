@@ -2,12 +2,19 @@ import React, { useEffect, useCallback } from "react";
 import { createPortal } from "react-dom";
 
 export interface ModalProps {
+  /** Controls modal visibility */
   open: boolean;
+  /** Callback fired when the modal should close (Escape key, overlay click, or close button) */
   onClose: () => void;
+  /** Optional title rendered in the modal header */
   title?: string;
+  /** Modal body content */
   children: React.ReactNode;
+  /** Additional CSS class applied to the modal panel */
   className?: string;
+  /** Close the modal when the overlay backdrop is clicked (default: true) */
   closeOnOverlayClick?: boolean;
+  /** Render the × close button in the top-right corner (default: true) */
   showCloseButton?: boolean;
 }
 

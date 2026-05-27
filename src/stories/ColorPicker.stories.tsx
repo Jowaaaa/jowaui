@@ -9,6 +9,12 @@ const meta: Meta<typeof ColorPicker> = {
     label: "Brand Color",
     defaultValue: "#6366f1",
   },
+  argTypes: {
+    label: { control: 'text' },
+    error: { control: 'text' },
+    hint: { control: 'text' },
+    disabled: { control: 'boolean' },
+  },
 };
 
 export default meta;

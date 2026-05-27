@@ -1,14 +1,23 @@
 import React from "react";
 
 export interface ColorPickerProps {
+  /** Visible label rendered above the control */
   label?: string;
+  /** Validation error message; replaces hint and applies error styling */
   error?: string;
+  /** Helper text shown below the control when there is no error */
   hint?: string;
+  /** Controlled hex color value (e.g. "#3b82f6") */
   value?: string;
+  /** Initial hex color value for uncontrolled usage (default: "#3b82f6") */
   defaultValue?: string;
+  /** Disables all interaction when true (default: false) */
   disabled?: boolean;
+  /** Callback fired with the new hex string whenever the color changes */
   onChange?: (value: string) => void;
+  /** Additional CSS class applied to the wrapper */
   className?: string;
+  /** HTML id for the text input; auto-derived from label when omitted */
   id?: string;
 }
 

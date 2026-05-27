@@ -14,9 +14,16 @@ const meta: Meta<typeof Tabs> = {
   component: Tabs,
   tags: ["autodocs"],
   args: { items: ITEMS, defaultValue: "overview" },
+  argTypes: {
+    variant: { control: 'select', options: ['line', 'pill'] },
+  },
 };
 export default meta;
 type Story = StoryObj<typeof Tabs>;
+
+export const Default: Story = {
+  render: (args) => <Tabs key={args.defaultValue} {...args} />,
+};
 
 export const Line: Story = { args: { variant: "line" } };
 export const Pill: Story = { args: { variant: "pill" } };

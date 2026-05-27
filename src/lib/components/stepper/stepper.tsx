@@ -3,16 +3,24 @@ import React from "react";
 export type StepStatus = "completed" | "active" | "pending" | "error";
 
 export interface StepperStep {
+  /** Unique identifier for the step */
   id: string;
+  /** Step label displayed below the step indicator */
   label: string;
+  /** Optional secondary description shown below the label */
   description?: string;
+  /** Explicit status override; derived from activeStep when omitted */
   status?: StepStatus;
 }
 
 export interface StepperProps {
+  /** Ordered list of steps to render */
   steps: StepperStep[];
+  /** Zero-based index of the currently active step (default: 0) */
   activeStep?: number;
+  /** Layout direction of the step list (default: "horizontal") */
   orientation?: "horizontal" | "vertical";
+  /** Additional CSS class applied to the ordered list */
   className?: string;
 }
 

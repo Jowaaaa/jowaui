@@ -1,18 +1,27 @@
 import React from "react";
 
 export interface MultiSelectOption {
+  /** Unique value used internally for selection tracking */
   value: string;
+  /** Human-readable label shown in the dropdown and as a tag */
   label: string;
 }
 
 export interface MultiSelectProps
   extends Omit<React.HTMLAttributes<HTMLDivElement>, "onChange"> {
+  /** List of selectable options */
   options: MultiSelectOption[];
+  /** Controlled array of selected values */
   value?: string[];
+  /** Initial selected values for uncontrolled usage (default: []) */
   defaultValue?: string[];
+  /** Callback fired with the updated selection array */
   onChange?: (value: string[]) => void;
+  /** Placeholder text shown when nothing is selected (default: "Select options…") */
   placeholder?: string;
+  /** Disables all interaction when true (default: false) */
   disabled?: boolean;
+  /** Additional CSS class applied to the root element */
   className?: string;
 }
 

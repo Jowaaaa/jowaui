@@ -13,6 +13,14 @@ const meta: Meta<typeof Select> = {
   component: Select,
   tags: ["autodocs"],
   args: { options: OPTIONS, label: "Fruit", placeholder: "Choose a fruit…" },
+  argTypes: {
+    label: { control: 'text' },
+    hint: { control: 'text' },
+    error: { control: 'text' },
+    placeholder: { control: 'text' },
+    size: { control: 'select', options: ['sm', 'md', 'lg'] },
+    disabled: { control: 'boolean' },
+  },
 };
 export default meta;
 type Story = StoryObj<typeof Select>;

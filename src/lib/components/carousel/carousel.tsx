@@ -1,17 +1,26 @@
 import React, { useState, useCallback, useEffect, useRef } from "react";
 
 export interface CarouselImage {
+  /** URL of the slide image */
   src: string;
+  /** Alt text for the image (default: "Slide N") */
   alt?: string;
 }
 
 export interface CarouselProps {
+  /** Arbitrary React nodes used as slides when no images are provided */
   children?: React.ReactNode[];
+  /** Image sources; takes precedence over children when provided */
   images?: (CarouselImage | string)[];
+  /** Automatically advance slides on an interval (default: false) */
   autoPlay?: boolean;
+  /** Milliseconds between auto-advance steps (default: 4000) */
   interval?: number;
+  /** Show dot navigation indicators (default: true) */
   showDots?: boolean;
+  /** Show previous/next arrow buttons (default: true) */
   showArrows?: boolean;
+  /** Additional CSS class applied to the carousel root */
   className?: string;
 }
 
