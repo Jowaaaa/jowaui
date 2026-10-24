@@ -2,31 +2,23 @@ import type { Preview, Decorator } from '@storybook/react-vite';
 import '../src/lib/styles/index.css';
 import './preview.css';
 
-const withTheme: Decorator = (Story, context) => {
-  const theme = context.globals?.theme ?? 'light';
-  document.documentElement.setAttribute('data-theme', theme);
+const withSavedComponentTheme: Decorator = (Story) => {
+  if (typeof window !== 'undefined') {
+    try {
+      const saved = JSON.parse(localStorage.getItem('jowa-theme-builder') ?? '{}') as Record<string, string>;
+      for (const [name, value] of Object.entries(saved)) {
+        if (name.startsWith('--jowa-editor-') && value) {
+          document.documentElement.style.setProperty(name, value);
+        }
+      }
+    } catch {
+      // Ignore malformed local editor state and use the light defaults.
+    }
+  }
   return Story();
 };
 
 const preview: Preview = {
-  globals: {
-    theme: 'light',
-  },
-  globalTypes: {
-    theme: {
-      name: 'Theme',
-      description: 'Global theme for components',
-      toolbar: {
-        icon: 'circlehollow',
-        items: [
-          { value: 'light', icon: 'sun', title: 'Light' },
-          { value: 'dark', icon: 'moon', title: 'Dark' },
-        ],
-        showName: true,
-        dynamicTitle: true,
-      },
-    },
-  },
   parameters: {
     options: {
       storySort: {
@@ -58,7 +50,7 @@ const preview: Preview = {
       },
     },
   },
-  decorators: [withTheme],
+  decorators: [withSavedComponentTheme],
 };
 
 export default preview;

@@ -8,8 +8,7 @@ A lightweight, zero-dependency React component library built with pure CSS custo
 
 - **Zero runtime dependencies** — only React as a peer dependency
 - **CSS custom properties as the API** — every token is a CSS variable; override globally, per-page, or per-component
-- **oklch color space** — perceptually uniform colors with automatic dark mode derivation
-- **Dark mode** — system preference (`prefers-color-scheme`) + manual `[data-theme="dark"]` attribute
+- **oklch color space** — perceptually uniform color primitives
 - **Motion tokens** — `--jowa-duration-*` and `--jowa-ease-*` tokens; `prefers-reduced-motion` respected by default
 - **Density system** — one CSS variable (`--jowa-density`) adjusts spacing across the entire app
 - **`@layer` architecture** — your styles always win, no `!important` needed
@@ -31,6 +30,16 @@ Import the stylesheet once at your app root:
 ```tsx
 import "@jowaaaa/jowaui/styles";
 ```
+
+## Builder
+
+Run the standalone visual builder during development:
+
+```bash
+npm run builder
+```
+
+The builder uses the library components directly and supports nested composition, local project persistence, JSON import/export, JSX export, responsive canvas sizes, and isolated JSX editing.
 
 Then use components anywhere:
 
@@ -63,14 +72,6 @@ export default function App() {
   --jowa-color-primary: oklch(52% 0.25 280);
   --jowa-radius-md: 8px;
 }
-```
-
-### Dark mode
-
-Dark mode activates automatically via `prefers-color-scheme: dark`. To control it manually, set the attribute on any ancestor element:
-
-```html
-<html data-theme="dark"> <!-- or "light" to force light -->
 ```
 
 ### Scoped theming (no ThemeProvider needed)

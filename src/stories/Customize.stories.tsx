@@ -334,12 +334,6 @@ const CustomizePage: React.FC = () => {
 
   useEffect(() => {
     setTokens(readAllTokens());
-    const observer = new MutationObserver(() => setTokens(readAllTokens()));
-    observer.observe(document.documentElement, {
-      attributes: true,
-      attributeFilter: ['data-theme'],
-    });
-    return () => observer.disconnect();
   }, []);
 
   const t = (name: string): string => tokens[name] ?? '';
@@ -480,24 +474,13 @@ const CustomizePage: React.FC = () => {
 
       <hr style={s.hr} />
 
-      {/* ── Dark mode ── */}
-      <h2 style={s.h2}>Dark Mode</h2>
+      {/* ── Component colors ── */}
+      <h2 style={s.h2}>Component Colors</h2>
       <p style={s.p}>
-        All tokens ship with dark mode values. jowaui respects the OS preference
-        via{' '}
-        <code style={s.inlineCode}>@media (prefers-color-scheme: dark)</code>{' '}
-        automatically. You can also force dark or light mode on any element
-        using the <code style={s.inlineCode}>data-theme</code> attribute:
+        The Storybook Theme Builder provides individual background, foreground,
+        and accent color pickers for every component. Changes are applied to all
+        stories and persisted locally while you explore the library.
       </p>
-      <pre style={s.codeBlock}>{`/* Force dark mode on a specific subtree */
-<div data-theme="dark">
-  <Card>Always dark</Card>
-</div>
-
-/* Force light mode */
-<div data-theme="light">
-  <Card>Always light</Card>
-</div>`}</pre>
 
       <hr style={s.hr} />
 

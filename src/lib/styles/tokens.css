@@ -10,6 +10,7 @@
   :root {
     /* Font */
     --jowa-font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    color-scheme: light;
 
     /* ── Color primitives (oklch) ─────────────────────────────────────── */
     /* Blue */
@@ -132,87 +133,6 @@
     --jowa-transition: var(--jowa-duration-fast) var(--jowa-ease-smooth);
   }
 
-  /* ── Dark mode (system preference) ──────────────────────────────────── */
-  @media (prefers-color-scheme: dark) {
-    :root:not([data-theme="light"]) {
-      --jowa-blue-l:  72%;
-      --jowa-green-l: 72%;
-      --jowa-red-l:   72%;
-      --jowa-amber-l: 82%;
-
-      --jowa-color-neutral-bg:     var(--jowa-neutral-900);
-      --jowa-color-neutral-border: var(--jowa-neutral-500);
-      --jowa-color-neutral-text:   var(--jowa-neutral-100);
-      --jowa-color-neutral-hover:  var(--jowa-neutral-800);
-      --jowa-color-muted:          var(--jowa-neutral-400);
-      --jowa-color-surface:        var(--jowa-neutral-800);
-
-      --jowa-color-primary-bg:  oklch(20% 0.06 var(--jowa-blue-h));
-      --jowa-color-danger-bg:   oklch(20% 0.06 25);
-      --jowa-color-success-bg:  oklch(20% 0.05 155);
-      --jowa-color-warning-bg:  oklch(20% 0.05 75);
-      --jowa-color-info-bg:     oklch(20% 0.05 232);
-
-      --jowa-shadow-sm: 0 1px 2px oklch(0% 0 0 / 30%);
-      --jowa-shadow-md: 0 4px 6px oklch(0% 0 0 / 40%);
-      --jowa-shadow-lg: 0 10px 24px oklch(0% 0 0 / 50%);
-    }
-  }
-
-  /* ── Light mode (explicit override) ─────────────────────────────────── */
-  [data-theme="light"] {
-    --jowa-blue-l:  52%;
-    --jowa-green-l: 52%;
-    --jowa-red-l:   53%;
-    --jowa-amber-l: 68%;
-
-    --jowa-color-neutral-bg:     var(--jowa-neutral-0);
-    --jowa-color-neutral-border: var(--jowa-neutral-200);
-    --jowa-color-neutral-text:   var(--jowa-neutral-800);
-    --jowa-color-neutral-hover:  var(--jowa-neutral-50);
-    --jowa-color-muted:          var(--jowa-neutral-500);
-    --jowa-color-surface:        var(--jowa-neutral-50);
-
-    --jowa-color-primary-bg:  var(--jowa-blue-50);
-    --jowa-color-danger-bg:   var(--jowa-red-50);
-    --jowa-color-success-bg:  var(--jowa-green-50);
-    --jowa-color-warning-bg:  var(--jowa-amber-50);
-    --jowa-color-info-bg:     var(--jowa-sky-50);
-
-    --jowa-shadow-sm: 0 1px 2px oklch(0% 0 0 / 5%);
-    --jowa-shadow-md: 0 4px 6px oklch(0% 0 0 / 8%);
-    --jowa-shadow-lg: 0 10px 24px oklch(0% 0 0 / 10%);
-
-    color-scheme: light;
-  }
-
-  /* ── Dark mode (manual [data-theme="dark"]) ──────────────────────────── */
-  [data-theme="dark"] {
-    --jowa-blue-l:  72%;
-    --jowa-green-l: 72%;
-    --jowa-red-l:   72%;
-    --jowa-amber-l: 82%;
-
-    --jowa-color-neutral-bg:     var(--jowa-neutral-900);
-    --jowa-color-neutral-border: var(--jowa-neutral-500);
-    --jowa-color-neutral-text:   var(--jowa-neutral-100);
-    --jowa-color-neutral-hover:  var(--jowa-neutral-800);
-    --jowa-color-muted:          var(--jowa-neutral-400);
-    --jowa-color-surface:        var(--jowa-neutral-800);
-
-    --jowa-color-primary-bg:  oklch(20% 0.06 var(--jowa-blue-h));
-    --jowa-color-danger-bg:   oklch(20% 0.06 25);
-    --jowa-color-success-bg:  oklch(20% 0.05 155);
-    --jowa-color-warning-bg:  oklch(20% 0.05 75);
-    --jowa-color-info-bg:     oklch(20% 0.05 232);
-
-    --jowa-shadow-sm: 0 1px 2px oklch(0% 0 0 / 30%);
-    --jowa-shadow-md: 0 4px 6px oklch(0% 0 0 / 40%);
-    --jowa-shadow-lg: 0 10px 24px oklch(0% 0 0 / 50%);
-
-    color-scheme: dark;
-  }
-
   /* ── Reduced motion ──────────────────────────────────────────────────── */
   @media (prefers-reduced-motion: reduce) {
     :root {
@@ -254,6 +174,6 @@
     font-size: var(--jowa-font-size-md);
     color: var(--jowa-color-neutral-text);
     line-height: var(--jowa-line-height);
-    color-scheme: light dark;
+    color-scheme: light;
   }
 }

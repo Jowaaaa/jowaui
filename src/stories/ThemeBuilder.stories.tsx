@@ -12,8 +12,25 @@ import { Tabs } from "../lib/components/tabs/tabs";
 /* ── Token definitions ────────────────────────────────────────────────────── */
 interface TokenGroup {
   label: string;
-  tokens: { key: string; label: string; type: "color" | "range" | "select"; min?: number; max?: number; step?: number; options?: string[] }[];
+  tokens: { key: string; label: string; type: "color" | "range" | "select"; min?: number; max?: number; step?: number; options?: string[]; defaultValue?: string }[];
 }
+
+const COMPONENTS = [
+  "accordion", "alert", "avatar", "badge", "banner", "button", "card", "carousel", "chart", "checkbox", "colorpicker", "combobox",
+  "confirmdialog", "contextmenu", "datepicker", "datagrid", "divider", "drawer", "dropdown", "fileinput", "footer", "gauge", "hero", "input",
+  "kanban", "markdownrenderer", "modal", "multiselect", "navbar", "numberinput", "otpinput", "pagination", "popover", "progress", "radio", "rangeslider",
+  "richtexteditor", "select", "sidebar", "skeleton", "sparkline", "spinner", "statcard", "stepper", "switch", "table", "tabs", "tag", "textarea",
+  "timeline", "toast", "tooltip", "tree", "wizardstepper",
+] as const;
+
+const COMPONENT_COLOR_TOKENS = COMPONENTS.flatMap((component) => {
+  const label = component.replace(/(^|-)([a-z])/g, (_, __, letter) => ` ${letter.toUpperCase()}`).trim();
+  return [
+    { key: `--jowa-editor-${component}-background`, label: `${label} background`, type: "color" as const, defaultValue: "#ffffff" },
+    { key: `--jowa-editor-${component}-foreground`, label: `${label} foreground`, type: "color" as const, defaultValue: "#1f2937" },
+    { key: `--jowa-editor-${component}-accent`, label: `${label} accent`, type: "color" as const, defaultValue: "#2563eb" },
+  ];
+});
 
 const TOKEN_GROUPS: TokenGroup[] = [
   {
@@ -27,6 +44,7 @@ const TOKEN_GROUPS: TokenGroup[] = [
       { key: "--jowa-amber-l",  label: "Warning lightness", type: "range", min: 20,  max: 95,  step: 1 },
     ],
   },
+  { label: "Components", tokens: COMPONENT_COLOR_TOKENS },
   {
     label: "Shape",
     tokens: [
@@ -68,6 +86,7 @@ function getDefaultValues(): Record<string, string> {
   for (const group of TOKEN_GROUPS) {
     for (const token of group.tokens) {
       defaults[token.key] = style.getPropertyValue(token.key).trim();
+      if (!defaults[token.key] && token.defaultValue) defaults[token.key] = token.defaultValue;
     }
   }
   return defaults;
@@ -197,9 +216,26 @@ const PreviewCanvas: React.FC<{ vars: Record<string, string> }> = ({ vars }) => 
 
 /* ── Theme Builder ────────────────────────────────────────────────────────── */
 const ThemeBuilderComponent: React.FC = () => {
-  const [vars, setVars] = useState<Record<string, string>>(() => getDefaultValues());
+  const [vars, setVars] = useState<Record<string, string>>(() => {
+    const defaults = getDefaultValues();
+    if (typeof window === "undefined") return defaults;
+    try {
+      return { ...defaults, ...JSON.parse(localStorage.getItem("jowa-theme-builder") ?? "{}") };
+    } catch {
+      return defaults;
+    }
+  });
   const [copied, setCopied] = useState(false);
   const [activeGroup, setActiveGroup] = useState(TOKEN_GROUPS[0].label);
+
+  useEffect(() => {
+    if (typeof document === "undefined") return;
+    for (const token of COMPONENT_COLOR_TOKENS) {
+      const value = vars[token.key];
+      if (value) document.documentElement.style.setProperty(token.key, value);
+    }
+    localStorage.setItem("jowa-theme-builder", JSON.stringify(vars));
+  }, [vars]);
 
   const handleChange = useCallback((key: string, raw: string) => {
     setVars((prev) => ({ ...prev, [key]: formatValue(key, raw) }));
@@ -252,7 +288,7 @@ const ThemeBuilderComponent: React.FC = () => {
           {activeTokens.map((token) => {
             const raw = vars[token.key] ?? "";
             const numeric = parseNumeric(token.key, raw);
-            return (
+             return (
               <div key={token.key}>
                 <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "4px" }}>
                   <label style={{ fontSize: "0.8125rem", fontWeight: 500, color: "var(--jowa-color-neutral-text)" }}>
@@ -262,19 +298,31 @@ const ThemeBuilderComponent: React.FC = () => {
                     {raw}
                   </code>
                 </div>
-                <input
-                  type="range"
-                  min={token.min}
-                  max={token.max}
-                  step={token.step}
-                  value={numeric}
-                  onChange={(e) => handleChange(token.key, e.target.value)}
-                  style={{ width: "100%", accentColor: "var(--jowa-color-primary)" }}
-                />
-                <div style={{ display: "flex", justifyContent: "space-between", fontSize: "0.6875rem", color: "var(--jowa-color-muted)" }}>
-                  <span>{token.min}</span>
-                  <span>{token.max}</span>
-                </div>
+                {token.type === "color" ? (
+                  <input
+                    type="color"
+                    value={raw || token.defaultValue}
+                    onChange={(e) => handleChange(token.key, e.target.value)}
+                    style={{ width: "100%", height: "2rem", padding: 0, border: "1px solid var(--jowa-color-neutral-border)", borderRadius: "var(--jowa-radius-sm)", background: "transparent", cursor: "pointer" }}
+                    aria-label={token.label}
+                  />
+                ) : (
+                  <>
+                    <input
+                      type="range"
+                      min={token.min}
+                      max={token.max}
+                      step={token.step}
+                      value={numeric}
+                      onChange={(e) => handleChange(token.key, e.target.value)}
+                      style={{ width: "100%", accentColor: "var(--jowa-color-primary)" }}
+                    />
+                    <div style={{ display: "flex", justifyContent: "space-between", fontSize: "0.6875rem", color: "var(--jowa-color-muted)" }}>
+                      <span>{token.min}</span>
+                      <span>{token.max}</span>
+                    </div>
+                  </>
+                )}
               </div>
             );
           })}
@@ -309,7 +357,7 @@ const meta: Meta = {
     layout: "fullscreen",
     docs: {
       description: {
-        component: "Live theme builder — adjust tokens and see all components update in real time. Click **Copy CSS** to export your overrides.",
+        component: "Live light-theme builder — adjust global tokens or individual component colors and see Storybook stories update in real time. Click **Copy CSS** to export your overrides.",
       },
     },
   },

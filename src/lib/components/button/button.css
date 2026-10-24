@@ -27,20 +27,20 @@
 
   .jowa-btn:disabled { opacity: 0.5; cursor: not-allowed; }
 
-  .jowa-btn--primary { background-color: var(--jowa-color-primary); color: #ffffff; }
-  .jowa-btn--primary:hover:not(:disabled) { background-color: var(--jowa-color-primary-hover); }
+  .jowa-btn--primary { background-color: var(--jowa-button-primary-background, var(--jowa-color-primary)); color: var(--jowa-button-primary-foreground, #ffffff); }
+  .jowa-btn--primary:hover:not(:disabled) { background-color: var(--jowa-button-primary-hover, var(--jowa-color-primary-hover)); }
 
-  .jowa-btn--danger { background-color: var(--jowa-color-danger); color: #ffffff; }
-  .jowa-btn--danger:hover:not(:disabled) { background-color: var(--jowa-color-danger-hover); }
+  .jowa-btn--danger { background-color: var(--jowa-button-danger-background, var(--jowa-color-danger)); color: var(--jowa-button-danger-foreground, #ffffff); }
+  .jowa-btn--danger:hover:not(:disabled) { background-color: var(--jowa-button-danger-hover, var(--jowa-color-danger-hover)); }
 
   .jowa-btn--outline {
     background-color: transparent;
-    color: var(--jowa-color-neutral-text);
-    border: 1px solid var(--jowa-color-neutral-border);
+    color: var(--jowa-button-outline-foreground, var(--jowa-color-neutral-text));
+    border: 1px solid var(--jowa-button-outline-border, var(--jowa-color-neutral-border));
   }
   .jowa-btn--outline:hover:not(:disabled) { background-color: var(--jowa-color-neutral-hover); }
 
-  .jowa-btn--ghost { background-color: transparent; color: var(--jowa-color-neutral-text); }
+  .jowa-btn--ghost { background-color: transparent; color: var(--jowa-button-ghost-foreground, var(--jowa-color-neutral-text)); }
   .jowa-btn--ghost:hover:not(:disabled) { background-color: var(--jowa-color-neutral-hover); }
 
   .jowa-btn--navbar {

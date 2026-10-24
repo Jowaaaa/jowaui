@@ -13,8 +13,8 @@
   }
 
   .jowa-badge--neutral { background: var(--jowa-color-surface);     color: var(--jowa-color-muted);    border: 1px solid var(--jowa-color-neutral-border); }
-  .jowa-badge--primary { background: var(--jowa-color-primary-bg);  color: var(--jowa-color-primary); }
-  .jowa-badge--success { background: var(--jowa-color-success-bg);  color: var(--jowa-color-success); }
-  .jowa-badge--warning { background: var(--jowa-color-warning-bg);  color: var(--jowa-color-warning); }
-  .jowa-badge--danger  { background: var(--jowa-color-danger-bg);   color: var(--jowa-color-danger);  }
+  .jowa-badge--primary { background: var(--jowa-badge-primary-background, var(--jowa-color-primary-bg)); color: var(--jowa-badge-primary-foreground, var(--jowa-color-primary)); }
+  .jowa-badge--success { background: var(--jowa-badge-success-background, var(--jowa-color-success-bg)); color: var(--jowa-badge-success-foreground, var(--jowa-color-success)); }
+  .jowa-badge--warning { background: var(--jowa-badge-warning-background, var(--jowa-color-warning-bg)); color: var(--jowa-badge-warning-foreground, var(--jowa-color-warning)); }
+  .jowa-badge--danger  { background: var(--jowa-badge-danger-background, var(--jowa-color-danger-bg)); color: var(--jowa-badge-danger-foreground, var(--jowa-color-danger)); }
 }

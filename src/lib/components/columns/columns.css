@@ -1,0 +1,9 @@
+.jowa-columns {
+  display: grid;
+  width: 100%;
+  align-items: start;
+}
+
+.jowa-column {
+  min-width: 0;
+}

@@ -278,7 +278,7 @@ const DOC_PAGES = [
     title: 'Customize',
     story: 'Docs/Customize',
     description:
-      'Override tokens, scope themes to a subtree, dark mode, reduced motion, and all available design tokens with live values.',
+      'Override tokens, scope themes to a subtree, customize component colors, reduced motion, and all available design tokens with live values.',
     icon: '🎨',
   },
 ];

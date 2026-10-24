@@ -1,0 +1,167 @@
+/* Storybook-only component theme editor mappings. */
+:root {
+  --jowa-editor-base-bg: var(--jowa-color-neutral-bg);
+  --jowa-editor-base-fg: var(--jowa-color-neutral-text);
+  --jowa-editor-base-border: var(--jowa-color-neutral-border);
+  --jowa-editor-base-accent: var(--jowa-color-primary);
+  --jowa-editor-base-accent-bg: var(--jowa-color-primary-bg);
+}
+
+/* Each root gets its own semantic scope. Existing component CSS then keeps its
+   normal behavior while the builder can override one component at a time. */
+.jowa-accordion,
+.jowa-alert,
+.jowa-avatar,
+.jowa-badge,
+.jowa-banner,
+.jowa-breadcrumbs,
+.jowa-btn,
+.jowa-card,
+.jowa-carousel,
+.jowa-chart,
+.jowa-checkbox-wrapper,
+.jowa-colorpicker-wrapper,
+.jowa-combobox,
+.jowa-confirmdialog,
+.jowa-context-menu,
+.jowa-datepicker-wrapper,
+.jowa-datagrid,
+.jowa-divider,
+.jowa-drawer,
+.jowa-dropdown,
+.jowa-fileinput,
+.jowa-footer,
+.jowa-gauge,
+.jowa-hero,
+.jowa-input-wrapper,
+.jowa-kanban,
+.jowa-markdown,
+.jowa-modal,
+.jowa-multiselect,
+.jowa-navbar,
+.jowa-numberinput,
+.jowa-otpinput,
+.jowa-pagination,
+.jowa-popover,
+.jowa-progress,
+.jowa-radio-wrapper,
+.jowa-rangeslider,
+.jowa-richtexteditor,
+.jowa-select-wrapper,
+.jowa-sidebar,
+.jowa-skeleton,
+.jowa-sparkline,
+.jowa-spinner,
+.jowa-statcard,
+.jowa-stepper,
+.jowa-switch,
+.jowa-table,
+.jowa-tabs,
+.jowa-tag,
+.jowa-textarea-wrapper,
+.jowa-timeline,
+.jowa-toast,
+.jowa-tooltip,
+.jowa-tree,
+.jowa-wizardstepper {
+  --jowa-color-neutral-bg: var(--jowa-editor-background, var(--jowa-editor-base-bg));
+  --jowa-color-surface: var(--jowa-editor-background, var(--jowa-editor-base-bg));
+  --jowa-color-neutral-text: var(--jowa-editor-foreground, var(--jowa-editor-base-fg));
+  --jowa-color-neutral-border: var(--jowa-editor-border, var(--jowa-editor-base-border));
+  --jowa-color-primary: var(--jowa-editor-accent, var(--jowa-editor-base-accent));
+  --jowa-color-primary-hover: var(--jowa-editor-accent-hover, var(--jowa-editor-base-accent));
+  --jowa-color-primary-bg: var(--jowa-editor-accent-bg, var(--jowa-editor-base-accent-bg));
+  --jowa-color-info: var(--jowa-editor-accent, var(--jowa-editor-base-accent));
+  --jowa-color-info-bg: var(--jowa-editor-accent-bg, var(--jowa-editor-base-accent-bg));
+  --jowa-color-success: var(--jowa-editor-accent, var(--jowa-editor-base-accent));
+  --jowa-color-success-bg: var(--jowa-editor-accent-bg, var(--jowa-editor-base-accent-bg));
+  --jowa-color-warning: var(--jowa-editor-accent, var(--jowa-editor-base-accent));
+  --jowa-color-warning-bg: var(--jowa-editor-accent-bg, var(--jowa-editor-base-accent-bg));
+  --jowa-color-danger: var(--jowa-editor-accent, var(--jowa-editor-base-accent));
+  --jowa-color-danger-bg: var(--jowa-editor-accent-bg, var(--jowa-editor-base-accent-bg));
+}
+
+.jowa-checkbox,
+.jowa-colorpicker,
+.jowa-confirmdialog,
+.jowa-contextmenu,
+.jowa-markdownrenderer,
+.jowa-otpinput,
+.jowa-radio,
+.jowa-richtexteditor {
+  --jowa-color-neutral-bg: var(--jowa-editor-background, var(--jowa-editor-base-bg));
+  --jowa-color-surface: var(--jowa-editor-background, var(--jowa-editor-base-bg));
+  --jowa-color-neutral-text: var(--jowa-editor-foreground, var(--jowa-editor-base-fg));
+  --jowa-color-neutral-border: var(--jowa-editor-border, var(--jowa-editor-base-border));
+  --jowa-color-primary: var(--jowa-editor-accent, var(--jowa-editor-base-accent));
+  --jowa-color-primary-bg: var(--jowa-editor-accent-bg, var(--jowa-editor-base-accent-bg));
+}
+
+.jowa-editor-component {
+  background: var(--jowa-editor-background, var(--jowa-editor-base-bg));
+  color: var(--jowa-editor-foreground, var(--jowa-editor-base-fg));
+}
+
+/* Bind the public editor keys to the local scope above. */
+.jowa-accordion { --jowa-editor-background: var(--jowa-editor-accordion-background, var(--jowa-editor-base-bg)); --jowa-editor-foreground: var(--jowa-editor-accordion-foreground, var(--jowa-editor-base-fg)); --jowa-editor-accent: var(--jowa-editor-accordion-accent, var(--jowa-editor-base-accent)); }
+.jowa-alert { --jowa-editor-background: var(--jowa-editor-alert-background, var(--jowa-editor-base-bg)); --jowa-editor-foreground: var(--jowa-editor-alert-foreground, var(--jowa-editor-base-fg)); --jowa-editor-accent: var(--jowa-editor-alert-accent, var(--jowa-editor-base-accent)); }
+.jowa-avatar { --jowa-editor-background: var(--jowa-editor-avatar-background, var(--jowa-editor-base-bg)); --jowa-editor-foreground: var(--jowa-editor-avatar-foreground, var(--jowa-editor-base-fg)); --jowa-editor-accent: var(--jowa-editor-avatar-accent, var(--jowa-editor-base-accent)); }
+.jowa-badge { --jowa-editor-background: var(--jowa-editor-badge-background, var(--jowa-editor-base-bg)); --jowa-editor-foreground: var(--jowa-editor-badge-foreground, var(--jowa-editor-base-fg)); --jowa-editor-accent: var(--jowa-editor-badge-accent, var(--jowa-editor-base-accent)); }
+.jowa-banner { --jowa-editor-background: var(--jowa-editor-banner-background, var(--jowa-editor-base-bg)); --jowa-editor-foreground: var(--jowa-editor-banner-foreground, var(--jowa-editor-base-fg)); --jowa-editor-accent: var(--jowa-editor-banner-accent, var(--jowa-editor-base-accent)); }
+.jowa-btn { --jowa-editor-background: var(--jowa-editor-button-background, var(--jowa-editor-base-bg)); --jowa-editor-foreground: var(--jowa-editor-button-foreground, var(--jowa-editor-base-fg)); --jowa-editor-accent: var(--jowa-editor-button-accent, var(--jowa-editor-base-accent)); }
+.jowa-card { --jowa-editor-background: var(--jowa-editor-card-background, var(--jowa-editor-base-bg)); --jowa-editor-foreground: var(--jowa-editor-card-foreground, var(--jowa-editor-base-fg)); --jowa-editor-accent: var(--jowa-editor-card-accent, var(--jowa-editor-base-accent)); }
+.jowa-carousel { --jowa-editor-background: var(--jowa-editor-carousel-background, var(--jowa-editor-base-bg)); --jowa-editor-foreground: var(--jowa-editor-carousel-foreground, var(--jowa-editor-base-fg)); --jowa-editor-accent: var(--jowa-editor-carousel-accent, var(--jowa-editor-base-accent)); }
+.jowa-chart { --jowa-editor-background: var(--jowa-editor-chart-background, var(--jowa-editor-base-bg)); --jowa-editor-foreground: var(--jowa-editor-chart-foreground, var(--jowa-editor-base-fg)); --jowa-editor-accent: var(--jowa-editor-chart-accent, var(--jowa-editor-base-accent)); }
+.jowa-combobox { --jowa-editor-background: var(--jowa-editor-combobox-background, var(--jowa-editor-base-bg)); --jowa-editor-foreground: var(--jowa-editor-combobox-foreground, var(--jowa-editor-base-fg)); --jowa-editor-accent: var(--jowa-editor-combobox-accent, var(--jowa-editor-base-accent)); }
+.jowa-datepicker-wrapper { --jowa-editor-background: var(--jowa-editor-datepicker-background, var(--jowa-editor-base-bg)); --jowa-editor-foreground: var(--jowa-editor-datepicker-foreground, var(--jowa-editor-base-fg)); --jowa-editor-accent: var(--jowa-editor-datepicker-accent, var(--jowa-editor-base-accent)); }
+.jowa-datagrid { --jowa-editor-background: var(--jowa-editor-datagrid-background, var(--jowa-editor-base-bg)); --jowa-editor-foreground: var(--jowa-editor-datagrid-foreground, var(--jowa-editor-base-fg)); --jowa-editor-accent: var(--jowa-editor-datagrid-accent, var(--jowa-editor-base-accent)); }
+.jowa-divider { --jowa-editor-background: var(--jowa-editor-divider-background, var(--jowa-editor-base-bg)); --jowa-editor-foreground: var(--jowa-editor-divider-foreground, var(--jowa-editor-base-fg)); --jowa-editor-accent: var(--jowa-editor-divider-accent, var(--jowa-editor-base-accent)); }
+.jowa-drawer { --jowa-editor-background: var(--jowa-editor-drawer-background, var(--jowa-editor-base-bg)); --jowa-editor-foreground: var(--jowa-editor-drawer-foreground, var(--jowa-editor-base-fg)); --jowa-editor-accent: var(--jowa-editor-drawer-accent, var(--jowa-editor-base-accent)); }
+.jowa-dropdown { --jowa-editor-background: var(--jowa-editor-dropdown-background, var(--jowa-editor-base-bg)); --jowa-editor-foreground: var(--jowa-editor-dropdown-foreground, var(--jowa-editor-base-fg)); --jowa-editor-accent: var(--jowa-editor-dropdown-accent, var(--jowa-editor-base-accent)); }
+.jowa-fileinput { --jowa-editor-background: var(--jowa-editor-fileinput-background, var(--jowa-editor-base-bg)); --jowa-editor-foreground: var(--jowa-editor-fileinput-foreground, var(--jowa-editor-base-fg)); --jowa-editor-accent: var(--jowa-editor-fileinput-accent, var(--jowa-editor-base-accent)); }
+.jowa-footer { --jowa-editor-background: var(--jowa-editor-footer-background, var(--jowa-editor-base-bg)); --jowa-editor-foreground: var(--jowa-editor-footer-foreground, var(--jowa-editor-base-fg)); --jowa-editor-accent: var(--jowa-editor-footer-accent, var(--jowa-editor-base-accent)); }
+.jowa-gauge { --jowa-editor-background: var(--jowa-editor-gauge-background, var(--jowa-editor-base-bg)); --jowa-editor-foreground: var(--jowa-editor-gauge-foreground, var(--jowa-editor-base-fg)); --jowa-editor-accent: var(--jowa-editor-gauge-accent, var(--jowa-editor-base-accent)); }
+.jowa-hero { --jowa-editor-background: var(--jowa-editor-hero-background, var(--jowa-editor-base-bg)); --jowa-editor-foreground: var(--jowa-editor-hero-foreground, var(--jowa-editor-base-fg)); --jowa-editor-accent: var(--jowa-editor-hero-accent, var(--jowa-editor-base-accent)); }
+.jowa-input-wrapper { --jowa-editor-background: var(--jowa-editor-input-background, var(--jowa-editor-base-bg)); --jowa-editor-foreground: var(--jowa-editor-input-foreground, var(--jowa-editor-base-fg)); --jowa-editor-accent: var(--jowa-editor-input-accent, var(--jowa-editor-base-accent)); }
+.jowa-kanban { --jowa-editor-background: var(--jowa-editor-kanban-background, var(--jowa-editor-base-bg)); --jowa-editor-foreground: var(--jowa-editor-kanban-foreground, var(--jowa-editor-base-fg)); --jowa-editor-accent: var(--jowa-editor-kanban-accent, var(--jowa-editor-base-accent)); }
+.jowa-modal { --jowa-editor-background: var(--jowa-editor-modal-background, var(--jowa-editor-base-bg)); --jowa-editor-foreground: var(--jowa-editor-modal-foreground, var(--jowa-editor-base-fg)); --jowa-editor-accent: var(--jowa-editor-modal-accent, var(--jowa-editor-base-accent)); }
+.jowa-multiselect { --jowa-editor-background: var(--jowa-editor-multiselect-background, var(--jowa-editor-base-bg)); --jowa-editor-foreground: var(--jowa-editor-multiselect-foreground, var(--jowa-editor-base-fg)); --jowa-editor-accent: var(--jowa-editor-multiselect-accent, var(--jowa-editor-base-accent)); }
+.jowa-navbar { --jowa-editor-background: var(--jowa-editor-navbar-background, var(--jowa-editor-base-bg)); --jowa-editor-foreground: var(--jowa-editor-navbar-foreground, var(--jowa-editor-base-fg)); --jowa-editor-accent: var(--jowa-editor-navbar-accent, var(--jowa-editor-base-accent)); }
+.jowa-numberinput { --jowa-editor-background: var(--jowa-editor-numberinput-background, var(--jowa-editor-base-bg)); --jowa-editor-foreground: var(--jowa-editor-numberinput-foreground, var(--jowa-editor-base-fg)); --jowa-editor-accent: var(--jowa-editor-numberinput-accent, var(--jowa-editor-base-accent)); }
+.jowa-pagination { --jowa-editor-background: var(--jowa-editor-pagination-background, var(--jowa-editor-base-bg)); --jowa-editor-foreground: var(--jowa-editor-pagination-foreground, var(--jowa-editor-base-fg)); --jowa-editor-accent: var(--jowa-editor-pagination-accent, var(--jowa-editor-base-accent)); }
+.jowa-popover { --jowa-editor-background: var(--jowa-editor-popover-background, var(--jowa-editor-base-bg)); --jowa-editor-foreground: var(--jowa-editor-popover-foreground, var(--jowa-editor-base-fg)); --jowa-editor-accent: var(--jowa-editor-popover-accent, var(--jowa-editor-base-accent)); }
+.jowa-progress { --jowa-editor-background: var(--jowa-editor-progress-background, var(--jowa-editor-base-bg)); --jowa-editor-foreground: var(--jowa-editor-progress-foreground, var(--jowa-editor-base-fg)); --jowa-editor-accent: var(--jowa-editor-progress-accent, var(--jowa-editor-base-accent)); }
+.jowa-rangeslider { --jowa-editor-background: var(--jowa-editor-rangeslider-background, var(--jowa-editor-base-bg)); --jowa-editor-foreground: var(--jowa-editor-rangeslider-foreground, var(--jowa-editor-base-fg)); --jowa-editor-accent: var(--jowa-editor-rangeslider-accent, var(--jowa-editor-base-accent)); }
+.jowa-select-wrapper { --jowa-editor-background: var(--jowa-editor-select-background, var(--jowa-editor-base-bg)); --jowa-editor-foreground: var(--jowa-editor-select-foreground, var(--jowa-editor-base-fg)); --jowa-editor-accent: var(--jowa-editor-select-accent, var(--jowa-editor-base-accent)); }
+.jowa-sidebar { --jowa-editor-background: var(--jowa-editor-sidebar-background, var(--jowa-editor-base-bg)); --jowa-editor-foreground: var(--jowa-editor-sidebar-foreground, var(--jowa-editor-base-fg)); --jowa-editor-accent: var(--jowa-editor-sidebar-accent, var(--jowa-editor-base-accent)); }
+.jowa-skeleton { --jowa-editor-background: var(--jowa-editor-skeleton-background, var(--jowa-editor-base-bg)); --jowa-editor-foreground: var(--jowa-editor-skeleton-foreground, var(--jowa-editor-base-fg)); --jowa-editor-accent: var(--jowa-editor-skeleton-accent, var(--jowa-editor-base-accent)); }
+.jowa-sparkline { --jowa-editor-background: var(--jowa-editor-sparkline-background, var(--jowa-editor-base-bg)); --jowa-editor-foreground: var(--jowa-editor-sparkline-foreground, var(--jowa-editor-base-fg)); --jowa-editor-accent: var(--jowa-editor-sparkline-accent, var(--jowa-editor-base-accent)); }
+.jowa-spinner { --jowa-editor-background: var(--jowa-editor-spinner-background, var(--jowa-editor-base-bg)); --jowa-editor-foreground: var(--jowa-editor-spinner-foreground, var(--jowa-editor-base-fg)); --jowa-editor-accent: var(--jowa-editor-spinner-accent, var(--jowa-editor-base-accent)); }
+.jowa-statcard { --jowa-editor-background: var(--jowa-editor-statcard-background, var(--jowa-editor-base-bg)); --jowa-editor-foreground: var(--jowa-editor-statcard-foreground, var(--jowa-editor-base-fg)); --jowa-editor-accent: var(--jowa-editor-statcard-accent, var(--jowa-editor-base-accent)); }
+.jowa-stepper { --jowa-editor-background: var(--jowa-editor-stepper-background, var(--jowa-editor-base-bg)); --jowa-editor-foreground: var(--jowa-editor-stepper-foreground, var(--jowa-editor-base-fg)); --jowa-editor-accent: var(--jowa-editor-stepper-accent, var(--jowa-editor-base-accent)); }
+.jowa-switch { --jowa-editor-background: var(--jowa-editor-switch-background, var(--jowa-editor-base-bg)); --jowa-editor-foreground: var(--jowa-editor-switch-foreground, var(--jowa-editor-base-fg)); --jowa-editor-accent: var(--jowa-editor-switch-accent, var(--jowa-editor-base-accent)); }
+.jowa-table { --jowa-editor-background: var(--jowa-editor-table-background, var(--jowa-editor-base-bg)); --jowa-editor-foreground: var(--jowa-editor-table-foreground, var(--jowa-editor-base-fg)); --jowa-editor-accent: var(--jowa-editor-table-accent, var(--jowa-editor-base-accent)); }
+.jowa-tabs { --jowa-editor-background: var(--jowa-editor-tabs-background, var(--jowa-editor-base-bg)); --jowa-editor-foreground: var(--jowa-editor-tabs-foreground, var(--jowa-editor-base-fg)); --jowa-editor-accent: var(--jowa-editor-tabs-accent, var(--jowa-editor-base-accent)); }
+.jowa-tag { --jowa-editor-background: var(--jowa-editor-tag-background, var(--jowa-editor-base-bg)); --jowa-editor-foreground: var(--jowa-editor-tag-foreground, var(--jowa-editor-base-fg)); --jowa-editor-accent: var(--jowa-editor-tag-accent, var(--jowa-editor-base-accent)); }
+.jowa-textarea-wrapper { --jowa-editor-background: var(--jowa-editor-textarea-background, var(--jowa-editor-base-bg)); --jowa-editor-foreground: var(--jowa-editor-textarea-foreground, var(--jowa-editor-base-fg)); --jowa-editor-accent: var(--jowa-editor-textarea-accent, var(--jowa-editor-base-accent)); }
+.jowa-timeline { --jowa-editor-background: var(--jowa-editor-timeline-background, var(--jowa-editor-base-bg)); --jowa-editor-foreground: var(--jowa-editor-timeline-foreground, var(--jowa-editor-base-fg)); --jowa-editor-accent: var(--jowa-editor-timeline-accent, var(--jowa-editor-base-accent)); }
+.jowa-toast { --jowa-editor-background: var(--jowa-editor-toast-background, var(--jowa-editor-base-bg)); --jowa-editor-foreground: var(--jowa-editor-toast-foreground, var(--jowa-editor-base-fg)); --jowa-editor-accent: var(--jowa-editor-toast-accent, var(--jowa-editor-base-accent)); }
+.jowa-tooltip { --jowa-editor-background: var(--jowa-editor-tooltip-background, var(--jowa-editor-base-bg)); --jowa-editor-foreground: var(--jowa-editor-tooltip-foreground, var(--jowa-editor-base-fg)); --jowa-editor-accent: var(--jowa-editor-tooltip-accent, var(--jowa-editor-base-accent)); }
+.jowa-tree { --jowa-editor-background: var(--jowa-editor-tree-background, var(--jowa-editor-base-bg)); --jowa-editor-foreground: var(--jowa-editor-tree-foreground, var(--jowa-editor-base-fg)); --jowa-editor-accent: var(--jowa-editor-tree-accent, var(--jowa-editor-base-accent)); }
+.jowa-wizardstepper { --jowa-editor-background: var(--jowa-editor-wizardstepper-background, var(--jowa-editor-base-bg)); --jowa-editor-foreground: var(--jowa-editor-wizardstepper-foreground, var(--jowa-editor-base-fg)); --jowa-editor-accent: var(--jowa-editor-wizardstepper-accent, var(--jowa-editor-base-accent)); }
+.jowa-checkbox { --jowa-editor-background: var(--jowa-editor-checkbox-background, var(--jowa-editor-base-bg)); --jowa-editor-foreground: var(--jowa-editor-checkbox-foreground, var(--jowa-editor-base-fg)); --jowa-editor-accent: var(--jowa-editor-checkbox-accent, var(--jowa-editor-base-accent)); }
+.jowa-colorpicker { --jowa-editor-background: var(--jowa-editor-colorpicker-background, var(--jowa-editor-base-bg)); --jowa-editor-foreground: var(--jowa-editor-colorpicker-foreground, var(--jowa-editor-base-fg)); --jowa-editor-accent: var(--jowa-editor-colorpicker-accent, var(--jowa-editor-base-accent)); }
+.jowa-confirmdialog { --jowa-editor-background: var(--jowa-editor-confirmdialog-background, var(--jowa-editor-base-bg)); --jowa-editor-foreground: var(--jowa-editor-confirmdialog-foreground, var(--jowa-editor-base-fg)); --jowa-editor-accent: var(--jowa-editor-confirmdialog-accent, var(--jowa-editor-base-accent)); }
+.jowa-contextmenu { --jowa-editor-background: var(--jowa-editor-contextmenu-background, var(--jowa-editor-base-bg)); --jowa-editor-foreground: var(--jowa-editor-contextmenu-foreground, var(--jowa-editor-base-fg)); --jowa-editor-accent: var(--jowa-editor-contextmenu-accent, var(--jowa-editor-base-accent)); }
+.jowa-markdownrenderer { --jowa-editor-background: var(--jowa-editor-markdownrenderer-background, var(--jowa-editor-base-bg)); --jowa-editor-foreground: var(--jowa-editor-markdownrenderer-foreground, var(--jowa-editor-base-fg)); --jowa-editor-accent: var(--jowa-editor-markdownrenderer-accent, var(--jowa-editor-base-accent)); }
+.jowa-otpinput { --jowa-editor-background: var(--jowa-editor-otpinput-background, var(--jowa-editor-base-bg)); --jowa-editor-foreground: var(--jowa-editor-otpinput-foreground, var(--jowa-editor-base-fg)); --jowa-editor-accent: var(--jowa-editor-otpinput-accent, var(--jowa-editor-base-accent)); }
+.jowa-radio { --jowa-editor-background: var(--jowa-editor-radio-background, var(--jowa-editor-base-bg)); --jowa-editor-foreground: var(--jowa-editor-radio-foreground, var(--jowa-editor-base-fg)); --jowa-editor-accent: var(--jowa-editor-radio-accent, var(--jowa-editor-base-accent)); }
+.jowa-richtexteditor { --jowa-editor-background: var(--jowa-editor-richtexteditor-background, var(--jowa-editor-base-bg)); --jowa-editor-foreground: var(--jowa-editor-richtexteditor-foreground, var(--jowa-editor-base-fg)); --jowa-editor-accent: var(--jowa-editor-richtexteditor-accent, var(--jowa-editor-base-accent)); }
+
+.jowa-btn--primary,
+.jowa-btn--danger,
+.jowa-btn--outline,
+.jowa-btn--ghost,
+.jowa-btn--navbar {
+  color: var(--jowa-editor-button-foreground, var(--jowa-editor-base-fg));
+}

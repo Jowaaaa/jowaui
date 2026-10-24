@@ -1,8 +1,10 @@
 # Dependencies
 node_modules/
+.next/
 
 # Build output
 dist/
+builder-dist/
 storybook-static/
 
 # TypeScript
