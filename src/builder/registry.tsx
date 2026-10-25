@@ -24,6 +24,7 @@ import { Switch } from "../lib/components/switch/switch";
 export type ComponentKey = "hero" | "card" | "columns" | "column" | "button" | "badge" | "alert" | "input" | "avatar" | "divider" | "progress" | "spinner" | "statcard" | "tag" | "navbar" | "banner" | "breadcrumbs" | "checkbox" | "skeleton" | "switch" | "textarea" | "custom";
 export type BuilderViewport = "desktop" | "tablet" | "mobile";
 export type SourceRange = { start: number; end: number };
+export type BuilderLayout = { columnStart: number; columnSpan: number };
 
 export type BuilderNode = {
   id: string;
@@ -32,6 +33,7 @@ export type BuilderNode = {
   children: BuilderNode[];
   styles?: Record<string, string>;
   responsiveStyles?: Partial<Record<BuilderViewport, Record<string, string>>>;
+  layout?: Partial<Record<BuilderViewport, BuilderLayout>>;
   source?: string;
   sourceVersion?: number;
   sourceRange?: SourceRange;
@@ -69,6 +71,11 @@ let nextId = 1;
 export function createNode(component: ComponentKey): BuilderNode {
   const definition = COMPONENT_REGISTRY[component];
   return { ...definition.create(), id: `${component}-${nextId++}` };
+}
+
+export function componentName(component: ComponentKey): string {
+  if (component === "statcard") return "StatCard";
+  return component.charAt(0).toUpperCase() + component.slice(1);
 }
 
 const COMPONENT_REGISTRY: Record<ComponentKey, ComponentDefinition> = {
@@ -536,7 +543,7 @@ export function nodeToJsx(node: BuilderNode, depth = 0): string {
     .map(([key, value]) => typeof value === "string" ? `${key}={${JSON.stringify(value)}}` : `${key}={${JSON.stringify(value)}}`)
     , ...(node.sourceAttributes ?? [])].join(" ");
   const definition = COMPONENT_REGISTRY[node.component];
-  const tag = definition.label;
+  const tag = componentName(node.component);
   const styleEntries = Object.entries(node.styles ?? {}).filter(([, value]) => value);
   const style = styleEntries.length
     ? ` style={{ ${styleEntries.map(([key, value]) => `"${key.startsWith("--") ? key : `--jowa-color-${key === "background" ? "neutral-bg" : key === "foreground" ? "neutral-text" : "primary"}`}": ${JSON.stringify(value)}`).join(", ")} }}`
@@ -591,7 +598,7 @@ function componentImports(nodes: BuilderNode[]): string {
   collect(nodes);
   return [...used]
     .filter((key) => key !== "custom")
-    .map((key) => COMPONENT_REGISTRY[key].label)
+    .map((key) => componentName(key))
     .sort()
     .join(", ");
 }
@@ -635,7 +642,7 @@ function sourceOwnedNode(source: string | undefined, start = 0, end = 0, label =
 }
 
 function componentForTag(tag: string): ComponentKey | undefined {
-  return (Object.keys(COMPONENT_REGISTRY) as ComponentKey[]).find((key) => COMPONENT_REGISTRY[key].label === tag);
+  return (Object.keys(COMPONENT_REGISTRY) as ComponentKey[]).find((key) => componentName(key) === tag || COMPONENT_REGISTRY[key].label === tag);
 }
 
 function jsxElementToNode(element: AstNode, fallback?: BuilderNode, source?: string): BuilderNode | undefined {

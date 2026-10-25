@@ -1,6 +1,6 @@
 import React from "react";
 import { describe, expect, it } from "vitest";
-import { COMPONENT_REGISTRY, createNode, moveNode, nodesToModule, sourceMap, sourceToNodes } from "./registry";
+import { COMPONENT_REGISTRY, componentName, createNode, moveNode, nodesToModule, sourceMap, sourceToNodes } from "./registry";
 
 describe("builder JSX registry", () => {
   it("exposes the expanded library registry", () => {
@@ -23,6 +23,15 @@ describe("builder JSX registry", () => {
     const element = React.createElement(COMPONENT_REGISTRY.button.render, button.props);
 
     expect(element.props.children).toBe("Get started");
+  });
+
+  it("uses code-safe names for generated component imports", () => {
+    const source = nodesToModule([createNode("statcard")]);
+
+    expect(componentName("statcard")).toBe("StatCard");
+    expect(source).toContain("import { StatCard }");
+    expect(source).toContain("<StatCard");
+    expect(() => sourceToNodes(source)).not.toThrow();
   });
 
   it("creates exportable Columns with editable Column children", () => {

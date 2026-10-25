@@ -66,6 +66,10 @@ button { cursor: pointer; }
 .viewport-switcher button:hover, .viewport-switcher__active { background: white !important; color: var(--builder-blue) !important; box-shadow: 0 1px 3px rgba(40, 55, 80, .12); }
 .builder-canvas-wrap { height: calc(100vh - 112px); padding: 30px; overflow: auto; }
 .builder-canvas { min-height: 100%; max-width: 1120px; margin: 0 auto; padding: 30px; border: 1px solid #e0e5ec; border-radius: 12px; background: #fff; box-shadow: 0 12px 35px rgba(30, 50, 80, .07); }
+.builder-grid { position: relative; display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); grid-auto-rows: minmax(18px, auto); gap: 16px; min-height: 100%; background-image: linear-gradient(to right, rgba(37, 99, 235, .08) 1px, transparent 1px), linear-gradient(to bottom, rgba(37, 99, 235, .055) 1px, transparent 1px); background-size: calc(100% / 12) 100%, 100% 64px; }
+.builder-grid--nested { min-height: 22px; margin: 8px 0; padding: 6px; border: 1px dashed rgba(37, 99, 235, .2); border-radius: 6px; background-color: rgba(248, 251, 255, .58); }
+.builder-grid > .builder-node, .builder-grid > .builder-drop-zone, .builder-grid > .canvas-empty { grid-column: 1 / -1; }
+.builder-grid > .builder-node { min-width: 0; }
 .builder-canvas--tablet { max-width: 768px; }
 .builder-canvas--mobile { max-width: 390px; }
 .canvas-empty { display: grid; place-items: center; min-height: 240px; border: 1px dashed #c4cfdd; border-radius: 10px; color: #8290a3; font-size: 13px; }

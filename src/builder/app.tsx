@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { SandpackLayout, SandpackPreview, SandpackProvider, useSandpack } from "@codesandbox/sandpack-react";
 import JSZip from "jszip";
-import { BuilderNode, BuilderViewport, COMPONENT_REGISTRY, ComponentKey, cloneNode, createNode, findNode, insertAfter, insertNode, moveNode, nodeToModule, nodesToModule, removeNode, sourceToNode, sourceToNodes, updateNode } from "./registry";
+import { BuilderLayout, BuilderNode, BuilderViewport, COMPONENT_REGISTRY, ComponentKey, cloneNode, createNode, findNode, insertAfter, insertNode, moveNode, nodeToModule, nodesToModule, removeNode, sourceToNode, sourceToNodes, updateNode } from "./registry";
 import { commitHistory, createHistoryState, redoHistory, undoHistory } from "./history";
 import { ProjectAsset, loadAssets, removeAsset, saveAsset } from "./assets";
 
@@ -10,7 +10,7 @@ const FILES_STORAGE_KEY = "jowaui-builder-files";
 const PAGES_STORAGE_KEY = "jowaui-builder-pages";
 const PROJECT_NAME_STORAGE_KEY = "jowaui-builder-project-name";
 const VERSION_HISTORY_STORAGE_KEY = "jowaui-builder-version-history";
-const SANDBOX_DEPENDENCIES = { react: "18.3.1", "react-dom": "18.3.1", "@jowaaaa/jowaui": "0.2.1" };
+const SANDBOX_DEPENDENCIES = { react: "18.3.1", "react-dom": "18.3.1", "@jowaaaa/jowaui": "0.2.2" };
 const SANDBOX_TEMPLATE = "vite-react-ts" as const;
 const STYLE_CONTROLS = [
   { key: "margin", label: "Margin" },
@@ -25,6 +25,30 @@ const STYLE_CONTROLS = [
   { key: "border", label: "Border" },
   { key: "borderRadius", label: "Radius" },
 ];
+
+const DEFAULT_GRID_SPANS: Partial<Record<ComponentKey, number>> = {
+  hero: 12,
+  navbar: 12,
+  banner: 12,
+  divider: 12,
+  columns: 12,
+  card: 6,
+  input: 4,
+  textarea: 6,
+  button: 3,
+  checkbox: 4,
+  switch: 4,
+};
+
+function defaultLayout(component: ComponentKey): BuilderLayout {
+  return { columnStart: 1, columnSpan: DEFAULT_GRID_SPANS[component] ?? 4 };
+}
+
+function clampLayout(layout: BuilderLayout): BuilderLayout {
+  const columnSpan = Math.max(1, Math.min(12, Math.round(layout.columnSpan)));
+  const columnStart = Math.max(1, Math.min(13 - columnSpan, Math.round(layout.columnStart)));
+  return { columnStart, columnSpan };
+}
 
 function SandpackErrorDetails({ onError, onValid }: { onError?: (message: string) => void; onValid?: () => void } = {}) {
   const { sandpack: { error, status } } = useSandpack();
@@ -92,12 +116,12 @@ function readProjectFiles(): { files: ProjectFiles; dependencies: ProjectDepende
     const saved = localStorage.getItem(FILES_STORAGE_KEY);
     if (saved) {
       const parsed = JSON.parse(saved) as { files?: ProjectFiles; dependencies?: ProjectDependencies };
-       if (parsed.files && typeof parsed.files === "object") return { files: parsed.files, dependencies: parsed.dependencies ?? { "@jowaaaa/jowaui": "0.2.1" } };
+       if (parsed.files && typeof parsed.files === "object") return { files: parsed.files, dependencies: parsed.dependencies ?? { "@jowaaaa/jowaui": "0.2.2" } };
     }
   } catch {
     // Invalid project files fall back to the generated visual page.
   }
-  return { files: {}, dependencies: { "@jowaaaa/jowaui": "0.2.1" } };
+  return { files: {}, dependencies: { "@jowaaaa/jowaui": "0.2.2" } };
 }
 
 function readPages(): BuilderPage[] {
@@ -184,7 +208,7 @@ async function downloadProjectArchive(projectName: string, pages: BuilderPage[],
     private: true,
     type: "module",
     scripts: { dev: "vite", build: "vite build", preview: "vite preview" },
-    dependencies: { react: "^18.3.1", "react-dom": "^18.3.1", "@jowaaaa/jowaui": "0.2.1", ...projectDependencies },
+    dependencies: { react: "^18.3.1", "react-dom": "^18.3.1", "@jowaaaa/jowaui": "0.2.2", ...projectDependencies },
     devDependencies: { "@vitejs/plugin-react": "^4.4.1", vite: "^6.3.5" },
   }, null, 2));
   zip.file("package-lock.json", JSON.stringify({
@@ -196,7 +220,7 @@ async function downloadProjectArchive(projectName: string, pages: BuilderPage[],
       "": {
         name: packageName,
         version: "0.0.0",
-        dependencies: { react: "^18.3.1", "react-dom": "^18.3.1", "@jowaaaa/jowaui": "0.2.1", ...projectDependencies },
+        dependencies: { react: "^18.3.1", "react-dom": "^18.3.1", "@jowaaaa/jowaui": "0.2.2", ...projectDependencies },
         devDependencies: { "@vitejs/plugin-react": "^4.4.1", vite: "^6.3.5" },
       },
     },
@@ -255,14 +279,39 @@ function DropZone({ parentId, index, drop, empty = false }: { parentId: string |
   return <div className={`builder-drop-zone${empty ? " builder-drop-zone--empty" : ""}`} onDragOver={(event) => { event.preventDefault(); event.dataTransfer.dropEffect = "move"; }} onDrop={(event) => { event.stopPropagation(); drop(event, parentId, index); }} aria-label="Drop component here">{empty && <span>Drop a component here</span>}</div>;
 }
 
-function renderNode(node: BuilderNode, viewport: BuilderViewport, selectedId: string | null, editingId: string | null, select: (id: string) => void, openCode: (id: string) => void, drop: (event: React.DragEvent, parentId: string | null, index: number) => void, edit: (id: string) => void, commitInline: (id: string, key: string, value: string) => void, cancelInline: () => void, startDrag: (id: string) => void): React.ReactNode {
+function GridResizeHandle({ side, onResize }: { side: "left" | "right"; onResize: (delta: number, side: "left" | "right") => void }) {
+  const start = (event: React.PointerEvent<HTMLSpanElement>) => {
+    event.preventDefault();
+    event.stopPropagation();
+    const grid = event.currentTarget.closest(".builder-grid") as HTMLElement | null;
+    if (!grid) return;
+    const rect = grid.getBoundingClientRect();
+    const columns = 12;
+    const gap = Number.parseFloat(getComputedStyle(grid).columnGap) || 0;
+    const columnWidth = (rect.width - gap * (columns - 1)) / columns;
+    const startX = event.clientX;
+    const move = (moveEvent: PointerEvent) => onResize(Math.round((moveEvent.clientX - startX) / (columnWidth + gap)), side);
+    const stop = () => {
+      window.removeEventListener("pointermove", move);
+      window.removeEventListener("pointerup", stop);
+    };
+    window.addEventListener("pointermove", move);
+    window.addEventListener("pointerup", stop, { once: true });
+  };
+
+  return <span className={`builder-resize-handle builder-resize-handle--${side}`} onPointerDown={start} role="separator" aria-label={`Resize ${side}`} />;
+}
+
+function renderNode(node: BuilderNode, viewport: BuilderViewport, selectedId: string | null, editingId: string | null, select: (id: string) => void, openCode: (id: string) => void, drop: (event: React.DragEvent, parentId: string | null, index: number) => void, edit: (id: string) => void, commitInline: (id: string, key: string, value: string) => void, cancelInline: () => void, startDrag: (id: string) => void, resize: (id: string, base: BuilderLayout, delta: number, side: "left" | "right") => void, isGridItem = true): React.ReactNode {
   const definition = COMPONENT_REGISTRY[node.component];
   const children = node.component === "columns"
-    ? node.children.map((child) => <React.Fragment key={child.id}>{renderNode(child, viewport, selectedId, editingId, select, openCode, drop, edit, commitInline, cancelInline, startDrag)}</React.Fragment>)
-    : node.children.map((child, index) => <React.Fragment key={child.id}><DropZone parentId={node.id} index={index} drop={drop} />{renderNode(child, viewport, selectedId, editingId, select, openCode, drop, edit, commitInline, cancelInline, startDrag)}</React.Fragment>);
+    ? node.children.map((child) => <React.Fragment key={child.id}>{renderNode(child, viewport, selectedId, editingId, select, openCode, drop, edit, commitInline, cancelInline, startDrag, resize, false)}</React.Fragment>)
+    : node.children.map((child, index) => <React.Fragment key={child.id}><DropZone parentId={node.id} index={index} drop={drop} />{renderNode(child, viewport, selectedId, editingId, select, openCode, drop, edit, commitInline, cancelInline, startDrag, resize)}</React.Fragment>);
   const props = { ...node.props } as Record<string, unknown>;
-  const style = Object.fromEntries(Object.entries({ ...node.styles, ...node.responsiveStyles?.[viewport] }).map(([key, value]) => [key, value])) as React.CSSProperties;
-  if (node.component === "hero") props.actions = children;
+  const layout = clampLayout(node.layout?.[viewport] ?? node.layout?.desktop ?? defaultLayout(node.component));
+  const style = Object.fromEntries(Object.entries({ ...node.styles, ...node.responsiveStyles?.[viewport], ...(isGridItem ? { gridColumn: `${layout.columnStart} / span ${layout.columnSpan}` } : {}) }).map(([key, value]) => [key, value])) as React.CSSProperties;
+  const childContent = node.component === "columns" ? children : definition.acceptsChildren ? <div className="builder-grid builder-grid--nested">{children}</div> : children;
+  if (node.component === "hero") props.actions = childContent;
   const editableProp = primaryEditableProp(node);
 
   return (
@@ -279,10 +328,11 @@ function renderNode(node: BuilderNode, viewport: BuilderViewport, selectedId: st
       onDragOver={definition.acceptsChildren ? (event) => event.preventDefault() : undefined}
       onDrop={definition.acceptsChildren ? (event) => { event.stopPropagation(); drop(event, node.id, node.children.length); } : undefined}
     >
-      {node.component === "card" || node.component === "columns" || node.component === "column" ? React.createElement(definition.render, props, children) : React.createElement(definition.render, props)}
+      {node.component === "card" || node.component === "columns" || node.component === "column" ? React.createElement(definition.render, props, childContent) : React.createElement(definition.render, props)}
       {editingId === node.id && editableProp && <InlineTextEditor value={String(node.props[editableProp] ?? "")} onCommit={(value) => commitInline(node.id, editableProp, value)} onCancel={cancelInline} />}
       {definition.acceptsChildren && <DropZone parentId={node.id} index={node.children.length} drop={drop} empty={node.children.length === 0} />}
-      {selectedId === node.id && <span className="builder-node__label">{definition.label}</span>}
+      {selectedId === node.id && <span className="builder-node__label">{definition.label} · {layout.columnSpan}/12</span>}
+      {selectedId === node.id && isGridItem && <><GridResizeHandle side="left" onResize={(delta, side) => resize(node.id, layout, delta, side)} /><GridResizeHandle side="right" onResize={(delta, side) => resize(node.id, layout, delta, side)} /></>}
     </div>
   );
 }
@@ -453,7 +503,7 @@ export function BuilderApp() {
   const [versions, setVersions] = useState<PageVersion[]>(() => readVersionHistory());
   const [versionHistoryOpen, setVersionHistoryOpen] = useState(false);
   const [projectFiles, setProjectFiles] = useState<ProjectFiles>(() => activePage?.files ?? {});
-  const [projectDependencies, setProjectDependencies] = useState<ProjectDependencies>(() => activePage?.dependencies ?? { "@jowaaaa/jowaui": "0.2.1" });
+  const [projectDependencies, setProjectDependencies] = useState<ProjectDependencies>(() => activePage?.dependencies ?? { "@jowaaaa/jowaui": "0.2.2" });
   const [canvasPadding, setCanvasPadding] = useState(() => activePage?.canvasPadding ?? 30);
   const projectSource = projectFiles["/App.tsx"] ?? null;
   const [draggedComponent, setDraggedComponent] = useState<ComponentKey | null>(null);
@@ -545,7 +595,7 @@ export function BuilderApp() {
       window.alert("A page with that path already exists.");
       return;
     }
-  const page: BuilderPage = { id: `page-${Date.now()}`, name, path, nodes: starterNodes.map(cloneNode), files: {}, dependencies: { "@jowaaaa/jowaui": "0.2.1" }, canvasPadding: 30 };
+  const page: BuilderPage = { id: `page-${Date.now()}`, name, path, nodes: starterNodes.map(cloneNode), files: {}, dependencies: { "@jowaaaa/jowaui": "0.2.2" }, canvasPadding: 30 };
     setPages((current) => [...current, page]);
     setActivePageId(page.id);
     replace(page.nodes);
@@ -687,6 +737,20 @@ export function BuilderApp() {
     commitVisual((current) => updateNode(current, selectedId, (node) => ({ ...node, responsiveStyles: { ...node.responsiveStyles, [viewport]: { ...node.responsiveStyles?.[viewport], [key]: value } } })));
   };
 
+  const updateSelectedLayout = (key: "columnStart" | "columnSpan", value: number) => {
+    if (!selectedId || !selectedNode) return;
+    const current = clampLayout(selectedNode.layout?.[viewport] ?? selectedNode.layout?.desktop ?? defaultLayout(selectedNode.component));
+    const next = clampLayout({ ...current, [key]: value });
+    commitVisual((currentNodes) => updateNode(currentNodes, selectedId, (node) => ({ ...node, layout: { ...node.layout, [viewport]: next } })));
+  };
+
+  const resizeNode = (id: string, base: BuilderLayout, delta: number, side: "left" | "right") => {
+    const next = side === "left"
+      ? clampLayout({ columnStart: base.columnStart + delta, columnSpan: base.columnSpan - delta })
+      : clampLayout({ columnStart: base.columnStart, columnSpan: base.columnSpan + delta });
+    commitVisual((current) => updateNode(current, id, (node) => ({ ...node, layout: { ...node.layout, [viewport]: next } })));
+  };
+
   const updateCanvasPadding = (value: number) => setCanvasPadding(Math.max(0, Math.min(120, Number.isFinite(value) ? value : 0)));
 
   const editInline = (id: string) => setEditingNodeId(id);
@@ -756,7 +820,7 @@ export function BuilderApp() {
           setActivePageId(importedActive.id);
           replace(importedActive.nodes);
           setProjectFiles(importedActive.files ?? {});
-          setProjectDependencies(importedActive.dependencies ?? { "@jowaaaa/jowaui": "0.2.1" });
+          setProjectDependencies(importedActive.dependencies ?? { "@jowaaaa/jowaui": "0.2.2" });
           if (Array.isArray(project.assets)) {
             void Promise.all(project.assets.map(saveAsset)).then(() => setAssets(project.assets ?? []));
           }
@@ -764,7 +828,7 @@ export function BuilderApp() {
         } else if (Array.isArray(project.nodes)) {
           commit(project.nodes);
           setProjectFiles(project.files && typeof project.files === "object" ? project.files : {});
-          setProjectDependencies(project.dependencies && typeof project.dependencies === "object" ? project.dependencies : { "@jowaaaa/jowaui": "0.2.1" });
+          setProjectDependencies(project.dependencies && typeof project.dependencies === "object" ? project.dependencies : { "@jowaaaa/jowaui": "0.2.2" });
           if (Array.isArray(project.assets)) {
             void Promise.all(project.assets.map(saveAsset)).then(() => setAssets(project.assets ?? []));
           }
@@ -823,12 +887,14 @@ export function BuilderApp() {
         <main className="builder-main">
            <div className="canvas-toolbar"><span>{activePage?.name ?? "Page"}</span><span className="canvas-status">{draggedComponent ? `Drop ${COMPONENT_REGISTRY[draggedComponent].label}` : "Double-click an element to edit JSX"}</span><label className="canvas-setting">Page padding <input aria-label="Page padding" type="number" min="0" max="120" value={canvasPadding} onChange={(event) => updateCanvasPadding(Number(event.target.value))} /> px</label><span className="viewport-switcher">{(["desktop", "tablet", "mobile"] as const).map((size) => <button key={size} className={viewport === size ? "viewport-switcher__active" : ""} onClick={() => setViewport(size)}>{size}</button>)}</span></div>
           <div className="builder-canvas-wrap" onDragOver={(event) => event.preventDefault()} onDrop={(event) => handleDrop(event, null)}>
-             <div className={`builder-canvas builder-canvas--${viewport}${draggedNodeId || draggedComponent ? " builder-canvas--dragging" : ""}`} style={{ padding: `${canvasPadding}px`, "--builder-node-margin": canvasPadding === 0 ? "0px" : "7px" } as React.CSSProperties} onClick={() => { setSelectedId(null); setEditingNodeId(null); }}>
-               {nodes.length === 0 && <div className="canvas-empty">Drag a component here to start building.</div>}
-               <DropZone parentId={null} index={0} drop={handleDrop} />
-               {nodes.map((node, index) => <React.Fragment key={node.id}>{index > 0 && <DropZone parentId={null} index={index} drop={handleDrop} />}{renderNode(node, viewport, selectedId, editingNodeId, setSelectedId, setCodeNodeId, handleDrop, editInline, commitInline, () => setEditingNodeId(null), (id) => setDraggedNodeId(id || null))}</React.Fragment>)}
-               {nodes.length > 0 && <DropZone parentId={null} index={nodes.length} drop={handleDrop} />}
-             </div>
+              <div className={`builder-canvas builder-canvas--${viewport}${draggedNodeId || draggedComponent ? " builder-canvas--dragging" : ""}`} style={{ padding: `${canvasPadding}px`, "--builder-node-margin": canvasPadding === 0 ? "0px" : "7px" } as React.CSSProperties} onClick={() => { setSelectedId(null); setEditingNodeId(null); }}>
+                <div className="builder-grid">
+                  {nodes.length === 0 && <div className="canvas-empty">Drag a component here to start building.</div>}
+                  <DropZone parentId={null} index={0} drop={handleDrop} />
+                  {nodes.map((node, index) => <React.Fragment key={node.id}>{index > 0 && <DropZone parentId={null} index={index} drop={handleDrop} />}{renderNode(node, viewport, selectedId, editingNodeId, setSelectedId, setCodeNodeId, handleDrop, editInline, commitInline, () => setEditingNodeId(null), (id) => setDraggedNodeId(id || null), resizeNode)}</React.Fragment>)}
+                  {nodes.length > 0 && <DropZone parentId={null} index={nodes.length} drop={handleDrop} />}
+                </div>
+              </div>
           </div>
         </main>
 
@@ -839,8 +905,9 @@ export function BuilderApp() {
               <div className="inspector-fields">
                  {COMPONENT_REGISTRY[selectedNode.component].props.map((definition) => <label key={definition.key}>{definition.label}{renderInspectorProp(definition, selectedNode.props[definition.key] ?? (definition.type === "links" ? [] : ""))}</label>)}
                 <div className="inspector-divider"><p className="eyebrow">Colors</p></div>
-                {COMPONENT_REGISTRY[selectedNode.component].colors.map((color) => <label key={color.key}>{color.label}<input type="color" value={selectedNode.styles?.[color.key] ?? color.defaultValue} onChange={(event) => updateSelectedStyle(color.key, event.target.value)} /></label>)}
-                <div className="inspector-divider"><p className="eyebrow">Layout & style</p></div>
+                 {COMPONENT_REGISTRY[selectedNode.component].colors.map((color) => <label key={color.key}>{color.label}<input type="color" value={selectedNode.styles?.[color.key] ?? color.defaultValue} onChange={(event) => updateSelectedStyle(color.key, event.target.value)} /></label>)}
+                 {selectedNode.component !== "column" && <><div className="inspector-divider"><p className="eyebrow">Grid layout · {viewport}</p></div><label>Column start<input type="number" min="1" max="12" value={clampLayout(selectedNode.layout?.[viewport] ?? selectedNode.layout?.desktop ?? defaultLayout(selectedNode.component)).columnStart} onChange={(event) => updateSelectedLayout("columnStart", Number(event.target.value))} /></label><label>Column width<input type="number" min="1" max="12" value={clampLayout(selectedNode.layout?.[viewport] ?? selectedNode.layout?.desktop ?? defaultLayout(selectedNode.component)).columnSpan} onChange={(event) => updateSelectedLayout("columnSpan", Number(event.target.value))} /></label></>}
+                 <div className="inspector-divider"><p className="eyebrow">Layout & style</p></div>
                 {STYLE_CONTROLS.map((control) => <label key={control.key}>{control.label}<input type="text" placeholder="Default" value={selectedNode.responsiveStyles?.[viewport]?.[control.key] ?? selectedNode.styles?.[control.key] ?? ""} onChange={(event) => updateSelectedResponsiveStyle(control.key, event.target.value)} /></label>)}
               </div>
               <div className="inspector-actions"><button className="button button--primary" onClick={() => setCodeNodeId(selectedNode.id)}>Edit JSX</button><button className="button button--quiet" onClick={duplicateSelected}>Duplicate</button><button className="button button--quiet" onClick={() => { commitVisual((current) => removeNode(current, selectedNode.id)); setSelectedId(null); }}>Delete</button></div>
