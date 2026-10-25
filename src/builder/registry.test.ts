@@ -27,11 +27,13 @@ describe("builder JSX registry", () => {
 
   it("uses code-safe names for generated component imports", () => {
     const source = nodesToModule([createNode("statcard")]);
+    const localSource = nodesToModule([createNode("button")], "./lib");
 
     expect(componentName("statcard")).toBe("StatCard");
     expect(source).toContain("import { StatCard }");
     expect(source).toContain("<StatCard");
     expect(() => sourceToNodes(source)).not.toThrow();
+    expect(localSource).toContain('from "./lib"');
   });
 
   it("creates exportable Columns with editable Column children", () => {

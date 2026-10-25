@@ -10,8 +10,9 @@ const FILES_STORAGE_KEY = "jowaui-builder-files";
 const PAGES_STORAGE_KEY = "jowaui-builder-pages";
 const PROJECT_NAME_STORAGE_KEY = "jowaui-builder-project-name";
 const VERSION_HISTORY_STORAGE_KEY = "jowaui-builder-version-history";
-const SANDBOX_DEPENDENCIES = { react: "18.3.1", "react-dom": "18.3.1", "@jowaaaa/jowaui": "0.2.2" };
+const SANDBOX_DEPENDENCIES = { react: "18.3.1", "react-dom": "18.3.1" };
 const SANDBOX_TEMPLATE = "vite-react-ts" as const;
+const localLibraryFiles = Object.fromEntries(Object.entries(import.meta.glob("../lib/**/*.{ts,tsx,css}", { query: "?raw", import: "default", eager: true }) as Record<string, string>).map(([path, source]) => [`/${path.replace(/^\.\.\//, "")}`, source]));
 const STYLE_CONTROLS = [
   { key: "margin", label: "Margin" },
   { key: "padding", label: "Padding" },
@@ -116,12 +117,12 @@ function readProjectFiles(): { files: ProjectFiles; dependencies: ProjectDepende
     const saved = localStorage.getItem(FILES_STORAGE_KEY);
     if (saved) {
       const parsed = JSON.parse(saved) as { files?: ProjectFiles; dependencies?: ProjectDependencies };
-       if (parsed.files && typeof parsed.files === "object") return { files: parsed.files, dependencies: parsed.dependencies ?? { "@jowaaaa/jowaui": "0.2.2" } };
+       if (parsed.files && typeof parsed.files === "object") return { files: parsed.files, dependencies: parsed.dependencies ?? {} };
     }
   } catch {
     // Invalid project files fall back to the generated visual page.
   }
-  return { files: {}, dependencies: { "@jowaaaa/jowaui": "0.2.2" } };
+  return { files: {}, dependencies: {} };
 }
 
 function readPages(): BuilderPage[] {
@@ -184,12 +185,14 @@ async function downloadProjectArchive(projectName: string, pages: BuilderPage[],
   const activePage = pages.find((page) => page.id === activePageId) ?? pages[0];
   if (!activePage) return;
   const projectDependencies = Object.assign({}, ...pages.map((page) => page.dependencies));
+  delete projectDependencies["@jowaaaa/jowaui"];
   const packageName = projectName.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "") || "jowaui-project";
-  const sourceFiles = (page: BuilderPage) => ({ "/App.tsx": nodesToModule(page.nodes), ...page.files });
-  Object.entries(sourceFiles(activePage)).forEach(([path, content]) => zip.file(toProjectPath(path), content));
+  const sourceFiles = (page: BuilderPage, importSource: string) => ({ "/App.tsx": nodesToModule(page.nodes, importSource), ...page.files });
+  Object.entries(sourceFiles(activePage, "./lib")).forEach(([path, content]) => zip.file(toProjectPath(path), content));
   pages.filter((page) => page.id !== activePage.id).forEach((page) => {
-    Object.entries(sourceFiles(page)).forEach(([path, content]) => zip.file(`pages/${page.id}/${toProjectPath(path)}`, content));
+    Object.entries(sourceFiles(page, "../../../src/lib")).forEach(([path, content]) => zip.file(`pages/${page.id}/${toProjectPath(path)}`, content));
   });
+  Object.entries(localLibraryFiles).forEach(([path, content]) => zip.file(`src${path}`, content));
   zip.file("pages/index.json", JSON.stringify({ activePageId, pages: pages.map(({ id, name, path }) => ({ id, name, path })) }, null, 2));
   const assetManifest = assets.map((asset) => {
     const filename = `${asset.id}-${asset.name.replace(/[^a-zA-Z0-9._-]/g, "-")}`;
@@ -199,7 +202,7 @@ async function downloadProjectArchive(projectName: string, pages: BuilderPage[],
     return { ...asset, path };
   });
   zip.file("assets.json", JSON.stringify(assetManifest.map(({ dataUrl: _dataUrl, ...asset }) => asset), null, 2));
-  zip.file("src/main.tsx", `import React from "react";\nimport { createRoot } from "react-dom/client";\nimport "@jowaaaa/jowaui/styles";\nimport App from "./App";\n\ncreateRoot(document.getElementById("root")!).render(<React.StrictMode><App /></React.StrictMode>);\n`);
+  zip.file("src/main.tsx", `import React from "react";\nimport { createRoot } from "react-dom/client";\nimport "./lib/styles/index.css";\nimport App from "./App";\n\ncreateRoot(document.getElementById("root")!).render(<React.StrictMode><App /></React.StrictMode>);\n`);
   zip.file("src/index.css", `html, body, #root { min-height: 100%; }\nbody { margin: 0; }\n`);
   zip.file("index.html", `<!doctype html>\n<html lang="en">\n  <head><meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" /><title>jowaui project</title></head>\n  <body><div id="root"></div><script type="module" src="/src/main.tsx"></script></body>\n</html>\n`);
   zip.file("builder-project.json", JSON.stringify({ version: 3, name: projectName, activePageId, pages, assets }, null, 2));
@@ -208,7 +211,7 @@ async function downloadProjectArchive(projectName: string, pages: BuilderPage[],
     private: true,
     type: "module",
     scripts: { dev: "vite", build: "vite build", preview: "vite preview" },
-    dependencies: { react: "^18.3.1", "react-dom": "^18.3.1", "@jowaaaa/jowaui": "0.2.2", ...projectDependencies },
+    dependencies: { react: "^18.3.1", "react-dom": "^18.3.1", ...projectDependencies },
     devDependencies: { "@vitejs/plugin-react": "^4.4.1", vite: "^6.3.5" },
   }, null, 2));
   zip.file("package-lock.json", JSON.stringify({
@@ -220,7 +223,7 @@ async function downloadProjectArchive(projectName: string, pages: BuilderPage[],
       "": {
         name: packageName,
         version: "0.0.0",
-        dependencies: { react: "^18.3.1", "react-dom": "^18.3.1", "@jowaaaa/jowaui": "0.2.2", ...projectDependencies },
+        dependencies: { react: "^18.3.1", "react-dom": "^18.3.1", ...projectDependencies },
         devDependencies: { "@vitejs/plugin-react": "^4.4.1", vite: "^6.3.5" },
       },
     },
@@ -338,7 +341,7 @@ function renderNode(node: BuilderNode, viewport: BuilderViewport, selectedId: st
 }
 
 function CodeModal({ node, onClose, onSave }: { node: BuilderNode; onClose: () => void; onSave: (source: string) => string | undefined }) {
-  const generated = nodeToModule(node);
+  const generated = nodeToModule(node, "./lib");
   const [source, setSource] = useState(node.sourceVersion === 1 ? node.source ?? generated : generated);
   const [previewCode, setPreviewCode] = useState(source);
   const [lastValidCode, setLastValidCode] = useState(source);
@@ -370,10 +373,10 @@ function CodeModal({ node, onClose, onSave }: { node: BuilderNode; onClose: () =
           </div>
           <div className="code-preview">
             <div className="preview-label">Isolated preview</div>
-             <div className="preview-validator" aria-hidden="true"><SandpackProvider template={SANDBOX_TEMPLATE} files={{ "/App.tsx": source }} customSetup={{ entry: "/App.tsx", dependencies: SANDBOX_DEPENDENCIES }}>
+             <div className="preview-validator" aria-hidden="true"><SandpackProvider template={SANDBOX_TEMPLATE} files={{ ...localLibraryFiles, "/App.tsx": source }} customSetup={{ entry: "/App.tsx", dependencies: SANDBOX_DEPENDENCIES }}>
               <SandpackLayout><SandpackPreview showSandpackErrorOverlay={false} /><SandpackErrorDetails onError={(message) => { setPreviewError(message); setPreviewCode(lastValidCode); }} onValid={() => { setLastValidCode(source); setPreviewCode(source); setPreviewError(null); }} /></SandpackLayout>
             </SandpackProvider></div>
-            <SandpackProvider template={SANDBOX_TEMPLATE} files={{ "/App.tsx": previewCode }} customSetup={{ entry: "/App.tsx", dependencies: SANDBOX_DEPENDENCIES }}><SandpackLayout><SandpackPreview showSandpackErrorOverlay={false} /></SandpackLayout></SandpackProvider>
+             <SandpackProvider template={SANDBOX_TEMPLATE} files={{ ...localLibraryFiles, "/App.tsx": previewCode }} customSetup={{ entry: "/App.tsx", dependencies: SANDBOX_DEPENDENCIES }}><SandpackLayout><SandpackPreview showSandpackErrorOverlay={false} /></SandpackLayout></SandpackProvider>
             {previewError && <p className="code-error" role="alert">Preview error: {previewError}</p>}
           </div>
         </div>
@@ -391,7 +394,7 @@ function ProjectCodeModal({ files, dependencies, fallbackSource, onClose, onSave
   const [activeFile, setActiveFile] = useState("/App.tsx");
   const [dependencyText, setDependencyText] = useState(JSON.stringify(dependencies, null, 2));
   const [error, setError] = useState<string | null>(null);
-  const previewFiles = Object.fromEntries(Object.entries(draftFiles).map(([path, code]) => [path, code.trim() ? code : starterFileContent(path)]));
+  const previewFiles = { ...localLibraryFiles, ...Object.fromEntries(Object.entries(draftFiles).map(([path, code]) => [path, code.trim() ? code : starterFileContent(path)])) };
   const save = () => {
     let parsedDependencies: ProjectDependencies;
     try {
@@ -415,7 +418,7 @@ function ProjectCodeModal({ files, dependencies, fallbackSource, onClose, onSave
         <div className="builder-modal__body builder-modal__body--files">
           <div className="project-files"><div className="preview-label">Files</div>{Object.keys(draftFiles).map((file) => <button key={file} className={activeFile === file ? "project-file project-file--active" : "project-file"} onClick={() => setActiveFile(file)}>{file}</button>)}<button className="project-file project-file--add" onClick={() => { const requested = window.prompt("File path", "/components/Section.tsx"); const name = requested ? normalizeProjectPath(requested) : null; if (!name) { setError("Use an absolute project path such as /components/Section.tsx."); return; } if (draftFiles[name] !== undefined) { setError("A file with that path already exists."); setActiveFile(name); return; } setDraftFiles((current) => ({ ...current, [name]: starterFileContent(name) })); setActiveFile(name); setError(null); }}>+ Add file</button></div>
             <div className="code-pane"><label htmlFor="project-code">Edit {activeFile}</label><textarea id="project-code" spellCheck={false} value={draftFiles[activeFile] ?? ""} onChange={(event) => setDraftFiles((current) => ({ ...current, [activeFile]: event.target.value }))} />{error && <p className="code-error" role="alert">{error}</p>}<label htmlFor="project-dependencies">Dependencies (JSON)</label><textarea className="dependency-editor" id="project-dependencies" spellCheck={false} value={dependencyText} onChange={(event) => setDependencyText(event.target.value)} /><p className="hint">App.tsx is synchronized into the visual layer tree when the project source is saved. Other files remain source-owned and can be imported by the app.</p></div>
-            <div className="code-preview"><div className="preview-label">Project preview</div><SandpackProvider template={SANDBOX_TEMPLATE} files={previewFiles} customSetup={{ entry: "/App.tsx", dependencies: { ...dependencies, ...SANDBOX_DEPENDENCIES } }}><SandpackLayout><SandpackPreview showSandpackErrorOverlay={false} /><SandpackErrorDetails /></SandpackLayout></SandpackProvider></div>
+             <div className="code-preview"><div className="preview-label">Project preview</div><SandpackProvider template={SANDBOX_TEMPLATE} files={previewFiles} customSetup={{ entry: "/App.tsx", dependencies: { ...dependencies, ...SANDBOX_DEPENDENCIES } }}><SandpackLayout><SandpackPreview showSandpackErrorOverlay={false} /><SandpackErrorDetails /></SandpackLayout></SandpackProvider></div>
         </div>
         <footer className="builder-modal__footer"><button className="button button--quiet" onClick={onClose}>Cancel</button><button className="button button--primary" onClick={save}>Save project source</button></footer>
       </section>
@@ -503,7 +506,7 @@ export function BuilderApp() {
   const [versions, setVersions] = useState<PageVersion[]>(() => readVersionHistory());
   const [versionHistoryOpen, setVersionHistoryOpen] = useState(false);
   const [projectFiles, setProjectFiles] = useState<ProjectFiles>(() => activePage?.files ?? {});
-  const [projectDependencies, setProjectDependencies] = useState<ProjectDependencies>(() => activePage?.dependencies ?? { "@jowaaaa/jowaui": "0.2.2" });
+  const [projectDependencies, setProjectDependencies] = useState<ProjectDependencies>(() => activePage?.dependencies ?? {});
   const [canvasPadding, setCanvasPadding] = useState(() => activePage?.canvasPadding ?? 30);
   const projectSource = projectFiles["/App.tsx"] ?? null;
   const [draggedComponent, setDraggedComponent] = useState<ComponentKey | null>(null);
@@ -595,7 +598,7 @@ export function BuilderApp() {
       window.alert("A page with that path already exists.");
       return;
     }
-  const page: BuilderPage = { id: `page-${Date.now()}`, name, path, nodes: starterNodes.map(cloneNode), files: {}, dependencies: { "@jowaaaa/jowaui": "0.2.2" }, canvasPadding: 30 };
+  const page: BuilderPage = { id: `page-${Date.now()}`, name, path, nodes: starterNodes.map(cloneNode), files: {}, dependencies: {}, canvasPadding: 30 };
     setPages((current) => [...current, page]);
     setActivePageId(page.id);
     replace(page.nodes);
@@ -760,7 +763,7 @@ export function BuilderApp() {
   };
 
   const exportJsx = () => {
-    const blob = new Blob([nodesToModule(nodes)], { type: "text/plain" });
+    const blob = new Blob([nodesToModule(nodes, "./lib")], { type: "text/plain" });
     const url = URL.createObjectURL(blob);
     const link = document.createElement("a");
     link.href = url;
@@ -820,7 +823,7 @@ export function BuilderApp() {
           setActivePageId(importedActive.id);
           replace(importedActive.nodes);
           setProjectFiles(importedActive.files ?? {});
-          setProjectDependencies(importedActive.dependencies ?? { "@jowaaaa/jowaui": "0.2.2" });
+          setProjectDependencies(importedActive.dependencies ?? {});
           if (Array.isArray(project.assets)) {
             void Promise.all(project.assets.map(saveAsset)).then(() => setAssets(project.assets ?? []));
           }
@@ -828,7 +831,7 @@ export function BuilderApp() {
         } else if (Array.isArray(project.nodes)) {
           commit(project.nodes);
           setProjectFiles(project.files && typeof project.files === "object" ? project.files : {});
-          setProjectDependencies(project.dependencies && typeof project.dependencies === "object" ? project.dependencies : { "@jowaaaa/jowaui": "0.2.2" });
+          setProjectDependencies(project.dependencies && typeof project.dependencies === "object" ? project.dependencies : {});
           if (Array.isArray(project.assets)) {
             void Promise.all(project.assets.map(saveAsset)).then(() => setAssets(project.assets ?? []));
           }
@@ -926,7 +929,7 @@ export function BuilderApp() {
           return error instanceof Error ? error.message : "Unable to parse this module.";
         }
       }} />}
-      {projectCodeOpen && <ProjectCodeModal files={projectFiles} dependencies={projectDependencies} fallbackSource={nodesToModule(nodes)} onClose={() => setProjectCodeOpen(false)} onSave={(files, dependencies) => {
+      {projectCodeOpen && <ProjectCodeModal files={projectFiles} dependencies={projectDependencies} fallbackSource={nodesToModule(nodes, "./lib")} onClose={() => setProjectCodeOpen(false)} onSave={(files, dependencies) => {
         try {
           const appSource = files["/App.tsx"] ?? "";
           const parsed = sourceToNodes(appSource);
@@ -962,6 +965,6 @@ export function PublishedPreview({ id }: { id: string }) {
   });
 
   if (!snapshot) return <main className="published-error"><h1>Preview not found</h1><p>This published snapshot is unavailable in this browser.</p></main>;
-  const files = { "/App.tsx": nodesToModule(snapshot.nodes), ...snapshot.files };
+  const files = { ...localLibraryFiles, "/App.tsx": nodesToModule(snapshot.nodes, "./lib"), ...snapshot.files };
   return <div className="published-preview"><SandpackProvider template={SANDBOX_TEMPLATE} files={files} customSetup={{ entry: "/App.tsx", dependencies: { ...snapshot.dependencies, ...SANDBOX_DEPENDENCIES } }}><SandpackLayout><SandpackPreview showSandpackErrorOverlay={false} /><SandpackErrorDetails /></SandpackLayout></SandpackProvider></div>;
 }

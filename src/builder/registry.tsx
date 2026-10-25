@@ -572,20 +572,20 @@ function escapeJsxText(value: string): string {
     .replace(/\}/g, "&#125;");
 }
 
-export function nodesToModule(nodes: BuilderNode[]): string {
+export function nodesToModule(nodes: BuilderNode[], importSource = "@jowaaaa/jowaui"): string {
   const imports = componentImports(nodes);
   const body = nodes.length === 1
     ? nodeToJsx(nodes[0], 2)
     : nodes.length > 1
       ? ["    <>", ...nodes.map((node) => nodeToJsx(node, 3)), "    </>"].join("\n")
       : "    <main />";
-  const importLine = imports ? `import { ${imports} } from "@jowaaaa/jowaui";\n` : "";
+  const importLine = imports ? `import { ${imports} } from "${importSource}";\n` : "";
   return `import React from "react";\n${importLine}\nexport default function App() {\n  return (\n${body}\n  );\n}\n`;
 }
 
-export function nodeToModule(node: BuilderNode): string {
+export function nodeToModule(node: BuilderNode, importSource = "@jowaaaa/jowaui"): string {
   const imports = componentImports([node]);
-  const importLine = imports ? `import { ${imports} } from "@jowaaaa/jowaui";\n` : "";
+  const importLine = imports ? `import { ${imports} } from "${importSource}";\n` : "";
   return `import React from "react";\n${importLine}\nexport default function Component() {\n  return (\n${nodeToJsx(node, 2)}\n  );\n}\n`;
 }
 
