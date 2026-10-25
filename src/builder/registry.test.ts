@@ -1,5 +1,6 @@
 import React from "react";
 import { describe, expect, it } from "vitest";
+import { createExportFiles } from "./exporter";
 import { COMPONENT_REGISTRY, componentName, createNode, moveNode, nodesToModule, sourceMap, sourceToNodes } from "./registry";
 
 describe("builder JSX registry", () => {
@@ -23,6 +24,12 @@ describe("builder JSX registry", () => {
     const element = React.createElement(COMPONENT_REGISTRY.button.render, button.props);
 
     expect(element.props.children).toBe("Get started");
+  });
+
+  it("uses grid width for surface components while preserving intrinsic Avatar sizing", () => {
+    expect(COMPONENT_REGISTRY.badge.fillsGrid).not.toBe(false);
+    expect(COMPONENT_REGISTRY.button.fillsGrid).not.toBe(false);
+    expect(COMPONENT_REGISTRY.avatar.fillsGrid).toBe(false);
   });
 
   it("uses code-safe names for generated component imports", () => {
@@ -130,5 +137,27 @@ describe("builder node movement", () => {
     card.children = [button];
 
     expect(moveNode([card], card.id, button.id, 0)).toEqual([card]);
+  });
+
+  it("exports every page and routes paths to their page modules", () => {
+    const home = createNode("hero");
+    const about = createNode("card");
+    const files = createExportFiles([
+      { id: "page-home", name: "Home", path: "/", nodes: [home], files: {} },
+      { id: "page-about", name: "About", path: "/about", nodes: [about], files: {} },
+    ], "page-home");
+
+    expect(files["src/pages/home/Home.tsx"]).toContain("<Hero");
+    expect(files["src/pages/about/About.tsx"]).toContain("<Card");
+    expect(files["src/App.tsx"]).toContain('"/about": Page1');
+    expect(files["src/App.tsx"]).toContain("const fallback = Page0;");
+  });
+
+  it("keeps page files beside their page module and fixes local library imports", () => {
+    const source = 'import React from "react";\nimport { Button } from "./lib";\nexport default function App() { return <Button />; }';
+    const files = createExportFiles([{ id: "page-home", name: "Home", path: "/", nodes: [], files: { "/App.tsx": source, "/components/Badge.tsx": "export {};" } }], "page-home");
+
+    expect(files["src/pages/home/Home.tsx"]).toContain('from "../../lib"');
+    expect(files["src/pages/home/components/Badge.tsx"]).toBe("export {};");
   });
 });

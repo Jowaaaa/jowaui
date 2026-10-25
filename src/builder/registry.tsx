@@ -24,7 +24,7 @@ import { Switch } from "../lib/components/switch/switch";
 export type ComponentKey = "hero" | "card" | "columns" | "column" | "button" | "badge" | "alert" | "input" | "avatar" | "divider" | "progress" | "spinner" | "statcard" | "tag" | "navbar" | "banner" | "breadcrumbs" | "checkbox" | "skeleton" | "switch" | "textarea" | "custom";
 export type BuilderViewport = "desktop" | "tablet" | "mobile";
 export type SourceRange = { start: number; end: number };
-export type BuilderLayout = { columnStart: number; columnSpan: number };
+export type BuilderLayout = { columnStart: number; columnSpan: number; rowStart?: number; rowSpan?: number; gridVersion?: 50 };
 
 export type BuilderNode = {
   id: string;
@@ -60,6 +60,7 @@ export type ComponentDefinition = {
   description: string;
   acceptsChildren: boolean;
   palette?: boolean;
+  fillsGrid?: boolean;
   props: PropDefinition[];
   colors: ColorSlot[];
   create: () => BuilderNode;
@@ -235,6 +236,7 @@ const COMPONENT_REGISTRY: Record<ComponentKey, ComponentDefinition> = {
     category: "Content",
     description: "An image or initials identity marker.",
     acceptsChildren: false,
+    fillsGrid: false,
     props: [
       { key: "src", label: "Image URL", type: "text" },
       { key: "alt", label: "Alt text", type: "text" },
