@@ -36,7 +36,7 @@ export const LiveWebsite: Story = {
         Explore the live example website to see the component library in use.
       </p>
       <a
-        href="https://jowaui.jobvanderwal.dev/example"
+        href="https://jowaui-example.jobvanderwal.dev/"
         target="_blank"
         rel="noreferrer"
         style={{

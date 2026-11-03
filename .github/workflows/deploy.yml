@@ -33,7 +33,7 @@ jobs:
         working-directory: jowaui-example
         run: |
           npm run build
-          cp public/.htaccess build/client/.htaccess
+          cp public/.htaccess dist/.htaccess
         env:
           NODE_ENV: production
 
@@ -56,10 +56,10 @@ jobs:
           username: ${{ secrets.SFTP_USERNAME }}
           password: ${{ secrets.SFTP_PASSWORD }}
           port: ${{ secrets.SFTP_PORT }}
-          source: "jowaui-example/build/client/*"
+          source: "jowaui-example/dist/*"
           target: "./example"
           rm: true
-          strip_components: 3
+          strip_components: 2
 
       - name: Deploy example rewrite rules
         uses: appleboy/scp-action@v0.1.7
@@ -68,6 +68,6 @@ jobs:
           username: ${{ secrets.SFTP_USERNAME }}
           password: ${{ secrets.SFTP_PASSWORD }}
           port: ${{ secrets.SFTP_PORT }}
-          source: "jowaui-example/build/client/.htaccess"
+          source: "jowaui-example/dist/.htaccess"
           target: "./example"
-          strip_components: 3
+          strip_components: 2
