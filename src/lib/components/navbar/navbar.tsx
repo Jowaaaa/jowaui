@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useId, useState } from "react";
 
 export interface NavbarLink {
   /** Display text for the navigation link */
@@ -33,6 +33,11 @@ export const Navbar: React.FC<NavbarProps> = ({
   className = "",
   style,
 }) => {
+  const [menuOpen, setMenuOpen] = useState(false);
+  const menuId = useId();
+  const navLinks = links ?? [];
+  const hasLinks = navLinks.length > 0;
+
   return (
     <nav
       className={["jowa-navbar", className].filter(Boolean).join(" ")}
@@ -46,16 +51,42 @@ export const Navbar: React.FC<NavbarProps> = ({
         )}
       </a>
 
-      {links && links.length > 0 && (
-        <ul className="jowa-navbar__links">
-          {links.map((link) => (
-            <li key={link.href}>
-              <a className="jowa-navbar__link" href={link.href}>
-                {link.label}
-              </a>
-            </li>
-          ))}
-        </ul>
+      {hasLinks && (
+        <>
+          <button
+            type="button"
+            className="jowa-navbar__menu-toggle"
+            aria-controls={menuId}
+            aria-expanded={menuOpen}
+            aria-label={menuOpen ? "Close navigation menu" : "Open navigation menu"}
+            onClick={() => setMenuOpen((open) => !open)}
+          >
+            <span aria-hidden="true" className="jowa-navbar__menu-icon">
+              <span />
+              <span />
+              <span />
+            </span>
+          </button>
+
+          <ul
+            id={menuId}
+            className={["jowa-navbar__links", menuOpen ? "jowa-navbar__links--open" : ""]
+              .filter(Boolean)
+              .join(" ")}
+          >
+            {navLinks.map((link) => (
+              <li key={link.href}>
+                <a
+                  className="jowa-navbar__link"
+                  href={link.href}
+                  onClick={() => setMenuOpen(false)}
+                >
+                  {link.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </>
       )}
 
       {actions && <div className="jowa-navbar__actions">{actions}</div>}

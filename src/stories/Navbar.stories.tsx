@@ -41,6 +41,22 @@ export const WithActions: Story = {
   },
 };
 
+export const MobileMenu: Story = {
+  args: {
+    title: "MyBrand",
+    links: [
+      { label: "Home", href: "/" },
+      { label: "Docs", href: "/docs" },
+      { label: "Contact", href: "/contact" },
+    ],
+  },
+  parameters: {
+    viewport: {
+      defaultViewport: "mobile1",
+    },
+  },
+};
+
 export const NoLinks: Story = {
   args: {
     title: "Minimal",
