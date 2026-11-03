@@ -1,13 +1,15 @@
-import type { Preview, Decorator } from '@storybook/react-vite';
-import '../src/lib/styles/index.css';
-import './preview.css';
+import type { Preview, Decorator } from "@storybook/react-vite";
+import "../src/lib/styles/index.css";
+import "./preview.css";
 
 const withSavedComponentTheme: Decorator = (Story) => {
-  if (typeof window !== 'undefined') {
+  if (typeof window !== "undefined") {
     try {
-      const saved = JSON.parse(localStorage.getItem('jowa-theme-builder') ?? '{}') as Record<string, string>;
+      const saved = JSON.parse(
+        localStorage.getItem("jowa-theme-builder") ?? "{}",
+      ) as Record<string, string>;
       for (const [name, value] of Object.entries(saved)) {
-        if (name.startsWith('--jowa-editor-') && value) {
+        if (name.startsWith("--jowa-editor-") && value) {
           document.documentElement.style.setProperty(name, value);
         }
       }
@@ -23,16 +25,17 @@ const preview: Preview = {
     options: {
       storySort: {
         order: [
-          'Introduction',
-          'Docs',
-          ['Install', 'Customize'],
-          'Components',
-          'Forms',
-          'Navigation',
-          'Overlay',
-          'Feedback',
-          'Data',
-          'Theme',
+          "Introduction",
+          "Example",
+          "Docs",
+          ["Install", "Customize"],
+          "Components",
+          "Forms",
+          "Navigation",
+          "Overlay",
+          "Feedback",
+          "Data",
+          "Theme",
         ],
       },
     },
@@ -45,7 +48,7 @@ const preview: Preview = {
     backgrounds: { disabled: true },
     docs: {
       source: {
-        type: 'dynamic',
+        type: "dynamic",
         excludeDecorators: true,
       },
     },
