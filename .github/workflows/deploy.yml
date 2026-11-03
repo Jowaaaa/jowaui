@@ -17,13 +17,27 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: 'npm'
+          cache: "npm"
 
       - name: Install dependencies
         run: npm ci
 
       - name: Build Storybook
         run: npm run build-storybook
+
+      - name: Install example dependencies
+        working-directory: jowaui-example
+        run: npm ci
+
+      - name: Build example pages
+        working-directory: jowaui-example
+        run: npm run build
+        env:
+          NODE_ENV: production
+
+      - name: Prerender example pages
+        working-directory: jowaui-example
+        run: npm run prerender
 
       - name: Deploy via SFTP
         uses: appleboy/scp-action@v0.1.7
@@ -32,7 +46,19 @@ jobs:
           username: ${{ secrets.SFTP_USERNAME }}
           password: ${{ secrets.SFTP_PASSWORD }}
           port: ${{ secrets.SFTP_PORT }}
-          source: 'storybook-static/*'
-          target: './storybook-static'
+          source: "storybook-static/*"
+          target: "./storybook-static"
           rm: true
           strip_components: 1
+
+      - name: Deploy example pages
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.SFTP_HOST }}
+          username: ${{ secrets.SFTP_USERNAME }}
+          password: ${{ secrets.SFTP_PASSWORD }}
+          port: ${{ secrets.SFTP_PORT }}
+          source: "jowaui-example/build/client/*"
+          target: "./example"
+          rm: true
+          strip_components: 3
