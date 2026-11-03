@@ -70,17 +70,20 @@ export const ToastProvider: React.FC<ToastProviderProps> = ({
     dispatch({ type: "REMOVE", id });
   }, []);
 
+  // Portals are only available after hydration in SSR applications.
+  const region = typeof document === "undefined" ? null : createPortal(
+    <div className={`jowa-toast-region jowa-toast-region--${position}`} aria-live="polite" aria-atomic="false">
+      {state.toasts.map((t) => (
+        <ToastCard key={t.id} item={t} onDismiss={dismiss} />
+      ))}
+    </div>,
+    document.body,
+  );
+
   return (
     <ToastContext.Provider value={{ toast, dismiss }}>
       {children}
-      {createPortal(
-        <div className={`jowa-toast-region jowa-toast-region--${position}`} aria-live="polite" aria-atomic="false">
-          {state.toasts.map((t) => (
-            <ToastCard key={t.id} item={t} onDismiss={dismiss} />
-          ))}
-        </div>,
-        document.body,
-      )}
+      {region}
     </ToastContext.Provider>
   );
 };
