@@ -31,13 +31,11 @@ jobs:
 
       - name: Build example pages
         working-directory: jowaui-example
-        run: npm run build
+        run: |
+          npm run build
+          cp public/.htaccess build/client/.htaccess
         env:
           NODE_ENV: production
-
-      - name: Prerender example pages
-        working-directory: jowaui-example
-        run: npm run prerender
 
       - name: Deploy via SFTP
         uses: appleboy/scp-action@v0.1.7
@@ -61,4 +59,15 @@ jobs:
           source: "jowaui-example/build/client/*"
           target: "./example"
           rm: true
+          strip_components: 3
+
+      - name: Deploy example rewrite rules
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.SFTP_HOST }}
+          username: ${{ secrets.SFTP_USERNAME }}
+          password: ${{ secrets.SFTP_PASSWORD }}
+          port: ${{ secrets.SFTP_PORT }}
+          source: "jowaui-example/build/client/.htaccess"
+          target: "./example"
           strip_components: 3

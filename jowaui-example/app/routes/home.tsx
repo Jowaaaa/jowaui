@@ -21,18 +21,6 @@ import {
   Table,
   Tabs,
 } from "@jowaaaa/jowaui";
-import type { Route } from "./+types/home";
-
-export function meta({}: Route.MetaArgs) {
-  return [
-    { title: "jowaui | Thoughtful UI primitives" },
-    {
-      name: "description",
-      content: "A focused component library for interfaces people enjoy using.",
-    },
-  ];
-}
-
 const chartData = [
   { label: "Mon", value: 32 },
   { label: "Tue", value: 48 },
