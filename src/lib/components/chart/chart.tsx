@@ -30,7 +30,7 @@ export const Chart: React.FC<ChartProps> = ({
   data,
   type = "bar",
   height = 220,
-  color = "var(--jowa-color-primary)",
+  color = "var(--jowa-chart-series-color, var(--jowa-color-primary))",
   showGrid = true,
   showLabels = true,
   className = "",

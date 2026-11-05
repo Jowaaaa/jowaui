@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
+import { componentColorMeta } from "./component-colors";
 import { Sidebar } from "../lib/components/sidebar/sidebar";
 
 const meta: Meta<typeof Sidebar> = {
   title: "Components/Sidebar",
   component: Sidebar,
   tags: ["autodocs"],
+  ...componentColorMeta("sidebar"),
   parameters: { layout: "fullscreen" },
   decorators: [
     (Story) => (
@@ -15,6 +17,7 @@ const meta: Meta<typeof Sidebar> = {
     ),
   ],
   argTypes: {
+    ...componentColorMeta("sidebar").argTypes,
     collapsed: { control: "boolean" },
     header: { control: "text" },
     footer: { control: "text" },

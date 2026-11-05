@@ -1,5 +1,6 @@
 import React from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
+import { componentColorMeta } from "./component-colors";
 import { DataGrid } from "../lib/components/datagrid/datagrid";
 import type { DataGridColumn } from "../lib/components/datagrid/datagrid";
 
@@ -53,6 +54,7 @@ const COLUMNS: DataGridColumn<Product>[] = [
 const meta: Meta = {
   title: "Data/DataGrid",
   tags: ["autodocs"],
+  ...componentColorMeta("datagrid"),
 };
 export default meta;
 type Story = StoryObj;

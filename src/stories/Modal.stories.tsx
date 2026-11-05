@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
+import { componentColorMeta } from "./component-colors";
 import { Modal } from "../lib/components/modal/modal";
 import { Button } from "../lib/components/button/button";
 
@@ -7,7 +8,9 @@ const meta: Meta<typeof Modal> = {
   title: "Components/Modal",
   component: Modal,
   tags: ["autodocs"],
+  ...componentColorMeta("modal"),
   argTypes: {
+    ...componentColorMeta("modal").argTypes,
     // `open` is intentionally excluded — the demo wrapper owns open state via a trigger button
     title: { control: "text" },
     closeOnOverlayClick: { control: "boolean" },

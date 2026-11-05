@@ -1,25 +1,24 @@
 @layer jowa.components {
   .jowa-sparkline {
-    --jowa-sparkline-color: var(--jowa-color-primary);
     display: inline-block;
     vertical-align: middle;
   }
 
   .jowa-sparkline__line {
     fill: none;
-    stroke: var(--jowa-sparkline-color);
+    stroke: var(--jowa-sparkline-color, var(--jowa-color-primary));
     stroke-width: 1.75;
     stroke-linecap: round;
     stroke-linejoin: round;
   }
 
   .jowa-sparkline__area {
-    fill: var(--jowa-sparkline-color);
+    fill: var(--jowa-sparkline-color, var(--jowa-color-primary));
     opacity: 0.12;
   }
 
   .jowa-sparkline__dot {
-    fill: var(--jowa-sparkline-color);
+    fill: var(--jowa-sparkline-color, var(--jowa-color-primary));
     stroke: var(--jowa-color-neutral-bg);
     stroke-width: 1.5;
   }

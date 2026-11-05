@@ -1,12 +1,15 @@
 import React, { useState } from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
+import { componentColorMeta } from "./component-colors";
 import { Pagination } from "../lib/components/pagination/pagination";
 
 const meta: Meta<typeof Pagination> = {
   title: "Components/Pagination",
   component: Pagination,
   tags: ["autodocs"],
+  ...componentColorMeta("pagination"),
   argTypes: {
+    ...componentColorMeta("pagination").argTypes,
     page: { control: 'number' },
     total: { control: 'number' },
     pageSize: { control: 'number' },

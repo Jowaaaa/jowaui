@@ -1,11 +1,14 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
+import { componentColorMeta } from "./component-colors";
 import { Progress } from "../lib/components/progress/progress";
 
 const meta: Meta<typeof Progress> = {
   title: "Components/Progress",
   component: Progress,
   tags: ["autodocs"],
+  ...componentColorMeta("progress"),
   argTypes: {
+    ...componentColorMeta("progress").argTypes,
     variant: { control: "select", options: ["primary", "success", "warning", "danger"] },
     size: { control: "select", options: ["sm", "md", "lg"] },
     value: { control: { type: "range", min: 0, max: 100 } },

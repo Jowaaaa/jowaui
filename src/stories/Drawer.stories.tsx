@@ -1,12 +1,15 @@
 import React, { useState } from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
+import { componentColorMeta } from "./component-colors";
 import { Drawer } from "../lib/components/drawer/drawer";
 import { Button } from "../lib/components/button/button";
 
 const meta: Meta = {
   title: "Overlay/Drawer",
   tags: ["autodocs"],
+  ...componentColorMeta("drawer"),
   argTypes: {
+    ...componentColorMeta("drawer").argTypes,
     open: { control: 'boolean' },
     side: { control: 'select', options: ['left', 'right', 'top', 'bottom'] },
     title: { control: 'text' },

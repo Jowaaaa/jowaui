@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
+import { componentColorMeta } from "./component-colors";
 import { Dropdown } from "../lib/components/dropdown/dropdown";
 import { Button } from "../lib/components/button/button";
 
@@ -6,7 +7,9 @@ const meta: Meta<typeof Dropdown> = {
   title: "Components/Dropdown",
   component: Dropdown,
   tags: ["autodocs"],
+  ...componentColorMeta("dropdown"),
   argTypes: {
+    ...componentColorMeta("dropdown").argTypes,
     align: { control: 'select', options: ['left', 'right'] },
   },
 };

@@ -36,23 +36,23 @@
   }
 
   .jowa-timeline__dot--success {
-    background-color: var(--jowa-color-success);
-    box-shadow: 0 0 0 2px var(--jowa-color-success);
+    background-color: var(--jowa-timeline-success-color, var(--jowa-color-success));
+    box-shadow: 0 0 0 2px var(--jowa-timeline-success-color, var(--jowa-color-success));
   }
 
   .jowa-timeline__dot--danger {
-    background-color: var(--jowa-color-danger);
-    box-shadow: 0 0 0 2px var(--jowa-color-danger);
+    background-color: var(--jowa-timeline-danger-color, var(--jowa-color-danger));
+    box-shadow: 0 0 0 2px var(--jowa-timeline-danger-color, var(--jowa-color-danger));
   }
 
   .jowa-timeline__dot--warning {
-    background-color: var(--jowa-color-warning);
-    box-shadow: 0 0 0 2px var(--jowa-color-warning);
+    background-color: var(--jowa-timeline-warning-color, var(--jowa-color-warning));
+    box-shadow: 0 0 0 2px var(--jowa-timeline-warning-color, var(--jowa-color-warning));
   }
 
   .jowa-timeline__dot--info {
-    background-color: var(--jowa-color-primary);
-    box-shadow: 0 0 0 2px var(--jowa-color-primary);
+    background-color: var(--jowa-timeline-info-color, var(--jowa-color-primary));
+    box-shadow: 0 0 0 2px var(--jowa-timeline-info-color, var(--jowa-color-primary));
   }
 
   .jowa-timeline__dot-icon {

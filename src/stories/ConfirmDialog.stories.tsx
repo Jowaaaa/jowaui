@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
+import { componentColorMeta } from "./component-colors";
 import { ConfirmDialog } from "../lib/components/confirmdialog/confirmdialog";
 import { Button } from "../lib/components/button/button";
 
@@ -7,7 +8,9 @@ const meta: Meta<typeof ConfirmDialog> = {
   title: "Components/ConfirmDialog",
   component: ConfirmDialog,
   tags: ["autodocs"],
+  ...componentColorMeta("confirmdialog"),
   argTypes: {
+    ...componentColorMeta("confirmdialog").argTypes,
     variant: { control: "select", options: ["default", "danger", "warning"] },
     title: { control: "text" },
     description: { control: "text" },

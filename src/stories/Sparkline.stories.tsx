@@ -1,10 +1,12 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
+import { componentColorMeta } from "./component-colors";
 import { Sparkline } from "../lib/components/sparkline/sparkline";
 
 const meta: Meta<typeof Sparkline> = {
   title: "Components/Sparkline",
   component: Sparkline,
   tags: ["autodocs"],
+  ...componentColorMeta("sparkline"),
   args: {
     data: [3, 7, 2, 9, 4, 11, 6, 14, 8, 12],
     width: 120,
@@ -13,6 +15,7 @@ const meta: Meta<typeof Sparkline> = {
     showLastDot: true,
   },
   argTypes: {
+    ...componentColorMeta("sparkline").argTypes,
     width: { control: 'number' },
     height: { control: 'number' },
     filled: { control: 'boolean' },

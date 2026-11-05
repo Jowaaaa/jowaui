@@ -1,14 +1,45 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { Banner } from "../lib/components/banner/banner";
 
+const variantColors = {
+  infoBackgroundColor: "--jowa-banner-info-background",
+  infoTextColor: "--jowa-banner-info-foreground",
+  infoBorderColor: "--jowa-banner-info-border",
+  successBackgroundColor: "--jowa-banner-success-background",
+  successTextColor: "--jowa-banner-success-foreground",
+  successBorderColor: "--jowa-banner-success-border",
+  warningBackgroundColor: "--jowa-banner-warning-background",
+  warningTextColor: "--jowa-banner-warning-foreground",
+  warningBorderColor: "--jowa-banner-warning-border",
+  dangerBackgroundColor: "--jowa-banner-danger-background",
+  dangerTextColor: "--jowa-banner-danger-foreground",
+  dangerBorderColor: "--jowa-banner-danger-border",
+} as const;
+
+const variantColorControls = Object.fromEntries(
+  Object.keys(variantColors).map((name) => [name, { control: "color", table: { category: "Variant colors" } }]),
+);
+
 const meta: Meta<typeof Banner> = {
   title: "Components/Banner",
   component: Banner,
   tags: ["autodocs"],
   argTypes: {
     variant: { control: "select", options: ["info", "success", "warning", "danger"] },
+    ...variantColorControls,
     dismissible: { control: 'boolean' },
   },
+  decorators: [
+    (Story, context) => {
+      const args = context.args as Record<string, unknown>;
+      const style = Object.fromEntries(
+        Object.entries(variantColors)
+          .filter(([name]) => args[name])
+          .map(([name, variable]) => [variable, args[name]]),
+      );
+      return <div style={style}><Story /></div>;
+    },
+  ],
 };
 
 export default meta;

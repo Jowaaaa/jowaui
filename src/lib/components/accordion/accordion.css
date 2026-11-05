@@ -3,13 +3,13 @@
     display: flex;
     flex-direction: column;
     font-family: var(--jowa-font-family);
-    border: 1.5px solid var(--jowa-color-neutral-border);
+    border: 1.5px solid var(--jowa-accordion-border, var(--jowa-color-neutral-border));
     border-radius: var(--jowa-radius-md);
     overflow: hidden;
   }
 
   .jowa-accordion-item {
-    border-bottom: 1.5px solid var(--jowa-color-neutral-border);
+    border-bottom: 1.5px solid var(--jowa-accordion-border, var(--jowa-color-neutral-border));
   }
 
   .jowa-accordion-item:last-child {
@@ -25,8 +25,8 @@
     font-family: var(--jowa-font-family);
     font-size: var(--jowa-font-size-md);
     font-weight: var(--jowa-font-weight-medium);
-    color: var(--jowa-color-neutral-text);
-    background: var(--jowa-color-neutral-bg);
+    color: var(--jowa-accordion-text, var(--jowa-color-neutral-text));
+    background: var(--jowa-accordion-background, var(--jowa-color-neutral-bg));
     border: none;
     cursor: pointer;
     text-align: left;
@@ -34,12 +34,12 @@
   }
 
   .jowa-accordion-header:hover {
-    background: var(--jowa-color-neutral-hover);
+    background: var(--jowa-accordion-hover, var(--jowa-color-neutral-hover));
   }
 
   .jowa-accordion-header:focus-visible {
     outline: none;
-    box-shadow: inset 0 0 0 2px var(--jowa-color-primary);
+    box-shadow: inset 0 0 0 2px var(--jowa-accordion-accent, var(--jowa-color-primary));
   }
 
   .jowa-accordion-item--disabled .jowa-accordion-header {
@@ -48,12 +48,12 @@
   }
 
   .jowa-accordion-item--disabled .jowa-accordion-header:hover {
-    background: var(--jowa-color-neutral-bg);
+    background: var(--jowa-accordion-background, var(--jowa-color-neutral-bg));
   }
 
   .jowa-accordion-chevron {
     flex-shrink: 0;
-    color: var(--jowa-color-muted);
+    color: var(--jowa-accordion-accent, var(--jowa-color-muted));
     transition: transform var(--jowa-duration-fast) var(--jowa-ease-smooth);
   }
 
@@ -75,7 +75,8 @@
   .jowa-accordion-content {
     overflow: hidden;
     font-size: var(--jowa-font-size-md);
-    color: var(--jowa-color-neutral-text);
+    color: var(--jowa-accordion-content-text, var(--jowa-accordion-text, var(--jowa-color-neutral-text)));
+    background: var(--jowa-accordion-content-background, var(--jowa-color-neutral-bg));
     padding: 0 var(--jowa-spacing-md);
     transition: padding var(--jowa-duration-normal) var(--jowa-ease-smooth);
   }

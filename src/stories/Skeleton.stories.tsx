@@ -1,12 +1,15 @@
 import React from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
+import { componentColorMeta } from "./component-colors";
 import { Skeleton } from "../lib/components/skeleton/skeleton";
 
 const meta: Meta<typeof Skeleton> = {
   title: "Feedback/Skeleton",
   component: Skeleton,
   tags: ["autodocs"],
+  ...componentColorMeta("skeleton"),
   argTypes: {
+    ...componentColorMeta("skeleton").argTypes,
     variant: { control: 'select', options: ['text', 'rect', 'circle'] },
     lines: { control: 'number' },
     width: { control: 'text' },

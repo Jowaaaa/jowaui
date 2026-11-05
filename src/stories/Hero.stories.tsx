@@ -1,6 +1,13 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { Hero } from "../lib/components/hero/hero";
 import { Button } from "../lib/components/button/button";
+import { componentColorArgTypes, withComponentColors } from "./component-colors";
+
+const colorControls = [
+  { key: "background", name: "Background", variables: ["--jowa-hero-background"], category: "Hero" },
+  { key: "title", name: "Title", variables: ["--jowa-hero-title-color"], category: "Hero" },
+  { key: "subtitle", name: "Subtitle", variables: ["--jowa-hero-subtitle-color"], category: "Hero" },
+] as const;
 
 const meta: Meta<typeof Hero> = {
   title: "Components/Hero",
@@ -9,7 +16,9 @@ const meta: Meta<typeof Hero> = {
   parameters: { layout: "fullscreen" },
   argTypes: {
     align: { control: "select", options: ["center", "left"] },
+    ...componentColorArgTypes(colorControls),
   },
+  decorators: [withComponentColors(colorControls)],
 };
 
 export default meta;

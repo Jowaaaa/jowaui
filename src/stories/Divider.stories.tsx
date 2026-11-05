@@ -1,11 +1,14 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
+import { componentColorMeta } from "./component-colors";
 import { Divider } from "../lib/components/divider/divider";
 
 const meta: Meta<typeof Divider> = {
   title: "Components/Divider",
   component: Divider,
   tags: ["autodocs"],
+  ...componentColorMeta("divider"),
   argTypes: {
+    ...componentColorMeta("divider").argTypes,
     orientation: { control: "select", options: ["horizontal", "vertical"] },
   },
 };

@@ -66,9 +66,9 @@
     padding: 2px 8px;
   }
 
-  .jowa-statcard__change--up      { background: var(--jowa-color-success-bg); color: var(--jowa-color-success); }
-  .jowa-statcard__change--down    { background: var(--jowa-color-danger-bg);  color: var(--jowa-color-danger);  }
-  .jowa-statcard__change--neutral { background: var(--jowa-color-surface);    color: var(--jowa-color-muted);   }
+  .jowa-statcard__change--up      { background: var(--jowa-statcard-up-background, var(--jowa-color-success-bg)); color: var(--jowa-statcard-up-text, var(--jowa-color-success)); }
+  .jowa-statcard__change--down    { background: var(--jowa-statcard-down-background, var(--jowa-color-danger-bg)); color: var(--jowa-statcard-down-text, var(--jowa-color-danger)); }
+  .jowa-statcard__change--neutral { background: var(--jowa-statcard-neutral-background, var(--jowa-color-surface)); color: var(--jowa-statcard-neutral-text, var(--jowa-color-muted)); }
 
   .jowa-statcard__trend-icon { font-size: 0.75rem; }
 

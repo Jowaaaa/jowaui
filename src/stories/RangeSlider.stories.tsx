@@ -2,6 +2,15 @@ import React from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { RangeSlider } from "../lib/components/rangeslider/rangeslider";
 import "../lib/components/rangeslider/rangeslider.css";
+import { componentColorArgTypes, withComponentColors } from "./component-colors";
+
+const colorControls = [
+  { key: "trackColor", name: "Track", variables: ["--jowa-color-neutral-border"], category: "Slider" },
+  { key: "fillColor", name: "Fill", variables: ["--jowa-color-primary"], category: "Slider" },
+  { key: "thumbColor", name: "Thumb", variables: ["--jowa-color-primary"], category: "Slider" },
+  { key: "tooltipBackground", name: "Tooltip background", variables: ["--jowa-color-neutral-text"], category: "Tooltip" },
+  { key: "tooltipText", name: "Tooltip text", variables: ["--jowa-color-neutral-bg"], category: "Tooltip" },
+] as const;
 
 const meta: Meta<typeof RangeSlider> = {
   title: "Forms/RangeSlider",
@@ -14,7 +23,9 @@ const meta: Meta<typeof RangeSlider> = {
     step: { control: { type: "number" } },
     disabled: { control: "boolean" },
     showTooltip: { control: "boolean" },
+    ...componentColorArgTypes(colorControls),
   },
+  decorators: [withComponentColors(colorControls)],
 };
 export default meta;
 type Story = StoryObj<typeof RangeSlider>;

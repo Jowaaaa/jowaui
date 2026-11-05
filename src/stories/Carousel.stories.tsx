@@ -1,11 +1,14 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
+import { componentColorMeta } from "./component-colors";
 import { Carousel } from "../lib/components/carousel/carousel";
 
 const meta: Meta<typeof Carousel> = {
   title: "Components/Carousel",
   component: Carousel,
   tags: ["autodocs"],
+  ...componentColorMeta("carousel"),
   argTypes: {
+    ...componentColorMeta("carousel").argTypes,
     autoPlay: { control: "boolean" },
     showDots: { control: "boolean" },
     showArrows: { control: "boolean" },

@@ -2,6 +2,15 @@ import React from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { MultiSelect } from "../lib/components/multiselect/multiselect";
 import "../lib/components/multiselect/multiselect.css";
+import { componentColorArgTypes, withComponentColors } from "./component-colors";
+
+const colorControls = [
+  { key: "textColor", name: "Text", variables: ["--jowa-color-neutral-text"], category: "Field" },
+  { key: "backgroundColor", name: "Background", variables: ["--jowa-color-surface"], category: "Field" },
+  { key: "borderColor", name: "Border", variables: ["--jowa-color-neutral-border"], category: "Field" },
+  { key: "focusColor", name: "Focus", variables: ["--jowa-color-primary"], category: "States" },
+  { key: "mutedColor", name: "Placeholder", variables: ["--jowa-color-muted"], category: "States" },
+] as const;
 
 const OPTIONS = [
   { value: "react", label: "React" },
@@ -20,7 +29,9 @@ const meta: Meta<typeof MultiSelect> = {
   argTypes: {
     disabled: { control: "boolean" },
     placeholder: { control: "text" },
+    ...componentColorArgTypes(colorControls),
   },
+  decorators: [withComponentColors(colorControls)],
 };
 export default meta;
 type Story = StoryObj<typeof MultiSelect>;

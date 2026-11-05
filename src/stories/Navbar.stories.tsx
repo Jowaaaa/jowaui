@@ -1,6 +1,12 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { Navbar } from "../lib/components/navbar/navbar";
 import { Button } from "../lib/components/button/button";
+import { componentColorArgTypes, withComponentColors } from "./component-colors";
+
+const colorControls = [
+  { key: "background", name: "Background", variables: ["--jowa-navbar-bg"], category: "Navbar" },
+  { key: "text", name: "Text", variables: ["--jowa-navbar-text"], category: "Navbar" },
+] as const;
 
 const meta: Meta<typeof Navbar> = {
   title: "Components/Navbar",
@@ -13,7 +19,9 @@ const meta: Meta<typeof Navbar> = {
     title: { control: "text" },
     logoSrc: { control: "text" },
     logoAlt: { control: "text" },
+    ...componentColorArgTypes(colorControls),
   },
+  decorators: [withComponentColors(colorControls)],
 };
 
 export default meta;

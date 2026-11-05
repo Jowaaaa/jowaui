@@ -1,10 +1,12 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
+import { componentColorMeta } from "./component-colors";
 import { Footer } from "../lib/components/footer/footer";
 
 const meta: Meta<typeof Footer> = {
   title: "Components/Footer",
   component: Footer,
   tags: ["autodocs"],
+  ...componentColorMeta("footer"),
   parameters: { layout: "fullscreen" },
 };
 

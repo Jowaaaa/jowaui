@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
+import { componentColorMeta } from "./component-colors";
 import { ContextMenu } from "../lib/components/contextmenu/contextmenu";
 import type { ContextMenuEntry } from "../lib/components/contextmenu/contextmenu";
 
@@ -6,6 +7,7 @@ const meta: Meta<typeof ContextMenu> = {
   title: "Components/ContextMenu",
   component: ContextMenu,
   tags: ["autodocs"],
+  ...componentColorMeta("contextmenu"),
 };
 
 export default meta;

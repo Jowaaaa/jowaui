@@ -3,6 +3,7 @@
     width: 100%;
     overflow-x: auto;
     font-family: var(--jowa-font-family);
+    background: var(--jowa-color-neutral-bg);
     border-radius: var(--jowa-radius-lg);
     border: 1px solid var(--jowa-color-neutral-border);
   }

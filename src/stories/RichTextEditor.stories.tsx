@@ -1,12 +1,15 @@
 import React from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
+import { componentColorMeta } from "./component-colors";
 import { RichTextEditor } from "../lib/components/richtexteditor/richtexteditor";
 
 const meta: Meta<typeof RichTextEditor> = {
   title: "Forms/RichTextEditor",
   component: RichTextEditor,
   tags: ["autodocs"],
+  ...componentColorMeta("richtexteditor"),
   argTypes: {
+    ...componentColorMeta("richtexteditor").argTypes,
     placeholder: { control: 'text' },
     disabled: { control: 'boolean' },
   },

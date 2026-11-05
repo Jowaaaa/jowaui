@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
+import { componentColorMeta } from "./component-colors";
 import { KanbanBoard } from "../lib/components/kanban/kanban";
 import type { KanbanColumn } from "../lib/components/kanban/kanban";
 
@@ -7,6 +8,7 @@ const meta: Meta<typeof KanbanBoard> = {
   title: "Components/KanbanBoard",
   component: KanbanBoard,
   tags: ["autodocs"],
+  ...componentColorMeta("kanban"),
 };
 
 export default meta;

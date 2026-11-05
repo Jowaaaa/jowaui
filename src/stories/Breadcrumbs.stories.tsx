@@ -1,11 +1,14 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
+import { componentColorMeta } from "./component-colors";
 import { Breadcrumbs } from "../lib/components/breadcrumbs/breadcrumbs";
 
 const meta: Meta<typeof Breadcrumbs> = {
   title: "Components/Breadcrumbs",
   component: Breadcrumbs,
   tags: ["autodocs"],
+  ...componentColorMeta("breadcrumbs"),
   argTypes: {
+    ...componentColorMeta("breadcrumbs").argTypes,
     separator: { control: "text" },
   },
 };

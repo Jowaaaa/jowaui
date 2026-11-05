@@ -1,11 +1,14 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
+import { componentColorMeta } from "./component-colors";
 import { Avatar } from "../lib/components/avatar/avatar";
 
 const meta: Meta<typeof Avatar> = {
   title: "Components/Avatar",
   component: Avatar,
   tags: ["autodocs"],
+  ...componentColorMeta("avatar"),
   argTypes: {
+    ...componentColorMeta("avatar").argTypes,
     size: { control: "select", options: ["sm", "md", "lg", "xl"] },
   },
 };

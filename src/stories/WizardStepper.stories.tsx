@@ -1,5 +1,6 @@
 import React from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
+import { componentColorMeta } from "./component-colors";
 import { WizardStepper } from "../lib/components/wizardstepper/wizardstepper";
 import type { WizardStep } from "../lib/components/wizardstepper/wizardstepper";
 
@@ -122,7 +123,9 @@ const VALIDATION_STEPS: WizardStep[] = [
 const meta: Meta = {
   title: "Navigation/WizardStepper",
   tags: ["autodocs"],
+  ...componentColorMeta("wizardstepper"),
   argTypes: {
+    ...componentColorMeta("wizardstepper").argTypes,
     currentStep: { control: 'number' },
     defaultStep: { control: 'number' },
   },

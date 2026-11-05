@@ -1,5 +1,16 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { Input } from "../lib/components/input/input";
+import { componentColorArgTypes, withComponentColors } from "./component-colors";
+
+const colorControls = [
+  { key: "background", name: "Background", variables: ["--jowa-input-background"], category: "Field" },
+  { key: "text", name: "Text", variables: ["--jowa-input-foreground"], category: "Field" },
+  { key: "label", name: "Label", variables: ["--jowa-input-label-color"], category: "Field" },
+  { key: "border", name: "Border", variables: ["--jowa-input-border-color"], category: "Field" },
+  { key: "placeholder", name: "Placeholder", variables: ["--jowa-input-placeholder-color"], category: "Field" },
+  { key: "focus", name: "Focus", variables: ["--jowa-input-focus-color"], category: "States" },
+  { key: "errorColor", name: "Error", variables: ["--jowa-input-error-color"], category: "States" },
+] as const;
 
 const meta: Meta<typeof Input> = {
   title: "Components/Input",
@@ -10,7 +21,9 @@ const meta: Meta<typeof Input> = {
     error: { control: 'text' },
     hint: { control: 'text' },
     disabled: { control: 'boolean' },
+    ...componentColorArgTypes(colorControls),
   },
+  decorators: [withComponentColors(colorControls)],
 };
 
 export default meta;

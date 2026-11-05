@@ -20,8 +20,9 @@ import { StatCard } from "../lib/components/statcard/statcard";
 import { Tag } from "../lib/components/tag/tag";
 import { Textarea } from "../lib/components/textarea/textarea";
 import { Switch } from "../lib/components/switch/switch";
+import { Accordion } from "../lib/components/accordion/accordion";
 
-export type ComponentKey = "hero" | "card" | "columns" | "column" | "button" | "badge" | "alert" | "input" | "avatar" | "divider" | "progress" | "spinner" | "statcard" | "tag" | "navbar" | "banner" | "breadcrumbs" | "checkbox" | "skeleton" | "switch" | "textarea" | "custom";
+export type ComponentKey = "hero" | "card" | "columns" | "column" | "button" | "badge" | "alert" | "input" | "avatar" | "divider" | "progress" | "spinner" | "statcard" | "tag" | "navbar" | "banner" | "breadcrumbs" | "checkbox" | "skeleton" | "switch" | "textarea" | "accordion" | "custom";
 export type BuilderViewport = "desktop" | "tablet" | "mobile";
 export type SourceRange = { start: number; end: number };
 export type BuilderLayout = { columnStart: number; columnSpan: number; rowStart?: number; rowSpan?: number; gridVersion?: 50 };
@@ -80,6 +81,28 @@ export function componentName(component: ComponentKey): string {
 }
 
 const COMPONENT_REGISTRY: Record<ComponentKey, ComponentDefinition> = {
+  accordion: {
+    key: "accordion",
+    label: "Accordion",
+    category: "Content",
+    description: "Expandable sections of related content.",
+    acceptsChildren: false,
+    props: [
+      { key: "items", label: "Items", type: "json" },
+      { key: "multiple", label: "Allow multiple open", type: "boolean" },
+    ],
+    colors: [
+      { key: "--jowa-accordion-background", label: "Background", defaultValue: "#ffffff" },
+      { key: "--jowa-accordion-text", label: "Text", defaultValue: "#1f2937" },
+      { key: "--jowa-accordion-border", label: "Border", defaultValue: "#e5e7eb" },
+      { key: "--jowa-accordion-hover", label: "Hover", defaultValue: "#f8fafc" },
+      { key: "--jowa-accordion-accent", label: "Accent", defaultValue: "#2563eb" },
+      { key: "--jowa-accordion-content-background", label: "Content background", defaultValue: "#ffffff" },
+      { key: "--jowa-accordion-content-text", label: "Content text", defaultValue: "#1f2937" },
+    ],
+    create: () => ({ id: "", component: "accordion", props: { items: [{ id: "one", title: "First section", content: "Accordion content" }, { id: "two", title: "Second section", content: "More accordion content" }], multiple: false }, children: [], styles: {} }),
+    render: Accordion as unknown as React.ComponentType<Record<string, unknown>>,
+  },
   hero: {
     key: "hero",
     label: "Hero",
@@ -126,7 +149,11 @@ const COMPONENT_REGISTRY: Record<ComponentKey, ComponentDefinition> = {
       { key: "count", label: "Column count", type: "number" },
       { key: "gap", label: "Column gap", type: "text" },
     ],
-    colors: [],
+    colors: [
+      { key: "--jowa-color-neutral-bg", label: "Background", defaultValue: "#ffffff" },
+      { key: "--jowa-color-neutral-text", label: "Text", defaultValue: "#1f2937" },
+      { key: "--jowa-color-primary", label: "Accent", defaultValue: "#2563eb" },
+    ],
     create: () => ({ id: "", component: "columns", props: { count: 3, gap: "24px" }, children: [createNode("column"), createNode("column"), createNode("column")], styles: {} }),
     render: Columns as unknown as React.ComponentType<Record<string, unknown>>,
   },
@@ -138,7 +165,11 @@ const COMPONENT_REGISTRY: Record<ComponentKey, ComponentDefinition> = {
     acceptsChildren: true,
     palette: false,
     props: [],
-    colors: [],
+    colors: [
+      { key: "--jowa-color-neutral-bg", label: "Background", defaultValue: "#ffffff" },
+      { key: "--jowa-color-neutral-text", label: "Text", defaultValue: "#1f2937" },
+      { key: "--jowa-color-primary", label: "Accent", defaultValue: "#2563eb" },
+    ],
     create: () => ({ id: "", component: "column", props: {}, children: [], styles: {} }),
     render: Column as unknown as React.ComponentType<Record<string, unknown>>,
   },
@@ -243,7 +274,11 @@ const COMPONENT_REGISTRY: Record<ComponentKey, ComponentDefinition> = {
       { key: "initials", label: "Initials", type: "text" },
       { key: "size", label: "Size", type: "select", options: ["sm", "md", "lg", "xl"] },
     ],
-    colors: [],
+    colors: [
+      { key: "--jowa-color-neutral-bg", label: "Background", defaultValue: "#eff6ff" },
+      { key: "--jowa-color-neutral-text", label: "Text", defaultValue: "#2563eb" },
+      { key: "--jowa-color-primary", label: "Accent", defaultValue: "#2563eb" },
+    ],
     create: () => ({ id: "", component: "avatar", props: { alt: "Jowaui", initials: "JW", size: "md" }, children: [], styles: {} }),
     render: Avatar as unknown as React.ComponentType<Record<string, unknown>>,
   },
@@ -257,7 +292,11 @@ const COMPONENT_REGISTRY: Record<ComponentKey, ComponentDefinition> = {
       { key: "label", label: "Label", type: "text" },
       { key: "orientation", label: "Orientation", type: "select", options: ["horizontal", "vertical"] },
     ],
-    colors: [],
+    colors: [
+      { key: "--jowa-color-neutral-bg", label: "Background", defaultValue: "#ffffff" },
+      { key: "--jowa-color-neutral-text", label: "Text", defaultValue: "#64748b" },
+      { key: "--jowa-color-primary", label: "Accent", defaultValue: "#e5e7eb" },
+    ],
     create: () => ({ id: "", component: "divider", props: { label: "", orientation: "horizontal" }, children: [], styles: {} }),
     render: Divider as unknown as React.ComponentType<Record<string, unknown>>,
   },
@@ -275,7 +314,11 @@ const COMPONENT_REGISTRY: Record<ComponentKey, ComponentDefinition> = {
       { key: "variant", label: "Variant", type: "select", options: ["primary", "success", "warning", "danger"] },
       { key: "size", label: "Size", type: "select", options: ["sm", "md", "lg"] },
     ],
-    colors: [],
+    colors: [
+      { key: "--jowa-color-neutral-bg", label: "Background", defaultValue: "#e5e7eb" },
+      { key: "--jowa-color-neutral-text", label: "Text", defaultValue: "#1f2937" },
+      { key: "--jowa-color-primary", label: "Accent", defaultValue: "#2563eb" },
+    ],
     create: () => ({ id: "", component: "progress", props: { value: 64, max: 100, label: "Progress", showValue: true, variant: "primary", size: "md" }, children: [], styles: {} }),
     render: Progress as unknown as React.ComponentType<Record<string, unknown>>,
   },
@@ -286,7 +329,11 @@ const COMPONENT_REGISTRY: Record<ComponentKey, ComponentDefinition> = {
     description: "A loading indicator.",
     acceptsChildren: false,
     props: [{ key: "size", label: "Size", type: "select", options: ["sm", "md", "lg"] }],
-    colors: [],
+    colors: [
+      { key: "--jowa-color-neutral-bg", label: "Background", defaultValue: "transparent" },
+      { key: "--jowa-color-neutral-text", label: "Text", defaultValue: "#1f2937" },
+      { key: "--jowa-color-primary", label: "Accent", defaultValue: "#2563eb" },
+    ],
     create: () => ({ id: "", component: "spinner", props: { size: "md" }, children: [], styles: {} }),
     render: Spinner as unknown as React.ComponentType<Record<string, unknown>>,
   },
@@ -303,7 +350,11 @@ const COMPONENT_REGISTRY: Record<ComponentKey, ComponentDefinition> = {
       { key: "change", label: "Change", type: "text" },
       { key: "trend", label: "Trend", type: "select", options: ["up", "down", "neutral"] },
     ],
-    colors: [],
+    colors: [
+      { key: "--jowa-color-neutral-bg", label: "Background", defaultValue: "#ffffff" },
+      { key: "--jowa-color-neutral-text", label: "Text", defaultValue: "#1f2937" },
+      { key: "--jowa-color-primary", label: "Accent", defaultValue: "#2563eb" },
+    ],
     create: () => ({ id: "", component: "statcard", props: { label: "Active users", value: "1,248", unit: "users", change: "+12%", trend: "up" }, children: [], styles: {} }),
     render: StatCard as unknown as React.ComponentType<Record<string, unknown>>,
   },
@@ -317,7 +368,11 @@ const COMPONENT_REGISTRY: Record<ComponentKey, ComponentDefinition> = {
       { key: "children", label: "Label", type: "text" },
       { key: "variant", label: "Variant", type: "select", options: ["neutral", "primary", "success", "warning", "danger"] },
     ],
-    colors: [],
+    colors: [
+      { key: "--jowa-color-neutral-bg", label: "Background", defaultValue: "#eff6ff" },
+      { key: "--jowa-color-neutral-text", label: "Text", defaultValue: "#2563eb" },
+      { key: "--jowa-color-primary", label: "Accent", defaultValue: "#2563eb" },
+    ],
     create: () => ({ id: "", component: "tag", props: { children: "Featured", variant: "primary" }, children: [], styles: {} }),
     render: Tag as unknown as React.ComponentType<Record<string, unknown>>,
   },
@@ -351,7 +406,11 @@ const COMPONENT_REGISTRY: Record<ComponentKey, ComponentDefinition> = {
       { key: "variant", label: "Variant", type: "select", options: ["info", "success", "warning", "danger"] },
       { key: "dismissible", label: "Dismissible", type: "boolean" },
     ],
-    colors: [],
+    colors: [
+      { key: "--jowa-color-neutral-bg", label: "Background", defaultValue: "#eff6ff" },
+      { key: "--jowa-color-neutral-text", label: "Text", defaultValue: "#2563eb" },
+      { key: "--jowa-color-primary", label: "Accent", defaultValue: "#2563eb" },
+    ],
     create: () => ({ id: "", component: "banner", props: { children: "This is an important announcement.", variant: "info", dismissible: false }, children: [], styles: {} }),
     render: Banner as unknown as React.ComponentType<Record<string, unknown>>,
   },
@@ -362,7 +421,11 @@ const COMPONENT_REGISTRY: Record<ComponentKey, ComponentDefinition> = {
     description: "A path indicator for nested pages.",
     acceptsChildren: false,
     props: [{ key: "items", label: "Items JSON", type: "json" }, { key: "separator", label: "Separator", type: "text" }],
-    colors: [],
+    colors: [
+      { key: "--jowa-color-neutral-bg", label: "Background", defaultValue: "#ffffff" },
+      { key: "--jowa-color-neutral-text", label: "Text", defaultValue: "#1f2937" },
+      { key: "--jowa-color-primary", label: "Accent", defaultValue: "#2563eb" },
+    ],
     create: () => ({ id: "", component: "breadcrumbs", props: { items: [{ label: "Home", href: "/" }, { label: "Current" }], separator: "/" }, children: [], styles: {} }),
     render: Breadcrumbs as unknown as React.ComponentType<Record<string, unknown>>,
   },
@@ -373,7 +436,11 @@ const COMPONENT_REGISTRY: Record<ComponentKey, ComponentDefinition> = {
     description: "A labeled checkbox control.",
     acceptsChildren: false,
     props: [{ key: "label", label: "Label", type: "text" }, { key: "hint", label: "Hint", type: "text" }, { key: "checked", label: "Checked", type: "boolean" }],
-    colors: [],
+    colors: [
+      { key: "--jowa-color-neutral-bg", label: "Background", defaultValue: "#ffffff" },
+      { key: "--jowa-color-neutral-text", label: "Text", defaultValue: "#1f2937" },
+      { key: "--jowa-color-primary", label: "Accent", defaultValue: "#2563eb" },
+    ],
     create: () => ({ id: "", component: "checkbox", props: { label: "Accept terms", hint: "Required to continue", checked: false }, children: [], styles: {} }),
     render: Checkbox as unknown as React.ComponentType<Record<string, unknown>>,
   },
@@ -384,7 +451,11 @@ const COMPONENT_REGISTRY: Record<ComponentKey, ComponentDefinition> = {
     description: "A loading placeholder for content.",
     acceptsChildren: false,
     props: [{ key: "variant", label: "Variant", type: "select", options: ["text", "rect", "circle"] }, { key: "width", label: "Width", type: "text" }, { key: "height", label: "Height", type: "text" }, { key: "lines", label: "Lines", type: "number" }],
-    colors: [],
+    colors: [
+      { key: "--jowa-color-neutral-bg", label: "Background", defaultValue: "#e5e7eb" },
+      { key: "--jowa-color-neutral-text", label: "Text", defaultValue: "#1f2937" },
+      { key: "--jowa-color-primary", label: "Accent", defaultValue: "#2563eb" },
+    ],
     create: () => ({ id: "", component: "skeleton", props: { variant: "rect", width: "240px", height: "80px", lines: 1 }, children: [], styles: {} }),
     render: Skeleton as unknown as React.ComponentType<Record<string, unknown>>,
   },
@@ -395,7 +466,11 @@ const COMPONENT_REGISTRY: Record<ComponentKey, ComponentDefinition> = {
     description: "A labeled on/off toggle.",
     acceptsChildren: false,
     props: [{ key: "label", label: "Label", type: "text" }, { key: "hint", label: "Hint", type: "text" }, { key: "labelPosition", label: "Label position", type: "select", options: ["left", "right"] }, { key: "size", label: "Size", type: "select", options: ["sm", "md", "lg"] }, { key: "checked", label: "Checked", type: "boolean" }],
-    colors: [],
+    colors: [
+      { key: "--jowa-color-neutral-bg", label: "Background", defaultValue: "#e5e7eb" },
+      { key: "--jowa-color-neutral-text", label: "Text", defaultValue: "#1f2937" },
+      { key: "--jowa-color-primary", label: "Accent", defaultValue: "#2563eb" },
+    ],
     create: () => ({ id: "", component: "switch", props: { label: "Enable notifications", hint: "Receive product updates", labelPosition: "right", size: "md", checked: true }, children: [], styles: {} }),
     render: Switch as unknown as React.ComponentType<Record<string, unknown>>,
   },
@@ -406,7 +481,11 @@ const COMPONENT_REGISTRY: Record<ComponentKey, ComponentDefinition> = {
     description: "A multi-line text field.",
     acceptsChildren: false,
     props: [{ key: "label", label: "Label", type: "text" }, { key: "placeholder", label: "Placeholder", type: "text" }, { key: "hint", label: "Hint", type: "text" }, { key: "resize", label: "Resize", type: "select", options: ["none", "vertical", "horizontal", "both"] }],
-    colors: [],
+    colors: [
+      { key: "--jowa-color-neutral-bg", label: "Background", defaultValue: "#ffffff" },
+      { key: "--jowa-color-neutral-text", label: "Text", defaultValue: "#1f2937" },
+      { key: "--jowa-color-primary", label: "Accent", defaultValue: "#2563eb" },
+    ],
     create: () => ({ id: "", component: "textarea", props: { label: "Message", placeholder: "Write something...", hint: "Keep it concise", resize: "vertical" }, children: [], styles: {} }),
     render: Textarea as unknown as React.ComponentType<Record<string, unknown>>,
   },

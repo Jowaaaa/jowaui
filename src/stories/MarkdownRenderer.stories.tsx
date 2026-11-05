@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
+import { componentColorMeta } from "./component-colors";
 import { MarkdownRenderer } from "../lib/components/markdownrenderer/markdownrenderer";
 
 const SAMPLE_CONTENT = `# Markdown Renderer
@@ -43,7 +44,9 @@ const meta: Meta<typeof MarkdownRenderer> = {
   title: "Content/MarkdownRenderer",
   component: MarkdownRenderer,
   tags: ["autodocs"],
+  ...componentColorMeta("markdownrenderer"),
   argTypes: {
+    ...componentColorMeta("markdownrenderer").argTypes,
     content: { control: 'text' },
   },
 };

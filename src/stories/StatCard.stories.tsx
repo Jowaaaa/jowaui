@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
+import { componentColorMeta } from "./component-colors";
 import { StatCard } from "../lib/components/statcard/statcard";
 import { Sparkline } from "../lib/components/sparkline/sparkline";
 
@@ -6,6 +7,7 @@ const meta: Meta<typeof StatCard> = {
   title: "Components/StatCard",
   component: StatCard,
   tags: ["autodocs"],
+  ...componentColorMeta("statcard"),
   args: {
     label: "Total Revenue",
     value: "$48,295",
@@ -13,6 +15,7 @@ const meta: Meta<typeof StatCard> = {
     trend: "up",
   },
   argTypes: {
+    ...componentColorMeta("statcard").argTypes,
     label: { control: 'text' },
     value: { control: 'text' },
     unit: { control: 'text' },

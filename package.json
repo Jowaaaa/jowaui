@@ -42,8 +42,11 @@
   "scripts": {
     "build": "tsup",
     "build:watch": "tsup --watch",
+    "prestorybook": "npm run generate:story-colors",
     "storybook": "storybook dev -p 6006",
+    "prebuild-storybook": "npm run generate:story-colors",
     "build-storybook": "storybook build",
+    "generate:story-colors": "node scripts/generate-story-color-controls.mjs",
     "builder": "vite --host 0.0.0.0",
     "builder:build": "vite build",
     "test": "vitest run",

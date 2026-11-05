@@ -1,11 +1,14 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
+import { componentColorMeta } from "./component-colors";
 import { Spinner } from "../lib/components/spinner/spinner";
 
 const meta: Meta<typeof Spinner> = {
   title: "Components/Spinner",
   component: Spinner,
   tags: ["autodocs"],
+  ...componentColorMeta("spinner"),
   argTypes: {
+    ...componentColorMeta("spinner").argTypes,
     size: { control: "select", options: ["sm", "md", "lg"] },
   },
 };

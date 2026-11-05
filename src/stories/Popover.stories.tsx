@@ -1,12 +1,15 @@
 import React from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
+import { componentColorMeta } from "./component-colors";
 import { Popover } from "../lib/components/popover/popover";
 import { Button } from "../lib/components/button/button";
 
 const meta: Meta = {
   title: "Overlay/Popover",
   tags: ["autodocs"],
+  ...componentColorMeta("popover"),
   argTypes: {
+    ...componentColorMeta("popover").argTypes,
     placement: { control: 'select', options: ['top', 'bottom', 'left', 'right'] },
     open: { control: 'boolean' },
     defaultOpen: { control: 'boolean' },

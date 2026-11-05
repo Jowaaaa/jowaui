@@ -1,5 +1,15 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { NumberInput } from "../lib/components/numberinput/numberinput";
+import { componentColorArgTypes, withComponentColors } from "./component-colors";
+
+const colorControls = [
+  { key: "textColor", name: "Text", variables: ["--jowa-color-neutral-text"], category: "Field" },
+  { key: "backgroundColor", name: "Background", variables: ["--jowa-color-neutral-bg"], category: "Field" },
+  { key: "borderColor", name: "Border", variables: ["--jowa-color-neutral-border"], category: "Field" },
+  { key: "focusColor", name: "Focus", variables: ["--jowa-color-primary"], category: "States" },
+  { key: "errorColor", name: "Error", variables: ["--jowa-color-danger"], category: "States" },
+  { key: "mutedColor", name: "Muted", variables: ["--jowa-color-muted"], category: "States" },
+] as const;
 
 const meta: Meta<typeof NumberInput> = {
   title: "Forms/NumberInput",
@@ -20,7 +30,9 @@ const meta: Meta<typeof NumberInput> = {
     max: { control: 'number' },
     step: { control: 'number' },
     disabled: { control: 'boolean' },
+    ...componentColorArgTypes(colorControls),
   },
+  decorators: [withComponentColors(colorControls)],
 };
 
 export default meta;

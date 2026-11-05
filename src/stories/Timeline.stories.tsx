@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
+import { componentColorMeta } from "./component-colors";
 import { Timeline } from "../lib/components/timeline/timeline";
 import type { TimelineItem } from "../lib/components/timeline/timeline";
 
@@ -6,6 +7,7 @@ const meta: Meta<typeof Timeline> = {
   title: "Components/Timeline",
   component: Timeline,
   tags: ["autodocs"],
+  ...componentColorMeta("timeline"),
 };
 
 export default meta;

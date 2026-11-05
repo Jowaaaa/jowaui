@@ -12,11 +12,11 @@
     white-space: nowrap;
   }
 
-  .jowa-tag--neutral { background: var(--jowa-color-surface);    color: var(--jowa-color-neutral-text); border: 1px solid var(--jowa-color-neutral-border); }
-  .jowa-tag--primary { background: var(--jowa-color-primary-bg); color: var(--jowa-color-primary);      border: 1px solid oklch(from var(--jowa-color-primary) 85% c h); }
-  .jowa-tag--success { background: var(--jowa-color-success-bg); color: var(--jowa-color-success);      border: 1px solid oklch(from var(--jowa-color-success) 85% c h); }
-  .jowa-tag--warning { background: var(--jowa-color-warning-bg); color: var(--jowa-color-warning);      border: 1px solid oklch(from var(--jowa-color-warning) 85% c h); }
-  .jowa-tag--danger  { background: var(--jowa-color-danger-bg);  color: var(--jowa-color-danger);       border: 1px solid oklch(from var(--jowa-color-danger)  85% c h); }
+  .jowa-tag--neutral { background: var(--jowa-tag-neutral-background, var(--jowa-color-surface)); color: var(--jowa-tag-neutral-text, var(--jowa-color-neutral-text)); border: 1px solid var(--jowa-tag-neutral-border, var(--jowa-color-neutral-border)); }
+  .jowa-tag--primary { background: var(--jowa-tag-primary-background, var(--jowa-color-primary-bg)); color: var(--jowa-tag-primary-text, var(--jowa-color-primary)); border: 1px solid var(--jowa-tag-primary-border, oklch(from var(--jowa-color-primary) 85% c h)); }
+  .jowa-tag--success { background: var(--jowa-tag-success-background, var(--jowa-color-success-bg)); color: var(--jowa-tag-success-text, var(--jowa-color-success)); border: 1px solid var(--jowa-tag-success-border, oklch(from var(--jowa-color-success) 85% c h)); }
+  .jowa-tag--warning { background: var(--jowa-tag-warning-background, var(--jowa-color-warning-bg)); color: var(--jowa-tag-warning-text, var(--jowa-color-warning)); border: 1px solid var(--jowa-tag-warning-border, oklch(from var(--jowa-color-warning) 85% c h)); }
+  .jowa-tag--danger  { background: var(--jowa-tag-danger-background, var(--jowa-color-danger-bg)); color: var(--jowa-tag-danger-text, var(--jowa-color-danger)); border: 1px solid var(--jowa-tag-danger-border, oklch(from var(--jowa-color-danger) 85% c h)); }
 
   .jowa-tag__remove {
     background: none;

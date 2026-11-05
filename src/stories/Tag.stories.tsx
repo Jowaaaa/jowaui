@@ -1,12 +1,15 @@
 import React, { useState } from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
+import { componentColorMeta } from "./component-colors";
 import { Tag } from "../lib/components/tag/tag";
 
 const meta: Meta<typeof Tag> = {
   title: "Components/Tag",
   component: Tag,
   tags: ["autodocs"],
+  ...componentColorMeta("tag"),
   argTypes: {
+    ...componentColorMeta("tag").argTypes,
     variant: { control: "select", options: ["neutral", "primary", "success", "warning", "danger"] },
   },
 };

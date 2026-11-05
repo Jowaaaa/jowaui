@@ -1,6 +1,16 @@
 import React, { useState } from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { RadioGroup, Radio } from "../lib/components/radio/radio";
+import { componentColorArgTypes, withComponentColors } from "./component-colors";
+
+const colorControls = [
+  { key: "textColor", name: "Text", variables: ["--jowa-color-neutral-text"], category: "Radio" },
+  { key: "backgroundColor", name: "Background", variables: ["--jowa-color-neutral-bg"], category: "Radio" },
+  { key: "borderColor", name: "Border", variables: ["--jowa-color-neutral-border"], category: "Radio" },
+  { key: "checkedColor", name: "Checked", variables: ["--jowa-color-primary"], category: "States" },
+  { key: "errorColor", name: "Error", variables: ["--jowa-color-danger"], category: "States" },
+  { key: "hintColor", name: "Hint", variables: ["--jowa-color-muted"], category: "States" },
+] as const;
 
 const meta: Meta = {
   title: "Forms/Radio",
@@ -10,7 +20,9 @@ const meta: Meta = {
     hint: { control: 'text' },
     error: { control: 'text' },
     orientation: { control: 'select', options: ['vertical', 'horizontal'] },
+    ...componentColorArgTypes(colorControls),
   },
+  decorators: [withComponentColors(colorControls)],
 };
 export default meta;
 type Story = StoryObj;

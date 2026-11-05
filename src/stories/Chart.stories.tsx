@@ -1,11 +1,14 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
+import { componentColorMeta } from "./component-colors";
 import { Chart } from "../lib/components/chart/chart";
 
 const meta: Meta<typeof Chart> = {
   title: "Components/Chart",
   component: Chart,
   tags: ["autodocs"],
+  ...componentColorMeta("chart"),
   argTypes: {
+    ...componentColorMeta("chart").argTypes,
     type: { control: "select", options: ["bar", "line"] },
     showGrid: { control: "boolean" },
     showLabels: { control: "boolean" },

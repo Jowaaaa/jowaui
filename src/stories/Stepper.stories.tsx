@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
+import { componentColorMeta } from "./component-colors";
 import { Stepper } from "../lib/components/stepper/stepper";
 import type { StepperStep } from "../lib/components/stepper/stepper";
 
@@ -13,12 +14,14 @@ const meta: Meta<typeof Stepper> = {
   title: "Components/Stepper",
   component: Stepper,
   tags: ["autodocs"],
+  ...componentColorMeta("stepper"),
   args: {
     steps: STEPS,
     activeStep: 1,
     orientation: "horizontal",
   },
   argTypes: {
+    ...componentColorMeta("stepper").argTypes,
     activeStep: { control: 'number' },
     orientation: { control: 'select', options: ['horizontal', 'vertical'] },
   },

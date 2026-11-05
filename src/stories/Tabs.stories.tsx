@@ -1,5 +1,6 @@
 import React from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
+import { componentColorMeta } from "./component-colors";
 import { Tabs } from "../lib/components/tabs/tabs";
 
 const ITEMS = [
@@ -13,8 +14,10 @@ const meta: Meta<typeof Tabs> = {
   title: "Navigation/Tabs",
   component: Tabs,
   tags: ["autodocs"],
+  ...componentColorMeta("tabs"),
   args: { items: ITEMS, defaultValue: "overview" },
   argTypes: {
+    ...componentColorMeta("tabs").argTypes,
     variant: { control: 'select', options: ['line', 'pill'] },
   },
 };

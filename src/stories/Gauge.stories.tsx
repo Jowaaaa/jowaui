@@ -1,10 +1,12 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
+import { componentColorMeta } from "./component-colors";
 import { Gauge } from "../lib/components/gauge/gauge";
 
 const meta: Meta<typeof Gauge> = {
   title: "Components/Gauge",
   component: Gauge,
   tags: ["autodocs"],
+  ...componentColorMeta("gauge"),
   args: {
     value: 68,
     max: 100,
@@ -14,6 +16,7 @@ const meta: Meta<typeof Gauge> = {
     label: "CPU",
   },
   argTypes: {
+    ...componentColorMeta("gauge").argTypes,
     value: { control: 'number' },
     max: { control: 'number' },
     size: { control: 'number' },

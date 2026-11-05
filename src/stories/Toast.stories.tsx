@@ -1,11 +1,13 @@
 import React from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
+import { componentColorMeta } from "./component-colors";
 import { ToastProvider, useToast } from "../lib/components/toast/toast";
 import { Button } from "../lib/components/button/button";
 
 const meta: Meta = {
   title: "Feedback/Toast",
   tags: ["autodocs"],
+  ...componentColorMeta("toast"),
   decorators: [
     (Story, { args }) => (
       <ToastProvider
@@ -17,6 +19,7 @@ const meta: Meta = {
     ),
   ],
   argTypes: {
+    ...componentColorMeta("toast").argTypes,
     position: { control: 'select', options: ['top-right', 'top-left', 'top-center', 'bottom-right', 'bottom-left', 'bottom-center'] },
     defaultDuration: { control: 'number' },
   },

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
+import { componentColorMeta } from "./component-colors";
 import { Tree } from "../lib/components/tree/tree";
 import type { TreeNode } from "../lib/components/tree/tree";
 
@@ -7,7 +8,9 @@ const meta: Meta<typeof Tree> = {
   title: "Components/Tree",
   component: Tree,
   tags: ["autodocs"],
+  ...componentColorMeta("tree"),
   argTypes: {
+    ...componentColorMeta("tree").argTypes,
     selected: { control: 'text' },
   },
 };

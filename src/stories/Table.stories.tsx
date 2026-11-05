@@ -1,5 +1,6 @@
 import React from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
+import { componentColorMeta } from "./component-colors";
 import { Table } from "../lib/components/table/table";
 import { Badge } from "../lib/components/badge/badge";
 
@@ -30,7 +31,9 @@ const COLUMNS = [
 const meta: Meta = {
   title: "Data/Table",
   tags: ["autodocs"],
+  ...componentColorMeta("table"),
   argTypes: {
+    ...componentColorMeta("table").argTypes,
     striped: { control: 'boolean' },
     hoverable: { control: 'boolean' },
     bordered: { control: 'boolean' },
