@@ -5,6 +5,7 @@ import { BuilderLayout, BuilderNode, BuilderViewport, COMPONENT_REGISTRY, Compon
 import { createExportFiles } from "./exporter";
 import { commitHistory, createHistoryState, redoHistory, undoHistory } from "./history";
 import { ProjectAsset, loadAssets, removeAsset, saveAsset } from "./assets";
+import { clampLayout, defaultLayout, findAvailablePlacement, GRID_UNITS, layoutFromPointer } from "./layout";
 
 const STORAGE_KEY = "jowaui-builder-project";
 const FILES_STORAGE_KEY = "jowaui-builder-files";
@@ -13,8 +14,6 @@ const PROJECT_NAME_STORAGE_KEY = "jowaui-builder-project-name";
 const VERSION_HISTORY_STORAGE_KEY = "jowaui-builder-version-history";
 const SANDBOX_DEPENDENCIES = { react: "18.3.1", "react-dom": "18.3.1" };
 const SANDBOX_TEMPLATE = "vite-react-ts" as const;
-const GRID_UNITS = 50;
-const LEGACY_GRID_UNITS = 12;
 const localLibraryFiles = Object.fromEntries(Object.entries(import.meta.glob("../lib/**/*.{ts,tsx,css}", { query: "?raw", import: "default", eager: true }) as Record<string, string>).map(([path, source]) => [`/${path.replace(/^\.\.\//, "")}`, source]));
 const STYLE_CONTROLS = [
   { key: "margin", label: "Margin" },
@@ -29,49 +28,6 @@ const STYLE_CONTROLS = [
   { key: "border", label: "Border" },
   { key: "borderRadius", label: "Radius" },
 ];
-
-const DEFAULT_GRID_SPANS: Partial<Record<ComponentKey, number>> = {
-  hero: 50,
-  navbar: 50,
-  banner: 50,
-  divider: 50,
-  columns: 50,
-  card: 25,
-  input: 17,
-  textarea: 25,
-  button: 13,
-  checkbox: 17,
-  switch: 17,
-};
-const DEFAULT_GRID_ROW_SPANS: Partial<Record<ComponentKey, number>> = {
-  hero: 6,
-  card: 3,
-  columns: 4,
-  banner: 2,
-  alert: 2,
-  textarea: 2,
-  statcard: 3,
-};
-
-function defaultLayout(component: ComponentKey): BuilderLayout {
-  return { columnStart: 1, columnSpan: DEFAULT_GRID_SPANS[component] ?? 17, rowSpan: DEFAULT_GRID_ROW_SPANS[component] ?? 1, gridVersion: GRID_UNITS };
-}
-
-function clampLayout(layout: BuilderLayout): BuilderLayout {
-  const scale = (value: number) => Math.max(1, Math.round(value * GRID_UNITS / LEGACY_GRID_UNITS));
-  const migrated = layout.gridVersion === GRID_UNITS ? layout : {
-    ...layout,
-    columnStart: Math.round((layout.columnStart - 1) * GRID_UNITS / LEGACY_GRID_UNITS) + 1,
-    columnSpan: scale(layout.columnSpan),
-    rowStart: layout.rowStart === undefined ? undefined : Math.round((layout.rowStart - 1) * GRID_UNITS / LEGACY_GRID_UNITS) + 1,
-    rowSpan: layout.rowSpan === undefined ? undefined : scale(layout.rowSpan),
-  };
-  const columnSpan = Math.max(1, Math.min(GRID_UNITS, Math.round(migrated.columnSpan)));
-  const columnStart = Math.max(1, Math.min(GRID_UNITS + 1 - columnSpan, Math.round(migrated.columnStart)));
-  const rowSpan = migrated.rowSpan === undefined ? undefined : Math.max(1, Math.round(migrated.rowSpan));
-  const rowStart = migrated.rowStart === undefined ? undefined : Math.max(1, Math.round(migrated.rowStart));
-  return { columnStart, columnSpan, rowStart, rowSpan, gridVersion: GRID_UNITS };
-}
 
 function SandpackErrorDetails({ onError, onValid }: { onError?: (message: string) => void; onValid?: () => void } = {}) {
   const { sandpack: { error, status } } = useSandpack();
@@ -258,7 +214,7 @@ async function downloadProjectArchive(projectName: string, pages: BuilderPage[],
 
 function useDocumentHistory(initial: BuilderNode[]) {
   const [state, setState] = useState(() => createHistoryState(initial));
-  const replace = (present: BuilderNode[]) => setState(createHistoryState(present));
+  const replace = (presentOrUpdater: BuilderNode[] | ((current: BuilderNode[]) => BuilderNode[])) => setState((current) => ({ ...current, present: typeof presentOrUpdater === "function" ? presentOrUpdater(current.present) : presentOrUpdater }));
   const commit = (nextOrUpdater: BuilderNode[] | ((current: BuilderNode[]) => BuilderNode[])) => {
     setState((current) => {
       const next = typeof nextOrUpdater === "function" ? nextOrUpdater(current.present) : nextOrUpdater;
@@ -271,7 +227,8 @@ function useDocumentHistory(initial: BuilderNode[]) {
   const redo = () => setState((current) => {
     return redoHistory(current);
   });
-  return { nodes: state.present, commit, replace, undo, redo, canUndo: state.past.length > 0, canRedo: state.future.length > 0 };
+  const commitPreview = (base: BuilderNode[]) => setState((current) => ({ past: [...current.past, base], present: current.present, future: [] }));
+  return { nodes: state.present, commit, replace, commitPreview, undo, redo, canUndo: state.past.length > 0, canRedo: state.future.length > 0 };
 }
 
 function primaryEditableProp(node: BuilderNode): string | undefined {
@@ -296,11 +253,13 @@ function LinkListEditor({ value, onChange }: { value: unknown; onChange: (links:
   </div>;
 }
 
-function DropZone({ parentId, index, drop, empty = false }: { parentId: string | null; index: number; drop: (event: React.DragEvent, parentId: string | null, index: number) => void; empty?: boolean }) {
-  return <div className={`builder-drop-zone${empty ? " builder-drop-zone--empty" : ""}`} onDragOver={(event) => { event.preventDefault(); event.dataTransfer.dropEffect = "move"; }} onDrop={(event) => { event.stopPropagation(); drop(event, parentId, index); }} aria-label="Drop component here">{empty && <span>Drop a component here</span>}</div>;
+function DropZone({ parentId, index, drop }: { parentId: string | null; index: number; drop: (event: React.DragEvent, parentId: string | null, index: number) => void }) {
+  return <div className="builder-drop-zone" onDragOver={(event) => { event.preventDefault(); event.dataTransfer.dropEffect = "move"; }} onDrop={(event) => { event.stopPropagation(); drop(event, parentId, index); }} aria-label="Drop component here" />;
 }
 
-function GridResizeHandle({ side, onResize }: { side: "left" | "right" | "top" | "bottom"; onResize: (delta: number, side: "left" | "right" | "top" | "bottom") => void }) {
+type GridDropPreview = { nodeId?: string; component: ComponentKey; layout: BuilderLayout };
+
+function GridResizeHandle({ side, onResize, onResizeEnd }: { side: "left" | "right" | "top" | "bottom"; onResize: (delta: number, side: "left" | "right" | "top" | "bottom") => void; onResizeEnd: () => void }) {
   const start = (event: React.PointerEvent<HTMLSpanElement>) => {
     event.preventDefault();
     event.stopPropagation();
@@ -322,6 +281,7 @@ function GridResizeHandle({ side, onResize }: { side: "left" | "right" | "top" |
     const stop = () => {
       window.removeEventListener("pointermove", move);
       window.removeEventListener("pointerup", stop);
+      onResizeEnd();
     };
     window.addEventListener("pointermove", move);
     window.addEventListener("pointerup", stop, { once: true });
@@ -330,15 +290,16 @@ function GridResizeHandle({ side, onResize }: { side: "left" | "right" | "top" |
   return <span className={`builder-resize-handle builder-resize-handle--${side}`} onPointerDown={start} role="separator" aria-label={`Resize ${side}`} />;
 }
 
-function renderNode(node: BuilderNode, viewport: BuilderViewport, selectedId: string | null, editingId: string | null, select: (id: string) => void, openCode: (id: string) => void, drop: (event: React.DragEvent, parentId: string | null, index: number) => void, edit: (id: string) => void, commitInline: (id: string, key: string, value: string) => void, cancelInline: () => void, startDrag: (id: string) => void, resize: (id: string, base: BuilderLayout, delta: number, side: "left" | "right" | "top" | "bottom") => void, isGridItem = true): React.ReactNode {
+function renderNode(node: BuilderNode, viewport: BuilderViewport, selectedId: string | null, editingId: string | null, select: (id: string) => void, openCode: (id: string) => void, drop: (event: React.DragEvent, parentId: string | null, index: number) => void, edit: (id: string) => void, commitInline: (id: string, key: string, value: string) => void, cancelInline: () => void, startDrag: (id: string) => void, resize: (id: string, base: BuilderLayout, delta: number, side: "left" | "right" | "top" | "bottom") => void, resizeEnd: () => void, dropPreview?: GridDropPreview | null, isGridItem = true): React.ReactNode {
   const definition = COMPONENT_REGISTRY[node.component];
   const children = node.component === "columns"
-    ? node.children.map((child) => <React.Fragment key={child.id}>{renderNode(child, viewport, selectedId, editingId, select, openCode, drop, edit, commitInline, cancelInline, startDrag, resize, false)}</React.Fragment>)
-    : node.children.map((child, index) => <React.Fragment key={child.id}><DropZone parentId={node.id} index={index} drop={drop} />{renderNode(child, viewport, selectedId, editingId, select, openCode, drop, edit, commitInline, cancelInline, startDrag, resize)}</React.Fragment>);
+    ? node.children.map((child) => <React.Fragment key={child.id}>{renderNode(child, viewport, selectedId, editingId, select, openCode, drop, edit, commitInline, cancelInline, startDrag, resize, resizeEnd, undefined, false)}</React.Fragment>)
+    : node.children.map((child, index) => <React.Fragment key={child.id}><DropZone parentId={node.id} index={index} drop={drop} />{renderNode(child, viewport, selectedId, editingId, select, openCode, drop, edit, commitInline, cancelInline, startDrag, resize, resizeEnd)}</React.Fragment>);
   const props = { ...node.props } as Record<string, unknown>;
   const layout = clampLayout(node.layout?.[viewport] ?? node.layout?.desktop ?? defaultLayout(node.component));
-  const style = Object.fromEntries(Object.entries({ ...node.styles, ...node.responsiveStyles?.[viewport], ...(isGridItem ? { gridColumn: `${layout.columnStart} / span ${layout.columnSpan}`, ...(layout.rowStart !== undefined || layout.rowSpan !== undefined ? { gridRow: `${layout.rowStart ?? "auto"} / span ${layout.rowSpan ?? 1}` } : {}) } : {}) }).map(([key, value]) => [key, value])) as React.CSSProperties;
-  const childContent = node.component === "columns" ? children : definition.acceptsChildren ? <div className="builder-grid builder-grid--nested">{children}</div> : children;
+  const activeLayout = dropPreview?.nodeId === node.id ? dropPreview.layout : layout;
+  const style = Object.fromEntries(Object.entries({ ...node.styles, ...node.responsiveStyles?.[viewport], ...(isGridItem ? { gridColumn: `${activeLayout.columnStart} / span ${activeLayout.columnSpan}`, ...(activeLayout.rowStart !== undefined || activeLayout.rowSpan !== undefined ? { gridRow: `${activeLayout.rowStart ?? "auto"} / span ${activeLayout.rowSpan ?? 1}` } : {}) } : {}) }).map(([key, value]) => [key, value])) as React.CSSProperties;
+   const childContent = node.component === "columns" ? children : definition.acceptsChildren ? <div className="builder-grid-container"><div className="builder-grid builder-grid--nested">{children}</div></div> : children;
   if (node.component === "hero") props.actions = childContent;
   const editableProp = primaryEditableProp(node);
 
@@ -353,14 +314,12 @@ function renderNode(node: BuilderNode, viewport: BuilderViewport, selectedId: st
       draggable
       onDragStart={(event) => { event.stopPropagation(); event.dataTransfer.effectAllowed = "move"; event.dataTransfer.setData("jowa-node", node.id); startDrag(node.id); }}
       onDragEnd={() => startDrag("")}
-      onDragOver={definition.acceptsChildren ? (event) => event.preventDefault() : undefined}
-      onDrop={definition.acceptsChildren ? (event) => { event.stopPropagation(); drop(event, node.id, node.children.length); } : undefined}
-    >
+     >
       {node.component === "card" || node.component === "columns" || node.component === "column" ? React.createElement(definition.render, props, childContent) : React.createElement(definition.render, props)}
       {editingId === node.id && editableProp && <InlineTextEditor value={String(node.props[editableProp] ?? "")} onCommit={(value) => commitInline(node.id, editableProp, value)} onCancel={cancelInline} />}
-      {definition.acceptsChildren && <DropZone parentId={node.id} index={node.children.length} drop={drop} empty={node.children.length === 0} />}
+       {definition.acceptsChildren && node.children.length > 0 && <DropZone parentId={node.id} index={node.children.length} drop={drop} />}
       {selectedId === node.id && <span className="builder-node__label">{definition.label} · {layout.columnSpan}/{GRID_UNITS}</span>}
-      {selectedId === node.id && isGridItem && <><GridResizeHandle side="left" onResize={(delta, side) => resize(node.id, layout, delta, side)} /><GridResizeHandle side="right" onResize={(delta, side) => resize(node.id, layout, delta, side)} /><GridResizeHandle side="top" onResize={(delta, side) => resize(node.id, layout, delta, side)} /><GridResizeHandle side="bottom" onResize={(delta, side) => resize(node.id, layout, delta, side)} /></>}
+       {selectedId === node.id && isGridItem && <><GridResizeHandle side="left" onResize={(delta, side) => resize(node.id, layout, delta, side)} onResizeEnd={resizeEnd} /><GridResizeHandle side="right" onResize={(delta, side) => resize(node.id, layout, delta, side)} onResizeEnd={resizeEnd} /><GridResizeHandle side="top" onResize={(delta, side) => resize(node.id, layout, delta, side)} onResizeEnd={resizeEnd} /><GridResizeHandle side="bottom" onResize={(delta, side) => resize(node.id, layout, delta, side)} onResizeEnd={resizeEnd} /></>}
     </div>
   );
 }
@@ -520,7 +479,7 @@ export function BuilderApp() {
   const [pages, setPages] = useState<BuilderPage[]>(() => readPages());
   const [activePageId, setActivePageId] = useState(() => readPages()[0]?.id ?? "page-home");
   const activePage = pages.find((page) => page.id === activePageId) ?? pages[0];
-  const { nodes, commit, replace, undo, redo, canUndo, canRedo } = useDocumentHistory(activePage?.nodes ?? starterNodes);
+  const { nodes, commit, replace, commitPreview, undo, redo, canUndo, canRedo } = useDocumentHistory(activePage?.nodes ?? starterNodes);
   const [selectedId, setSelectedId] = useState<string | null>(nodes[0]?.id ?? null);
   const [codeNodeId, setCodeNodeId] = useState<string | null>(null);
   const [projectCodeOpen, setProjectCodeOpen] = useState(false);
@@ -536,10 +495,13 @@ export function BuilderApp() {
   const projectSource = projectFiles["/App.tsx"] ?? null;
   const [draggedComponent, setDraggedComponent] = useState<ComponentKey | null>(null);
   const [draggedNodeId, setDraggedNodeId] = useState<string | null>(null);
+  const [dropPreview, setDropPreview] = useState<GridDropPreview | null>(null);
   const [viewport, setViewport] = useState<"desktop" | "tablet" | "mobile">("desktop");
   const [editingNodeId, setEditingNodeId] = useState<string | null>(null);
   const importRef = useRef<HTMLInputElement>(null);
   const assetImportRef = useRef<HTMLInputElement>(null);
+  const resizeBaseRef = useRef<{ nodes: BuilderNode[]; changed: boolean } | null>(null);
+  const handledDropRef = useRef<Event | null>(null);
   const selectedNode = selectedId ? findNode(nodes, selectedId) : undefined;
   const codeNode = codeNodeId ? findNode(nodes, codeNodeId) : undefined;
   const selectedLayout = selectedNode ? clampLayout(selectedNode.layout?.[viewport] ?? selectedNode.layout?.desktop ?? defaultLayout(selectedNode.component)) : undefined;
@@ -724,23 +686,58 @@ export function BuilderApp() {
     setSelectedId(newNode.id);
   };
 
-  const handleDrop = (event: React.DragEvent, parentId: string | null, index = Number.MAX_SAFE_INTEGER) => {
+  const handleDrop = (event: React.DragEvent, parentId: string | null, index = Number.MAX_SAFE_INTEGER, placement?: BuilderLayout) => {
     event.preventDefault();
-    const nodeId = event.dataTransfer.getData("jowa-node");
+    if (handledDropRef.current === event.nativeEvent) return;
+    handledDropRef.current = event.nativeEvent;
+    const nodeId = event.dataTransfer.getData("jowa-node") || draggedNodeId;
     if (nodeId) {
-      commitVisual((current) => moveNode(current, nodeId, parentId, index));
+      commitVisual((current) => {
+        const moved = moveNode(current, nodeId, parentId, index);
+        return placement ? updateNode(moved, nodeId, (node) => ({ ...node, layout: { ...node.layout, [viewport]: placement } })) : moved;
+      });
       setSelectedId(nodeId);
       setDraggedNodeId(null);
+      setDropPreview(null);
       return;
     }
-    const component = event.dataTransfer.getData("jowa-component") as ComponentKey;
+    const component = (event.dataTransfer.getData("jowa-component") as ComponentKey) || draggedComponent;
     if (component && COMPONENT_REGISTRY[component]) {
       const newNode = createNode(component);
+      if (placement) newNode.layout = { ...newNode.layout, [viewport]: placement };
       commitVisual((current) => parentId ? insertNode(current, parentId, newNode) : [...current.slice(0, Math.min(index, current.length)), newNode, ...current.slice(Math.min(index, current.length))]);
       setSelectedId(newNode.id);
     }
     setDraggedComponent(null);
     setDraggedNodeId(null);
+    setDropPreview(null);
+  };
+
+  const getGridPlacement = (event: React.DragEvent<HTMLDivElement>): GridDropPreview | null => {
+    const nodeId = event.dataTransfer.getData("jowa-node") || draggedNodeId || "";
+    const component = (event.dataTransfer.getData("jowa-component") as ComponentKey) || draggedComponent || findNode(nodes, nodeId)?.component;
+    if (!component || !COMPONENT_REGISTRY[component]) return null;
+    const node = nodeId ? findNode(nodes, nodeId) : undefined;
+    const size = clampLayout(node?.layout?.[viewport] ?? node?.layout?.desktop ?? defaultLayout(component));
+    const grid = event.currentTarget;
+    const rect = grid.getBoundingClientRect();
+    const rowHeight = Number.parseFloat(getComputedStyle(grid).gridAutoRows) || rect.width / GRID_UNITS;
+    const requested = layoutFromPointer(rect, event.clientX, event.clientY, size, rowHeight);
+    const layout = findAvailablePlacement(nodes, requested, nodeId || undefined, viewport);
+    return { nodeId: nodeId || undefined, component, layout };
+  };
+
+  const updateGridDropPreview = (event: React.DragEvent<HTMLDivElement>) => {
+    event.preventDefault();
+    event.dataTransfer.dropEffect = "move";
+    setDropPreview(getGridPlacement(event));
+  };
+
+  const dropOnGrid = (event: React.DragEvent<HTMLDivElement>) => {
+    event.preventDefault();
+    event.stopPropagation();
+    const preview = getGridPlacement(event) ?? dropPreview;
+    handleDrop(event, null, Number.MAX_SAFE_INTEGER, preview?.layout);
   };
 
   const updateSelectedProp = (key: string, value: unknown) => {
@@ -787,7 +784,16 @@ export function BuilderApp() {
         : side === "top"
           ? clampLayout({ ...base, rowStart: (base.rowStart ?? 1) + delta, rowSpan: (base.rowSpan ?? 1) - delta })
           : clampLayout({ ...base, rowStart: base.rowStart ?? 1, rowSpan: (base.rowSpan ?? 1) + delta });
-    commitVisual((current) => updateNode(current, id, (node) => ({ ...node, layout: { ...node.layout, [viewport]: next } })));
+    if (!resizeBaseRef.current) resizeBaseRef.current = { nodes, changed: false };
+    resizeBaseRef.current.changed = true;
+    setProjectFiles({});
+    replace((current) => updateNode(current, id, (node) => ({ ...node, layout: { ...node.layout, [viewport]: next } })));
+  };
+
+  const finishResize = () => {
+    const resize = resizeBaseRef.current;
+    resizeBaseRef.current = null;
+    if (resize?.changed) commitPreview(resize.nodes);
   };
 
   const updateCanvasPadding = (value: number) => setCanvasPadding(Math.max(0, Math.min(120, Number.isFinite(value) ? value : 0)));
@@ -913,7 +919,7 @@ export function BuilderApp() {
                 className="palette-item"
                 draggable
                 onDragStart={(event) => { event.dataTransfer.setData("jowa-component", definition.key); setDraggedComponent(definition.key); }}
-                onDragEnd={() => setDraggedComponent(null)}
+                 onDragEnd={() => { setDraggedComponent(null); setDropPreview(null); }}
                 onClick={() => addComponent(definition.key)}
               >
                 <span className="palette-icon">{definition.label.slice(0, 1)}</span>
@@ -925,13 +931,12 @@ export function BuilderApp() {
 
         <main className="builder-main">
            <div className="canvas-toolbar"><span>{activePage?.name ?? "Page"}</span><span className="canvas-status">{draggedComponent ? `Drop ${COMPONENT_REGISTRY[draggedComponent].label}` : "Double-click an element to edit JSX"}</span><label className="canvas-setting">Page padding <input aria-label="Page padding" type="number" min="0" max="120" value={canvasPadding} onChange={(event) => updateCanvasPadding(Number(event.target.value))} /> px</label><span className="viewport-switcher">{(["desktop", "tablet", "mobile"] as const).map((size) => <button key={size} className={viewport === size ? "viewport-switcher__active" : ""} onClick={() => setViewport(size)}>{size}</button>)}</span></div>
-          <div className="builder-canvas-wrap" onDragOver={(event) => event.preventDefault()} onDrop={(event) => handleDrop(event, null)}>
-              <div className={`builder-canvas builder-canvas--${viewport}${draggedNodeId || draggedComponent ? " builder-canvas--dragging" : ""}`} style={{ padding: `${canvasPadding}px`, "--builder-node-margin": "0px" } as React.CSSProperties} onClick={() => { setSelectedId(null); setEditingNodeId(null); }}>
-                <div className="builder-grid">
-                  {nodes.length === 0 && <div className="canvas-empty">Drag a component here to start building.</div>}
-                  <DropZone parentId={null} index={0} drop={handleDrop} />
-                  {nodes.map((node, index) => <React.Fragment key={node.id}>{index > 0 && <DropZone parentId={null} index={index} drop={handleDrop} />}{renderNode(node, viewport, selectedId, editingNodeId, setSelectedId, setCodeNodeId, handleDrop, editInline, commitInline, () => setEditingNodeId(null), (id) => setDraggedNodeId(id || null), resizeNode)}</React.Fragment>)}
-                  {nodes.length > 0 && <DropZone parentId={null} index={nodes.length} drop={handleDrop} />}
+            <div className="builder-canvas-wrap" onDragOver={(event) => event.preventDefault()}>
+               <div className={`builder-canvas builder-canvas--${viewport}${draggedNodeId || draggedComponent ? " builder-canvas--dragging" : ""}`} style={{ padding: `${canvasPadding}px`, "--builder-node-margin": "0px" } as React.CSSProperties} onClick={() => { setSelectedId(null); setEditingNodeId(null); }}>
+                  <div className="builder-grid builder-grid--root" onDragOver={updateGridDropPreview} onDrop={dropOnGrid}>
+                    {nodes.length === 0 && <div className="canvas-empty">Drag a component here to start building.</div>}
+                    {dropPreview && !dropPreview.nodeId && <div className="builder-drop-preview" style={{ gridColumn: `${dropPreview.layout.columnStart} / span ${dropPreview.layout.columnSpan}`, gridRow: `${dropPreview.layout.rowStart ?? 1} / span ${dropPreview.layout.rowSpan ?? 1}` }}><strong>{COMPONENT_REGISTRY[dropPreview.component].label}</strong><span>{dropPreview.layout.columnSpan} × {dropPreview.layout.rowSpan ?? 1}</span></div>}
+                    {nodes.map((node) => <React.Fragment key={node.id}>{renderNode(node, viewport, selectedId, editingNodeId, setSelectedId, setCodeNodeId, handleDrop, editInline, commitInline, () => setEditingNodeId(null), (id) => { setDraggedNodeId(id || null); if (!id) setDropPreview(null); }, resizeNode, finishResize, dropPreview)}</React.Fragment>)}
                 </div>
               </div>
           </div>

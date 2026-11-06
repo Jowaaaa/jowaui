@@ -55,6 +55,7 @@ export { DataGrid } from "./components/datagrid/datagrid";
 export { WizardStepper } from "./components/wizardstepper/wizardstepper";
 export { MarkdownRenderer } from "./components/markdownrenderer/markdownrenderer";
 export { RichTextEditor } from "./components/richtexteditor/richtexteditor";
+export { CtaBanner } from "./components/ctabanner/ctabanner";
 
 // Types
 export type { ButtonProps, ButtonVariant, ButtonSize } from "./components/button/button";
@@ -113,3 +114,4 @@ export type { DataGridProps, DataGridColumn } from "./components/datagrid/datagr
 export type { WizardStepperProps, WizardStep } from "./components/wizardstepper/wizardstepper";
 export type { MarkdownRendererProps } from "./components/markdownrenderer/markdownrenderer";
 export type { RichTextEditorProps } from "./components/richtexteditor/richtexteditor";
+export type { CtaBannerProps } from "./components/ctabanner/ctabanner";

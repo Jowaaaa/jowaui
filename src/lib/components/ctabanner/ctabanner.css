@@ -1,0 +1,88 @@
+@layer jowa.components {
+  .jowa-cta-banner {
+    container-type: inline-size;
+    container-name: cta-banner;
+    display: flex;
+    align-items: center;
+    gap: var(--jowa-cta-banner-gap, var(--jowa-spacing-xl));
+    padding: var(--jowa-cta-banner-padding, var(--jowa-spacing-xl));
+    border: 1px solid var(--jowa-cta-banner-border, var(--jowa-color-primary));
+    border-radius: var(--jowa-cta-banner-radius, var(--jowa-radius-xl));
+    background: var(--jowa-cta-banner-background, var(--jowa-color-primary));
+    color: var(--jowa-cta-banner-foreground, var(--jowa-neutral-0));
+    font-family: var(--jowa-font-family);
+  }
+
+  .jowa-cta-banner--center {
+    justify-content: center;
+    text-align: center;
+  }
+
+  .jowa-cta-banner__content {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .jowa-cta-banner__title {
+    margin: 0;
+    color: var(--jowa-cta-banner-title-color, inherit);
+    font-size: var(--jowa-cta-banner-title-size, var(--jowa-font-size-lg));
+    font-weight: var(--jowa-font-weight-bold);
+    line-height: 1.2;
+  }
+
+  .jowa-cta-banner__description {
+    max-width: 60rem;
+    margin: var(--jowa-spacing-xs) 0 0;
+    color: var(--jowa-cta-banner-description-color, inherit);
+    font-size: var(--jowa-cta-banner-description-size, var(--jowa-font-size-md));
+    line-height: var(--jowa-line-height);
+    opacity: 0.88;
+  }
+
+  .jowa-cta-banner__actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--jowa-spacing-sm);
+    margin-top: var(--jowa-spacing-lg);
+  }
+
+  .jowa-cta-banner--center .jowa-cta-banner__actions {
+    justify-content: center;
+  }
+
+  .jowa-cta-banner__media {
+    flex: 0 1 240px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .jowa-cta-banner__media img,
+  .jowa-cta-banner__media svg {
+    display: block;
+    max-width: 100%;
+    max-height: 160px;
+    border-radius: var(--jowa-radius-lg);
+  }
+
+  @container cta-banner (max-width: 560px) {
+    .jowa-cta-banner {
+      align-items: stretch;
+      flex-direction: column;
+      padding: var(--jowa-spacing-lg);
+    }
+
+    .jowa-cta-banner__media {
+      order: -1;
+      flex-basis: auto;
+    }
+  }
+
+  @container cta-banner (max-width: 360px) {
+    .jowa-cta-banner__actions > * {
+      flex: 1 1 100%;
+    }
+  }
+}
